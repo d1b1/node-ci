@@ -14,17 +14,22 @@ block content
      | Log File / Source
     th(width="20%")
 
-    each process, i in data
-     tr
-      td
-       | #{process.pid}
-      td
-       | #{process.env}
-      td
-       | #{process.logFile}
-       br
-       | #{process.sourceDir}
-      td
-       a(href="/detail/#{i}", class="btn btn-primary") View
-       &nbsp;
-       a(href="/restart/#{i}", class="btn btn-primary") Restart
+    - if (!data || data.length == 0) 
+       tr
+        td(colspan="4")
+         | No processes started.
+    - else
+      each process, i in data
+       tr
+        td
+         | #{process.pid}
+        td
+         | #{process.env}
+        td
+         | #{process.logFile}
+         br
+         | #{process.sourceDir}
+        td
+         a(href="/detail/#{i}", class="btn btn-primary") View
+         &nbsp;
+         a(href="/restart/#{i}", class="btn btn-primary") Restart

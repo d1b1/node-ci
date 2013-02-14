@@ -4,17 +4,9 @@ var express    = require('express'),
     sys        = require('sys'),
     path       = require('path'),
     forever    = require('forever'),
-    GitHubApi = require("node-github"); 
-
-var github = new GitHubApi({
-    version: "3.0.0"
-});
-
-github.authenticate({
-    type: "basic",
-    username: 'd1b1',
-    password: 'ambereen'
-});
+    OAuth      = require('oauth').OAuth,
+    GitHubApi  = require("github"),
+    oa; 
 
 var app = express();
 app.configure(function() {
@@ -26,7 +18,27 @@ app.configure(function() {
   app.use(express.logger('dev'));
   app.use(express.bodyParser());
   app.use(express.methodOverride());
+  app.use(express.cookieParser());
+
+  app.use(express.session({
+    secret: 'jungleluv',
+    store: new express.session.MemoryStore({}),
+  }))
+
   app.use(app.router);
+
+  // Attach the Session to App.Local scope.
+  app.use(function(req, res, next) {
+    app.locals.session = req.session;
+
+    // Set the page defaults.
+    app.locals.page = { 
+      title: '', 
+      showsearch: true
+    }
+
+    next();
+  });
 
   // Catch all traffic not handled and send to the index.html.
   app.use('/', express.static(path.join(__dirname, '/')));
@@ -35,8 +47,29 @@ app.configure(function() {
   });
 
 });
+app.locals.moment = require('moment');
+app.locals._ = require('underscore');
 
-app.get('/restart/:target', function(req, res) {
+var routes = require('./routes/index')
+
+var check = function(req, res, next ) {
+  if (req.session.user && req.session.user.logged_in) {
+    next();
+  } else {
+    res.render('login', { session: req.session, params: { message: '', goto: req.url }, title: 'Home', hidesearch: '' });
+  }
+}
+
+app.get('/github_login', routes.github.login );
+app.get('/github_cb',    routes.github.callback );
+app.get('/account',  check, routes.github.userinfo );
+
+// Standard Login
+app.get('/login',  routes.session.login );
+app.post('/login', routes.session.loginsubmit );
+app.get('/logout', routes.session.logout );
+
+app.get('/restart/:target', check, function(req, res) {
 
   var target = parseInt(req.params.target);
 
@@ -52,18 +85,9 @@ app.get('/restart/:target', function(req, res) {
 
 });
 
-app.get('/git', function(req, res) {
+app.get('/git', check, routes.github.commits );
 
-  github.repos.getCommits({ user: 'd1b1', repo: 'composer'}, function(err, data) {
-    if (err) return res.send(err);
-
-    console.log(JSON.stringify(data));
-    res.send(data);
-  });
-
-});
-
-app.get('/list', function(req, res) {
+app.get('/list', check, function(req, res) {
   forever.list(false, function (err, data) {
     if (err) {
       // console.log('Error running `forever.list()`');
@@ -74,7 +98,7 @@ app.get('/list', function(req, res) {
   })
 });
 
-app.get('/tail/:id', function(req, res) {
+app.get('/tail/:id', check, function(req, res) {
 
   var id = parseInt(req.params.id);
 
@@ -90,7 +114,7 @@ app.get('/tail/:id', function(req, res) {
   })
 });
 
-app.get('/detail/:id', function(req, res) {
+app.get('/detail/:id', check, function(req, res) {
   
   var id = parseInt(req.params.id);
 
@@ -106,14 +130,13 @@ app.get('/detail/:id', function(req, res) {
   })
 });
 
-app.get('/all', function(req, res) {
+app.get('/all', check, function(req, res) {
   forever.list(false, function (err, data) {
     if (err) {
-      // console.log('Error running `forever.list()`');
-      // console.dir(err);
+      console.log('Error running `forever.list()`');
+      console.dir(err);
     }
     
-    console.dir(data)
     res.send(data);
   })
 });
@@ -122,13 +145,11 @@ app.get('/test', function(req, res) {
   res.send('Test Page');
 });
 
-app.post('/build', function(req, res) {
+app.post('/build', check, function(req, res) {
 
   var pl = JSON.parse(req.body.payload);
   var exec = require('child_process').exec;
   var execstr = "/var/www/composer/manager/getCommitCode.sh <<MARK "+pl.before+"\ "+pl.after+"\ "+pl.ref+"\ MARK";
-
-  console.log("Running", execstr);
 
   function puts(error, stdout, stderr) { sys.puts(stdout) }
   exec(execstr, puts);
@@ -139,5 +160,5 @@ app.post('/build', function(req, res) {
 
 var port = process.env.PORT || 3005;
 app.listen(port, function() { 
-  console.log('StartUp: Github Webhook Manager ' + port ); 
+  console.log('StartUp: Node CI Server ' + port ); 
 });

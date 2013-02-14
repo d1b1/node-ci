@@ -1,0 +1,18 @@
+extends layout
+
+block content
+
+  form(id='loginform', class="form-horizontal", action="/login", method="post")
+
+    h3 Login
+
+    .row
+      .span1.hidden-phone
+        a(href="/github_login")
+          img(width="64", class="hidden-phone", src="/assets/images/octocat.png")
+      .span5
+        p Got a github account? Use it login and manage your account. 
+      .span3
+        a(class="btn btn-primary btn-block", href="/github_login") use Github
+
+

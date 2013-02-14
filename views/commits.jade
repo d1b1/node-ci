@@ -1,0 +1,37 @@
+extends layout
+
+block header
+
+block content
+ 
+  h3 Composer Commits
+
+  table.table-striped.table.table-hover
+   tr
+    th(width="10%")
+     | Sha
+    th(width="20%")
+     | Author
+    th(width="40%")
+     | Message
+    th(width="10%")
+
+    - if (!data || data.length == 0) 
+       tr
+        td(colspan="4")
+         | No processes started.
+    - else
+      each commit, i in data
+       tr
+        td
+         b(href="#", alt="#{commit.sha}") #{commit.sha.substring(0, 10)}
+        td
+         | #{commit.commit.author.name}
+         br
+         | #{moment(commit.commit.author.date).format('MM/DD/YY hh:mm A')},
+         br
+         b #{moment(commit.commit.author.date).fromNow()}
+        td
+         | #{commit.commit.message}
+        td
+         a(href="/built/commit/#{commit.sha}", class="btn btn-primary") Build

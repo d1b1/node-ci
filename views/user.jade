@@ -1,0 +1,36 @@
+extends layout
+
+block header
+
+  link(href='http://fonts.googleapis.com/css?family=Droid+Sans:400,700', rel='stylesheet')
+
+block content
+
+  h3 Github User Info
+
+  table.table-striped.table.table-hover
+    tr
+      td(width="10%")
+        | Gravatar:
+      td(width="90%")
+       img(src="#{data.avatar_url}", class="img-polariod")
+    tr
+      td
+        | Username:
+      td
+        | #{data.login}
+    tr
+      td
+        | Name:
+      td
+        | #{data.name}
+    tr
+      td
+        | Company:
+      td
+        | #{data.company}
+    tr
+      td
+        | Location:
+      td
+        | #{data.location}
