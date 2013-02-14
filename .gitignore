@@ -1,0 +1,17 @@
+.DS_Store
+old_index.html
+changeQA.sh
+getCommitCode.sh
+*.swp
+grunt-ssmith.js
+node_modules/
+.project
+.buildpath
+.settings/org.eclipse.php.core.prefs
+api-node/reports
+node.log
+lint.log
+reports
+server.ssmith.js
+dist
+repos/

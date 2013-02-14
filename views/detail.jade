@@ -1,0 +1,28 @@
+extends layout
+
+block header
+
+block content
+ 
+  table.table-striped.table.table-hover
+
+     tr
+      td=PID
+      td
+       | #{data.pid}
+     tr
+      td=Environment
+      td
+       | #{data.env}
+     tr
+      td=Log File
+      td
+       | #{data.logFile}
+     tr
+      td=Source Dir
+      td
+       | #{data.sourceDir}
+     tr
+      td
+      td
+       a(href="/restart/#{i}", class="btn btn-primary") Restart
