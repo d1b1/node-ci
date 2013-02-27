@@ -141,25 +141,23 @@ app.get('/start/:sha', function(req, res) {
   var sha = req.params.sha;
  
   var appFolder = __dirname + '/tmp/' + sha + '';
-  var filename = __dirname + '/tmp/' + sha + '/server.js';
-  var options = { "env": { NODE_ENV: "development" }};
+  var options = { 
+    max:       3, 
+    portUsed:  22222,
+    logfile:   appFolder + '/forever_all.log',
+    append:    true,
+    checkFile: false,
+    sourceDir: appFolder, 
+    env:       { NODE_ENV: "development", PORT: 3011 }
+  };
 
   var sys = require('sys')
   var exec = require('child_process').exec;
   function puts(error, stdout, stderr) { 
     sys.puts(stdout) 
 
-// NODE_ENV=testing forever start \
-//   -l ${ROOT}/logs/qa-all.log \
-//   -o ${ROOT}/logs/qa-out.log \
-//   -e ${ROOT}/logs/qa-err.log \
-//   -a \
-//   --plain \
-//   --sourceDir ${ROOT}/branches/qa/ \
-//   server.js --port 3001
-  
     res.send('Starting forever process.')
-    forever.start(filename, options, function(err, data) {
+    forever.start('server.js', options, function(err, data) {
       console.log('Error Report', data);
       res.send(filename);
     });
@@ -196,6 +194,8 @@ app.get('/list', check, function(req, res) {
       // console.dir(err);
     }
 
+    var t = data[0];
+    console.log(t)
     res.render('list', { data: data } );
   })
 });
