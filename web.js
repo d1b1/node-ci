@@ -6,7 +6,9 @@ var express    = require('express'),
     forever    = require('forever'),
     OAuth      = require('oauth').OAuth,
     GitHubApi  = require("github"),
+    _          = require("underscore"),
     oa; 
+
 
 var app = express();
 app.configure(function() {
@@ -135,11 +137,27 @@ app.get('/sites', function(req, res) {
 
 });
 
+GLOBAL.site_ports = [];
+
+var getPort = function() {
+
+ for (var i=3010; i<3030;i++) { 
+
+   if (_.indexOf(GLOBAL.site_ports, i) == -1) {
+    return i
+   }
+
+ }
+
+
+}
 
 app.get('/start/:sha', function(req, res) {
 
   var sha = req.params.sha;
  
+  var newPort = getPort();
+
   var appFolder = __dirname + '/tmp/' + sha + '';
   var options = { 
     max:       3, 
@@ -147,8 +165,9 @@ app.get('/start/:sha', function(req, res) {
     logfile:   appFolder + '/forever_all.log',
     append:    true,
     checkFile: false,
+    fork: false,
     sourceDir: appFolder, 
-    env:       { NODE_ENV: "development", PORT: 3011 }
+    env:       { NODE_ENV: "development", PORT: newPort }
   };
 
   var sys = require('sys')
@@ -156,12 +175,12 @@ app.get('/start/:sha', function(req, res) {
   function puts(error, stdout, stderr) { 
     sys.puts(stdout) 
 
-    res.send('Starting forever process.')
-    forever.start('server.js', options, function(err, data) {
-      console.log('Error Report', data);
-      res.send(filename);
-    });
+    GLOBAL.site_ports.push(newPort)
 
+    var childProcess = forever.start('server.js', options);
+    
+    forever.startServer(childProcess);
+    res.redirect('/list')
   }
 
   console.log('NPM Install starting.')
@@ -169,11 +188,27 @@ app.get('/start/:sha', function(req, res) {
 
 });
 
+app.get('/stop/:target', check, function(req, res) {
+
+  var target = parseInt(req.params.target);
+
+  forever.stop(target, false, function (err, data) {
+    if (err) {
+      console.log('Error running `forever.restart()`');
+      console.dir(err);
+    }
+    res.send('Stopping ' + target);
+  });
+
+  res.redirect('/list');
+
+});
+
 app.get('/restart/:target', check, function(req, res) {
 
   var target = parseInt(req.params.target);
 
-  forever.restart(target, false, function (err, data) {
+  var childProcess = forever.restart(target, false, function (err, data) {
     if (err) {
       console.log('Error running `forever.restart()`');
       console.dir(err);
@@ -194,8 +229,6 @@ app.get('/list', check, function(req, res) {
       // console.dir(err);
     }
 
-    var t = data[0];
-    console.log(t)
     res.render('list', { data: data } );
   })
 });
