@@ -71,23 +71,103 @@ app.get('/login',  routes.session.login );
 app.post('/login', routes.session.loginsubmit );
 app.get('/logout', routes.session.logout );
 
-console.log('asdfasdf')
 app.get('/git/commit/:sha', function(req, res) {
-
-  console.log('here')
-  // GIT_WORK_TREE=$BUILDPATH git --git-dir=$REPO_PATH fetch origin
-  // GIT_WORK_TREE=$BUILDPATH git --git-dir=$REPO_PATH reset --hard
-  // GIT_WORK_TREE=$BUILDPATH git --git-dir=$REPO_PATH checkout -f $NEWREV
 
   var sys = require('sys')
   var exec = require('child_process').exec;
-  function puts(error, stdout, stderr) { sys.puts(stdout) }
+  function puts(error, stdout, stderr) { 
+    sys.puts(stdout) 
+    console.log('Set the checkout status to a specific commit')
 
-  var pdir = __dirname + '/tmp';
-  console.log(pdir);
-  exec("GIT_WORK_TREE=/tmp git --git-dir=$REPO_PATH fetch origin", puts);
-  exec("ls -la", puts);
-  res.send('asdfasdf')
+    res.send('We have rebuild the node using a specific commit.')
+  }
+
+  function checkout(error, stdout, stderr) {  
+    sys.puts(stdout) 
+    console.log('Preparing to checkout a commit.')
+    exec("GIT_WORK_TREE=" + pdir + " git --git-dir=" + pdir + "/.git --work-tree=" + pdir + " checkout " + req.params.sha, puts)
+  }
+
+  var pdir = __dirname + '/tmp/' + req.params.sha.substring(0,10);
+
+  var command = 'rm -Rf ' + pdir + '; ' +
+                'git clone git@github.com:npr/composer.git ' + pdir + '; ' + 
+                'GIT_WORK_TREE=' + pdir + ' git --git-dir=' + pdir + '/.git --work-tree=' + pdir + ' checkout ' + req.params.sha
+
+  console.log(command);
+  exec(command, puts);
+
+  // exec("rm -Rf " + pdir, function puts(error, stdout, stderr) { 
+  //   console.log('Removed the existing git repo.');
+
+  //   exec("git clone git@github.com:npr/composer.git " + pdir + "; ls -all", checkout);
+  // });
+  
+});
+
+app.get('/sites', function(req, res) {
+
+  var fs = require("fs");
+
+  var dir = __dirname + '/tmp';
+
+  fs.readdir(dir, function (err, list) {
+
+    console.log(list);
+    var data = [];
+
+    list.forEach(function (file) {
+
+      path = dir + "/" + file;
+
+      fs.stat(path, function (err, stat) {
+        if (stat && stat.isDirectory()) {
+          data.push({ data: stat, path: path, dir: file });
+        }
+      });
+
+    });
+
+    res.render('sites', { session: req.session, data: list})
+    console.log('Dddd', data);
+
+  });
+
+});
+
+
+app.get('/start/:sha', function(req, res) {
+
+  var sha = req.params.sha;
+ 
+  var appFolder = __dirname + '/tmp/' + sha + '';
+  var filename = __dirname + '/tmp/' + sha + '/server.js';
+  var options = { "env": { NODE_ENV: "development" }};
+
+  var sys = require('sys')
+  var exec = require('child_process').exec;
+  function puts(error, stdout, stderr) { 
+    sys.puts(stdout) 
+
+// NODE_ENV=testing forever start \
+//   -l ${ROOT}/logs/qa-all.log \
+//   -o ${ROOT}/logs/qa-out.log \
+//   -e ${ROOT}/logs/qa-err.log \
+//   -a \
+//   --plain \
+//   --sourceDir ${ROOT}/branches/qa/ \
+//   server.js --port 3001
+  
+    res.send('Starting forever process.')
+    forever.start(filename, options, function(err, data) {
+      console.log('Error Report', data);
+      res.send(filename);
+    });
+
+  }
+
+  console.log('NPM Install starting.')
+  exec('cd ' + appFolder + ';npm install', puts)
 
 });
 

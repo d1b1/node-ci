@@ -1,0 +1,2350 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'node', '/usr/local/bin/npm', 'install', 'tmp/36b762a962' ]
+2 info using npm@1.1.59
+3 info using node@v0.8.8
+4 verbose read json /Users/steve/Dropbox/github/RandD/node-ci/package.json
+5 verbose read json /Users/steve/Dropbox/github/RandD/node-ci/node_modules/connect/package.json
+6 verbose read json /Users/steve/Dropbox/github/RandD/node-ci/node_modules/execSync/package.json
+7 verbose read json /Users/steve/Dropbox/github/RandD/node-ci/node_modules/express/package.json
+8 verbose read json /Users/steve/Dropbox/github/RandD/node-ci/node_modules/forever/package.json
+9 verbose read json /Users/steve/Dropbox/github/RandD/node-ci/node_modules/forever-monitor/package.json
+10 verbose read json /Users/steve/Dropbox/github/RandD/node-ci/node_modules/github/package.json
+11 verbose read json /Users/steve/Dropbox/github/RandD/node-ci/node_modules/jade/package.json
+12 verbose read json /Users/steve/Dropbox/github/RandD/node-ci/node_modules/moment/package.json
+13 verbose read json /Users/steve/Dropbox/github/RandD/node-ci/node_modules/mongodb/package.json
+14 verbose read json /Users/steve/Dropbox/github/RandD/node-ci/node_modules/oauth/package.json
+15 verbose read json /Users/steve/Dropbox/github/RandD/node-ci/node_modules/request/package.json
+16 verbose read json /Users/steve/Dropbox/github/RandD/node-ci/node_modules/underscore/package.json
+17 verbose from cache /Users/steve/Dropbox/github/RandD/node-ci/package.json
+18 verbose readDependencies using package.json deps
+19 verbose cache add [ 'tmp/36b762a962', null ]
+20 silly cache add name=undefined spec="tmp/36b762a962" args=["tmp/36b762a962",null]
+21 verbose parsed url { pathname: 'tmp/36b762a962',
+21 verbose parsed url   path: 'tmp/36b762a962',
+21 verbose parsed url   href: 'tmp/36b762a962' }
+22 silly lockFile 4c2b673a-tmp-36b762a962 tmp/36b762a962
+23 verbose lock tmp/36b762a962 /Users/steve/.npm/4c2b673a-tmp-36b762a962.lock
+24 verbose read json tmp/36b762a962/package.json
+25 warn package.json Composer@0.1.22 No README.md file found!
+26 verbose tar pack [ '/var/folders/dd/s_scwdrs2r74q3sgmfc9zcz80000gn/T/npm-11907/1361995571299-0.7669767779298127/tmp.tgz',
+26 verbose tar pack   'tmp/36b762a962' ]
+27 verbose tarball /var/folders/dd/s_scwdrs2r74q3sgmfc9zcz80000gn/T/npm-11907/1361995571299-0.7669767779298127/tmp.tgz
+28 verbose folder tmp/36b762a962
+29 info prepublish Composer@0.1.22
+30 silly lockFile 32ec2b7e-71299-0-7669767779298127-tmp-tgz /var/folders/dd/s_scwdrs2r74q3sgmfc9zcz80000gn/T/npm-11907/1361995571299-0.7669767779298127/tmp.tgz
+31 verbose lock /var/folders/dd/s_scwdrs2r74q3sgmfc9zcz80000gn/T/npm-11907/1361995571299-0.7669767779298127/tmp.tgz /Users/steve/.npm/32ec2b7e-71299-0-7669767779298127-tmp-tgz.lock
+32 silly lockFile 32ec2b7e-71299-0-7669767779298127-tmp-tgz /var/folders/dd/s_scwdrs2r74q3sgmfc9zcz80000gn/T/npm-11907/1361995571299-0.7669767779298127/tmp.tgz
+33 verbose tar unpack /var/folders/dd/s_scwdrs2r74q3sgmfc9zcz80000gn/T/npm-11907/1361995571299-0.7669767779298127/tmp.tgz
+34 silly lockFile 6bcb85eb-71299-0-7669767779298127-package /var/folders/dd/s_scwdrs2r74q3sgmfc9zcz80000gn/T/npm-11907/1361995571299-0.7669767779298127/package
+35 verbose lock /var/folders/dd/s_scwdrs2r74q3sgmfc9zcz80000gn/T/npm-11907/1361995571299-0.7669767779298127/package /Users/steve/.npm/6bcb85eb-71299-0-7669767779298127-package.lock
+36 silly gunzTarPerm modes [ '777', '666' ]
+37 silly gunzTarPerm extractEntry package.json
+38 silly gunzTarPerm modified mode [ 'package.json', 420, 438 ]
+39 silly gunzTarPerm extractEntry .npmignore
+40 silly gunzTarPerm modified mode [ '.npmignore', 493, 511 ]
+41 silly gunzTarPerm extractEntry grunt.js
+42 silly gunzTarPerm modified mode [ 'grunt.js', 420, 438 ]
+43 silly gunzTarPerm extractEntry app.js
+44 silly gunzTarPerm modified mode [ 'app.js', 420, 438 ]
+45 silly gunzTarPerm extractEntry ci.js
+46 silly gunzTarPerm modified mode [ 'ci.js', 420, 438 ]
+47 silly gunzTarPerm extractEntry db.js
+48 silly gunzTarPerm modified mode [ 'db.js', 420, 438 ]
+49 silly gunzTarPerm extractEntry Load-Testing.js
+50 silly gunzTarPerm modified mode [ 'Load-Testing.js', 420, 438 ]
+51 silly gunzTarPerm extractEntry loadtest.js
+52 silly gunzTarPerm modified mode [ 'loadtest.js', 420, 438 ]
+53 silly gunzTarPerm extractEntry server.js
+54 silly gunzTarPerm modified mode [ 'server.js', 420, 438 ]
+55 silly gunzTarPerm extractEntry index.html
+56 silly gunzTarPerm modified mode [ 'index.html', 420, 438 ]
+57 silly gunzTarPerm extractEntry assets/version.js
+58 silly gunzTarPerm modified mode [ 'assets/version.js', 420, 438 ]
+59 silly gunzTarPerm extractEntry assets/css/custom/images/ui-icons_255b88_256x240.png
+60 silly gunzTarPerm modified mode [ 'assets/css/custom/images/ui-icons_255b88_256x240.png',
+60 silly gunzTarPerm   493,
+60 silly gunzTarPerm   511 ]
+61 silly gunzTarPerm extractEntry assets/css/custom/images/ui-bg_flat_0_aaaaaa_40x100.png
+62 silly gunzTarPerm modified mode [ 'assets/css/custom/images/ui-bg_flat_0_aaaaaa_40x100.png',
+62 silly gunzTarPerm   493,
+62 silly gunzTarPerm   511 ]
+63 silly gunzTarPerm extractEntry assets/css/custom/images/ui-bg_flat_100_31a601_40x100.png
+64 silly gunzTarPerm modified mode [ 'assets/css/custom/images/ui-bg_flat_100_31a601_40x100.png',
+64 silly gunzTarPerm   493,
+64 silly gunzTarPerm   511 ]
+65 silly gunzTarPerm extractEntry assets/css/custom/images/ui-bg_flat_100_84d5ee_40x100.png
+66 silly gunzTarPerm modified mode [ 'assets/css/custom/images/ui-bg_flat_100_84d5ee_40x100.png',
+66 silly gunzTarPerm   493,
+66 silly gunzTarPerm   511 ]
+67 silly gunzTarPerm extractEntry assets/css/custom/images/ui-bg_flat_100_ffffff_40x100.png
+68 silly gunzTarPerm modified mode [ 'assets/css/custom/images/ui-bg_flat_100_ffffff_40x100.png',
+68 silly gunzTarPerm   493,
+68 silly gunzTarPerm   511 ]
+69 silly gunzTarPerm extractEntry assets/css/custom/images/ui-bg_inset-soft_95_fef1ec_1x100.png
+70 silly gunzTarPerm modified mode [ 'assets/css/custom/images/ui-bg_inset-soft_95_fef1ec_1x100.png',
+70 silly gunzTarPerm   493,
+70 silly gunzTarPerm   511 ]
+71 silly gunzTarPerm extractEntry assets/css/custom/images/ui-bg_flat_100_255b88_40x100.png
+72 silly gunzTarPerm modified mode [ 'assets/css/custom/images/ui-bg_flat_100_255b88_40x100.png',
+72 silly gunzTarPerm   493,
+72 silly gunzTarPerm   511 ]
+73 silly gunzTarPerm extractEntry assets/css/custom/images/ui-icons_2e83ff_256x240.png
+74 silly gunzTarPerm modified mode [ 'assets/css/custom/images/ui-icons_2e83ff_256x240.png',
+74 silly gunzTarPerm   493,
+74 silly gunzTarPerm   511 ]
+75 silly gunzTarPerm extractEntry assets/css/custom/images/ui-icons_333333_256x240.png
+76 silly gunzTarPerm modified mode [ 'assets/css/custom/images/ui-icons_333333_256x240.png',
+76 silly gunzTarPerm   493,
+76 silly gunzTarPerm   511 ]
+77 silly gunzTarPerm extractEntry assets/css/custom/images/ui-icons_454545_256x240.png
+78 silly gunzTarPerm modified mode [ 'assets/css/custom/images/ui-icons_454545_256x240.png',
+78 silly gunzTarPerm   493,
+78 silly gunzTarPerm   511 ]
+79 silly gunzTarPerm extractEntry assets/css/custom/images/ui-icons_888888_256x240.png
+80 silly gunzTarPerm modified mode [ 'assets/css/custom/images/ui-icons_888888_256x240.png',
+80 silly gunzTarPerm   493,
+80 silly gunzTarPerm   511 ]
+81 silly gunzTarPerm extractEntry assets/css/custom/images/ui-icons_cd0a0a_256x240.png
+82 silly gunzTarPerm modified mode [ 'assets/css/custom/images/ui-icons_cd0a0a_256x240.png',
+82 silly gunzTarPerm   493,
+82 silly gunzTarPerm   511 ]
+83 silly gunzTarPerm extractEntry assets/css/custom/images/ui-icons_dddddd_256x240.png
+84 silly gunzTarPerm modified mode [ 'assets/css/custom/images/ui-icons_dddddd_256x240.png',
+84 silly gunzTarPerm   493,
+84 silly gunzTarPerm   511 ]
+85 silly gunzTarPerm extractEntry assets/css/custom/jquery-ui-1.8.19.custom.css
+86 silly gunzTarPerm modified mode [ 'assets/css/custom/jquery-ui-1.8.19.custom.css', 493, 511 ]
+87 silly gunzTarPerm extractEntry assets/css/fonts/bitter-bold/bitter-bold-webfont.eot
+88 silly gunzTarPerm modified mode [ 'assets/css/fonts/bitter-bold/bitter-bold-webfont.eot',
+88 silly gunzTarPerm   493,
+88 silly gunzTarPerm   511 ]
+89 silly gunzTarPerm extractEntry assets/css/fonts/bitter-bold/bitter-bold-webfont.svg
+90 silly gunzTarPerm modified mode [ 'assets/css/fonts/bitter-bold/bitter-bold-webfont.svg',
+90 silly gunzTarPerm   493,
+90 silly gunzTarPerm   511 ]
+91 silly gunzTarPerm extractEntry assets/css/fonts/bitter-bold/bitter-bold-webfont.ttf
+92 silly gunzTarPerm modified mode [ 'assets/css/fonts/bitter-bold/bitter-bold-webfont.ttf',
+92 silly gunzTarPerm   493,
+92 silly gunzTarPerm   511 ]
+93 silly gunzTarPerm extractEntry assets/css/fonts/bitter-bold/bitter-bold-webfont.woff
+94 silly gunzTarPerm modified mode [ 'assets/css/fonts/bitter-bold/bitter-bold-webfont.woff',
+94 silly gunzTarPerm   493,
+94 silly gunzTarPerm   511 ]
+95 silly gunzTarPerm extractEntry assets/css/fonts/bitter-regular/bitter-regular-webfont.eot
+96 silly gunzTarPerm modified mode [ 'assets/css/fonts/bitter-regular/bitter-regular-webfont.eot',
+96 silly gunzTarPerm   493,
+96 silly gunzTarPerm   511 ]
+97 silly gunzTarPerm extractEntry assets/css/fonts/bitter-regular/bitter-regular-webfont.svg
+98 silly gunzTarPerm modified mode [ 'assets/css/fonts/bitter-regular/bitter-regular-webfont.svg',
+98 silly gunzTarPerm   493,
+98 silly gunzTarPerm   511 ]
+99 silly gunzTarPerm extractEntry assets/css/fonts/bitter-regular/bitter-regular-webfont.ttf
+100 silly gunzTarPerm modified mode [ 'assets/css/fonts/bitter-regular/bitter-regular-webfont.ttf',
+100 silly gunzTarPerm   493,
+100 silly gunzTarPerm   511 ]
+101 silly gunzTarPerm extractEntry assets/css/fonts/bitter-regular/bitter-regular-webfont.woff
+102 silly gunzTarPerm modified mode [ 'assets/css/fonts/bitter-regular/bitter-regular-webfont.woff',
+102 silly gunzTarPerm   493,
+102 silly gunzTarPerm   511 ]
+103 silly gunzTarPerm extractEntry assets/css/fonts/iconfont/iconfont.eot
+104 silly gunzTarPerm modified mode [ 'assets/css/fonts/iconfont/iconfont.eot', 420, 438 ]
+105 silly gunzTarPerm extractEntry assets/css/fonts/iconfont/iconfont.svg
+106 silly gunzTarPerm modified mode [ 'assets/css/fonts/iconfont/iconfont.svg', 420, 438 ]
+107 silly gunzTarPerm extractEntry assets/css/fonts/iconfont/iconfont.ttf
+108 silly gunzTarPerm modified mode [ 'assets/css/fonts/iconfont/iconfont.ttf', 420, 438 ]
+109 silly gunzTarPerm extractEntry assets/css/fonts/iconfont/iconfont.woff
+110 silly gunzTarPerm modified mode [ 'assets/css/fonts/iconfont/iconfont.woff', 420, 438 ]
+111 silly gunzTarPerm extractEntry assets/css/fonts/opensans-bold/opensans-bold-webfont.eot
+112 silly gunzTarPerm modified mode [ 'assets/css/fonts/opensans-bold/opensans-bold-webfont.eot',
+112 silly gunzTarPerm   493,
+112 silly gunzTarPerm   511 ]
+113 silly gunzTarPerm extractEntry assets/css/fonts/opensans-bold/opensans-bold-webfont.svg
+114 silly gunzTarPerm modified mode [ 'assets/css/fonts/opensans-bold/opensans-bold-webfont.svg',
+114 silly gunzTarPerm   493,
+114 silly gunzTarPerm   511 ]
+115 silly gunzTarPerm extractEntry assets/css/fonts/opensans-bold/opensans-bold-webfont.ttf
+116 silly gunzTarPerm modified mode [ 'assets/css/fonts/opensans-bold/opensans-bold-webfont.ttf',
+116 silly gunzTarPerm   493,
+116 silly gunzTarPerm   511 ]
+117 silly gunzTarPerm extractEntry assets/css/fonts/opensans-bold/opensans-bold-webfont.woff
+118 silly gunzTarPerm modified mode [ 'assets/css/fonts/opensans-bold/opensans-bold-webfont.woff',
+118 silly gunzTarPerm   493,
+118 silly gunzTarPerm   511 ]
+119 silly gunzTarPerm extractEntry assets/css/fonts/opensans-regular/opensans-regular-webfont.eot
+120 silly gunzTarPerm modified mode [ 'assets/css/fonts/opensans-regular/opensans-regular-webfont.eot',
+120 silly gunzTarPerm   493,
+120 silly gunzTarPerm   511 ]
+121 silly gunzTarPerm extractEntry assets/css/fonts/opensans-regular/opensans-regular-webfont.svg
+122 silly gunzTarPerm modified mode [ 'assets/css/fonts/opensans-regular/opensans-regular-webfont.svg',
+122 silly gunzTarPerm   493,
+122 silly gunzTarPerm   511 ]
+123 silly gunzTarPerm extractEntry assets/css/fonts/opensans-regular/opensans-regular-webfont.ttf
+124 silly gunzTarPerm modified mode [ 'assets/css/fonts/opensans-regular/opensans-regular-webfont.ttf',
+124 silly gunzTarPerm   493,
+124 silly gunzTarPerm   511 ]
+125 silly gunzTarPerm extractEntry assets/css/fonts/opensans-regular/opensans-regular-webfont.woff
+126 silly gunzTarPerm modified mode [ 'assets/css/fonts/opensans-regular/opensans-regular-webfont.woff',
+126 silly gunzTarPerm   493,
+126 silly gunzTarPerm   511 ]
+127 silly gunzTarPerm extractEntry assets/css/fonts/proximanova-bold/proximanova-bold-webfont.eot
+128 silly gunzTarPerm modified mode [ 'assets/css/fonts/proximanova-bold/proximanova-bold-webfont.eot',
+128 silly gunzTarPerm   493,
+128 silly gunzTarPerm   511 ]
+129 silly gunzTarPerm extractEntry assets/css/fonts/proximanova-bold/proximanova-bold-webfont.svg
+130 silly gunzTarPerm modified mode [ 'assets/css/fonts/proximanova-bold/proximanova-bold-webfont.svg',
+130 silly gunzTarPerm   493,
+130 silly gunzTarPerm   511 ]
+131 silly gunzTarPerm extractEntry assets/css/fonts/proximanova-bold/proximanova-bold-webfont.ttf
+132 silly gunzTarPerm modified mode [ 'assets/css/fonts/proximanova-bold/proximanova-bold-webfont.ttf',
+132 silly gunzTarPerm   493,
+132 silly gunzTarPerm   511 ]
+133 silly gunzTarPerm extractEntry assets/css/fonts/proximanova-bold/proximanova-bold-webfont.woff
+134 silly gunzTarPerm modified mode [ 'assets/css/fonts/proximanova-bold/proximanova-bold-webfont.woff',
+134 silly gunzTarPerm   493,
+134 silly gunzTarPerm   511 ]
+135 silly gunzTarPerm extractEntry assets/css/global/normalize.css
+136 silly gunzTarPerm modified mode [ 'assets/css/global/normalize.css', 420, 438 ]
+137 silly gunzTarPerm extractEntry assets/css/index.css
+138 silly gunzTarPerm modified mode [ 'assets/css/index.css', 420, 438 ]
+139 silly gunzTarPerm extractEntry assets/css/screen.css
+140 silly gunzTarPerm modified mode [ 'assets/css/screen.css', 420, 438 ]
+141 silly gunzTarPerm extractEntry assets/demo-import/main-episodedetails_importer.html
+142 silly gunzTarPerm modified mode [ 'assets/demo-import/main-episodedetails_importer.html',
+142 silly gunzTarPerm   420,
+142 silly gunzTarPerm   438 ]
+143 silly gunzTarPerm extractEntry assets/demo-import/main-episodedetails_start-screen.html
+144 silly gunzTarPerm modified mode [ 'assets/demo-import/main-episodedetails_start-screen.html',
+144 silly gunzTarPerm   420,
+144 silly gunzTarPerm   438 ]
+145 silly gunzTarPerm extractEntry assets/demo.csv
+146 silly gunzTarPerm modified mode [ 'assets/demo.csv', 420, 438 ]
+147 silly gunzTarPerm extractEntry assets/demo2.csv
+148 silly gunzTarPerm modified mode [ 'assets/demo2.csv', 420, 438 ]
+149 silly gunzTarPerm extractEntry assets/img/ajax-loader.gif
+150 silly gunzTarPerm modified mode [ 'assets/img/ajax-loader.gif', 420, 438 ]
+151 silly gunzTarPerm extractEntry assets/img/album-60x60.png
+152 silly gunzTarPerm modified mode [ 'assets/img/album-60x60.png', 420, 438 ]
+153 silly gunzTarPerm extractEntry assets/img/icon-datepicker.gif
+154 silly gunzTarPerm modified mode [ 'assets/img/icon-datepicker.gif', 420, 438 ]
+155 silly gunzTarPerm extractEntry assets/img/icon-error.png
+156 silly gunzTarPerm modified mode [ 'assets/img/icon-error.png', 420, 438 ]
+157 silly gunzTarPerm extractEntry assets/img/icon-search.png
+158 silly gunzTarPerm modified mode [ 'assets/img/icon-search.png', 420, 438 ]
+159 silly gunzTarPerm extractEntry assets/img/remove.png
+160 silly gunzTarPerm modified mode [ 'assets/img/remove.png', 493, 511 ]
+161 silly gunzTarPerm extractEntry assets/js/libs/almond.js
+162 silly gunzTarPerm modified mode [ 'assets/js/libs/almond.js', 420, 438 ]
+163 silly gunzTarPerm extractEntry assets/js/libs/backbone.js
+164 silly gunzTarPerm modified mode [ 'assets/js/libs/backbone.js', 420, 438 ]
+165 silly gunzTarPerm extractEntry assets/js/libs/jquery.js
+166 silly gunzTarPerm modified mode [ 'assets/js/libs/jquery.js', 420, 438 ]
+167 silly gunzTarPerm extractEntry assets/js/libs/lodash.js
+168 silly gunzTarPerm modified mode [ 'assets/js/libs/lodash.js', 420, 438 ]
+169 silly gunzTarPerm extractEntry assets/js/libs/moment.js
+170 silly gunzTarPerm modified mode [ 'assets/js/libs/moment.js', 420, 438 ]
+171 silly gunzTarPerm extractEntry assets/js/libs/require.js
+172 silly gunzTarPerm modified mode [ 'assets/js/libs/require.js', 420, 438 ]
+173 silly gunzTarPerm extractEntry assets/js/plugins/backbone.layoutmanager.js
+174 silly gunzTarPerm modified mode [ 'assets/js/plugins/backbone.layoutmanager.js', 493, 511 ]
+175 silly gunzTarPerm extractEntry assets/js/plugins/Backbone.validateAll.js
+176 silly gunzTarPerm modified mode [ 'assets/js/plugins/Backbone.validateAll.js', 420, 438 ]
+177 silly gunzTarPerm extractEntry assets/js/plugins/jquery.cookie.js
+178 silly gunzTarPerm modified mode [ 'assets/js/plugins/jquery.cookie.js', 420, 438 ]
+179 silly gunzTarPerm extractEntry assets/js/plugins/moment.isocalendar.js
+180 silly gunzTarPerm modified mode [ 'assets/js/plugins/moment.isocalendar.js', 420, 438 ]
+181 silly gunzTarPerm extractEntry assets/js/plugins/wsse.js
+182 silly gunzTarPerm modified mode [ 'assets/js/plugins/wsse.js', 420, 438 ]
+183 silly gunzTarPerm extractEntry assets/sample.csv
+184 silly gunzTarPerm modified mode [ 'assets/sample.csv', 420, 438 ]
+185 silly gunzTarPerm extractEntry assets/vendor/swagger/index.js
+186 silly gunzTarPerm modified mode [ 'assets/vendor/swagger/index.js', 420, 438 ]
+187 silly gunzTarPerm extractEntry assets/vendor/swagger/paramTypes.js
+188 silly gunzTarPerm modified mode [ 'assets/vendor/swagger/paramTypes.js', 420, 438 ]
+189 silly gunzTarPerm extractEntry assets/vendor/swagger/randomizer.js
+190 silly gunzTarPerm modified mode [ 'assets/vendor/swagger/randomizer.js', 420, 438 ]
+191 silly gunzTarPerm extractEntry assets/vendor/swagger/swagger.js
+192 silly gunzTarPerm modified mode [ 'assets/vendor/swagger/swagger.js', 420, 438 ]
+193 silly gunzTarPerm extractEntry api/account.js
+194 silly gunzTarPerm modified mode [ 'api/account.js', 420, 438 ]
+195 silly gunzTarPerm extractEntry api/validate.js
+196 silly gunzTarPerm modified mode [ 'api/validate.js', 420, 438 ]
+197 silly gunzTarPerm extractEntry api/info.js
+198 silly gunzTarPerm modified mode [ 'api/info.js', 420, 438 ]
+199 silly gunzTarPerm extractEntry api/utility.js
+200 silly gunzTarPerm modified mode [ 'api/utility.js', 420, 438 ]
+201 silly gunzTarPerm extractEntry api/experimental.js
+202 silly gunzTarPerm modified mode [ 'api/experimental.js', 420, 438 ]
+203 silly gunzTarPerm extractEntry api/models.js
+204 silly gunzTarPerm modified mode [ 'api/models.js', 420, 438 ]
+205 silly gunzTarPerm extractEntry api/ucs.js
+206 silly gunzTarPerm modified mode [ 'api/ucs.js', 420, 438 ]
+207 silly gunzTarPerm extractEntry api/program.js
+208 silly gunzTarPerm modified mode [ 'api/program.js', 420, 438 ]
+209 silly gunzTarPerm extractEntry api/resources.js
+210 silly gunzTarPerm modified mode [ 'api/resources.js', 420, 438 ]
+211 silly gunzTarPerm extractEntry api/security.js
+212 silly gunzTarPerm modified mode [ 'api/security.js', 420, 438 ]
+213 silly gunzTarPerm extractEntry api/env.js
+214 silly gunzTarPerm modified mode [ 'api/env.js', 420, 438 ]
+215 silly gunzTarPerm extractEntry api/session.js
+216 silly gunzTarPerm modified mode [ 'api/session.js', 420, 438 ]
+217 silly gunzTarPerm extractEntry api/elastic.js
+218 silly gunzTarPerm modified mode [ 'api/elastic.js', 420, 438 ]
+219 silly gunzTarPerm extractEntry api/song.js
+220 silly gunzTarPerm modified mode [ 'api/song.js', 420, 438 ]
+221 silly gunzTarPerm extractEntry api/composer.js
+222 silly gunzTarPerm modified mode [ 'api/composer.js', 420, 438 ]
+223 silly gunzTarPerm extractEntry api/station.js
+224 silly gunzTarPerm modified mode [ 'api/station.js', 420, 438 ]
+225 silly gunzTarPerm extractEntry api/loader.js
+226 silly gunzTarPerm modified mode [ 'api/loader.js', 420, 438 ]
+227 silly gunzTarPerm extractEntry api/widget.js
+228 silly gunzTarPerm modified mode [ 'api/widget.js', 420, 438 ]
+229 silly gunzTarPerm extractEntry api/playlist.js
+230 silly gunzTarPerm modified mode [ 'api/playlist.js', 420, 438 ]
+231 silly gunzTarPerm extractEntry api/assets/swagger-ui.js
+232 silly gunzTarPerm modified mode [ 'api/assets/swagger-ui.js', 493, 511 ]
+233 silly gunzTarPerm extractEntry api/assets/swagger-ui.min.js
+234 silly gunzTarPerm modified mode [ 'api/assets/swagger-ui.min.js', 493, 511 ]
+235 silly gunzTarPerm extractEntry api/assets/css/custom.css
+236 silly gunzTarPerm modified mode [ 'api/assets/css/custom.css', 493, 511 ]
+237 silly gunzTarPerm extractEntry api/assets/css/screen.css
+238 silly gunzTarPerm modified mode [ 'api/assets/css/screen.css', 493, 511 ]
+239 silly gunzTarPerm extractEntry api/assets/images/pet_store_api.png
+240 silly gunzTarPerm modified mode [ 'api/assets/images/pet_store_api.png', 493, 511 ]
+241 silly gunzTarPerm extractEntry api/assets/images/throbber.gif
+242 silly gunzTarPerm modified mode [ 'api/assets/images/throbber.gif', 420, 438 ]
+243 silly gunzTarPerm extractEntry api/assets/images/wordnik_api.png
+244 silly gunzTarPerm modified mode [ 'api/assets/images/wordnik_api.png', 493, 511 ]
+245 silly gunzTarPerm extractEntry api/assets/lib/backbone-min.js
+246 silly gunzTarPerm modified mode [ 'api/assets/lib/backbone-min.js', 493, 511 ]
+247 silly gunzTarPerm extractEntry api/assets/lib/handlebars.runtime-1.0.0.beta.6.js
+248 silly gunzTarPerm modified mode [ 'api/assets/lib/handlebars.runtime-1.0.0.beta.6.js', 493, 511 ]
+249 silly gunzTarPerm extractEntry api/assets/lib/highlight.7.3.pack.js
+250 silly gunzTarPerm modified mode [ 'api/assets/lib/highlight.7.3.pack.js', 420, 438 ]
+251 silly gunzTarPerm extractEntry api/assets/lib/jquery.1.8.0.js
+252 silly gunzTarPerm modified mode [ 'api/assets/lib/jquery.1.8.0.js', 420, 438 ]
+253 silly gunzTarPerm extractEntry api/assets/lib/jquery.ba-bbq.min.js
+254 silly gunzTarPerm modified mode [ 'api/assets/lib/jquery.ba-bbq.min.js', 493, 511 ]
+255 silly gunzTarPerm extractEntry api/assets/lib/jquery.min.js
+256 silly gunzTarPerm modified mode [ 'api/assets/lib/jquery.min.js', 493, 511 ]
+257 silly gunzTarPerm extractEntry api/assets/lib/jquery.slideto.min.js
+258 silly gunzTarPerm modified mode [ 'api/assets/lib/jquery.slideto.min.js', 493, 511 ]
+259 silly gunzTarPerm extractEntry api/assets/lib/jquery.wiggle.min.js
+260 silly gunzTarPerm modified mode [ 'api/assets/lib/jquery.wiggle.min.js', 493, 511 ]
+261 silly gunzTarPerm extractEntry api/assets/lib/swagger.js
+262 silly gunzTarPerm modified mode [ 'api/assets/lib/swagger.js', 493, 511 ]
+263 silly gunzTarPerm extractEntry api/assets/lib/underscore-min.js
+264 silly gunzTarPerm modified mode [ 'api/assets/lib/underscore-min.js', 493, 511 ]
+265 silly gunzTarPerm extractEntry api/lib/common.js
+266 silly gunzTarPerm modified mode [ 'api/lib/common.js', 420, 438 ]
+267 silly gunzTarPerm extractEntry api/lib/episode.js
+268 silly gunzTarPerm modified mode [ 'api/lib/episode.js', 420, 438 ]
+269 silly gunzTarPerm extractEntry api/lib/es.js
+270 silly gunzTarPerm modified mode [ 'api/lib/es.js', 420, 438 ]
+271 silly gunzTarPerm extractEntry api/lib/program.js
+272 silly gunzTarPerm modified mode [ 'api/lib/program.js', 420, 438 ]
+273 silly gunzTarPerm extractEntry api/lib/security.js
+274 silly gunzTarPerm modified mode [ 'api/lib/security.js', 420, 438 ]
+275 silly gunzTarPerm extractEntry api/lib/ucs.js
+276 silly gunzTarPerm modified mode [ 'api/lib/ucs.js', 420, 438 ]
+277 silly gunzTarPerm extractEntry api/index.html
+278 silly gunzTarPerm modified mode [ 'api/index.html', 420, 438 ]
+279 silly gunzTarPerm extractEntry api/views/daily.jade
+280 silly gunzTarPerm modified mode [ 'api/views/daily.jade', 420, 438 ]
+281 silly gunzTarPerm extractEntry api/views/importform.jade
+282 silly gunzTarPerm modified mode [ 'api/views/importform.jade', 420, 438 ]
+283 silly gunzTarPerm extractEntry api/views/layout.jade
+284 silly gunzTarPerm modified mode [ 'api/views/layout.jade', 420, 438 ]
+285 silly gunzTarPerm extractEntry api/views/now.jade
+286 silly gunzTarPerm modified mode [ 'api/views/now.jade', 420, 438 ]
+287 silly gunzTarPerm extractEntry api/views/search.jade
+288 silly gunzTarPerm modified mode [ 'api/views/search.jade', 420, 438 ]
+289 silly gunzTarPerm extractEntry api/views/songlist.jade
+290 silly gunzTarPerm modified mode [ 'api/views/songlist.jade', 420, 438 ]
+291 silly gunzTarPerm extractEntry api/views/weekly.jade
+292 silly gunzTarPerm modified mode [ 'api/views/weekly.jade', 420, 438 ]
+293 silly gunzTarPerm extractEntry app/app.js
+294 silly gunzTarPerm modified mode [ 'app/app.js', 420, 438 ]
+295 silly gunzTarPerm extractEntry app/config.js
+296 silly gunzTarPerm modified mode [ 'app/config.js', 420, 438 ]
+297 silly gunzTarPerm extractEntry app/main.js
+298 silly gunzTarPerm modified mode [ 'app/main.js', 420, 438 ]
+299 silly gunzTarPerm extractEntry app/router.js
+300 silly gunzTarPerm modified mode [ 'app/router.js', 420, 438 ]
+301 silly gunzTarPerm extractEntry app/modules/airtime.js
+302 silly gunzTarPerm modified mode [ 'app/modules/airtime.js', 420, 438 ]
+303 silly gunzTarPerm extractEntry app/modules/episode.js
+304 silly gunzTarPerm modified mode [ 'app/modules/episode.js', 420, 438 ]
+305 silly gunzTarPerm extractEntry app/modules/hosts.js
+306 silly gunzTarPerm modified mode [ 'app/modules/hosts.js', 420, 438 ]
+307 silly gunzTarPerm extractEntry app/modules/import.js
+308 silly gunzTarPerm modified mode [ 'app/modules/import.js', 420, 438 ]
+309 silly gunzTarPerm extractEntry app/modules/login.js
+310 silly gunzTarPerm modified mode [ 'app/modules/login.js', 420, 438 ]
+311 silly gunzTarPerm extractEntry app/modules/details.js
+312 silly gunzTarPerm modified mode [ 'app/modules/details.js', 420, 438 ]
+313 silly gunzTarPerm extractEntry app/modules/program.js
+314 silly gunzTarPerm modified mode [ 'app/modules/program.js', 420, 438 ]
+315 silly gunzTarPerm extractEntry app/modules/search.js
+316 silly gunzTarPerm modified mode [ 'app/modules/search.js', 420, 438 ]
+317 silly gunzTarPerm extractEntry app/modules/session.js
+318 silly gunzTarPerm modified mode [ 'app/modules/session.js', 420, 438 ]
+319 silly gunzTarPerm extractEntry app/modules/streams.js
+320 silly gunzTarPerm modified mode [ 'app/modules/streams.js', 420, 438 ]
+321 silly gunzTarPerm extractEntry app/modules/structure.js
+322 silly gunzTarPerm modified mode [ 'app/modules/structure.js', 420, 438 ]
+323 silly gunzTarPerm extractEntry app/modules/calendar.js
+324 silly gunzTarPerm modified mode [ 'app/modules/calendar.js', 420, 438 ]
+325 silly gunzTarPerm extractEntry app/modules/ucs.js
+326 silly gunzTarPerm modified mode [ 'app/modules/ucs.js', 420, 438 ]
+327 silly gunzTarPerm extractEntry app/modules/menus.js
+328 silly gunzTarPerm modified mode [ 'app/modules/menus.js', 420, 438 ]
+329 silly gunzTarPerm extractEntry app/templates/layouts/footer.html
+330 silly gunzTarPerm modified mode [ 'app/templates/layouts/footer.html', 420, 438 ]
+331 silly gunzTarPerm extractEntry app/templates/layouts/header.html
+332 silly gunzTarPerm modified mode [ 'app/templates/layouts/header.html', 420, 438 ]
+333 silly gunzTarPerm extractEntry app/templates/layouts/main.html
+334 silly gunzTarPerm modified mode [ 'app/templates/layouts/main.html', 420, 438 ]
+335 silly gunzTarPerm extractEntry app/templates/partials/import/import.html
+336 silly gunzTarPerm modified mode [ 'app/templates/partials/import/import.html', 420, 438 ]
+337 silly gunzTarPerm extractEntry app/templates/partials/calendar/_markup.html
+338 silly gunzTarPerm modified mode [ 'app/templates/partials/calendar/_markup.html', 420, 438 ]
+339 silly gunzTarPerm extractEntry app/templates/partials/calendar/addprogram.html
+340 silly gunzTarPerm modified mode [ 'app/templates/partials/calendar/addprogram.html', 420, 438 ]
+341 silly gunzTarPerm extractEntry app/templates/partials/calendar/day.html
+342 silly gunzTarPerm modified mode [ 'app/templates/partials/calendar/day.html', 420, 438 ]
+343 silly gunzTarPerm extractEntry app/templates/partials/calendar/episode.html
+344 silly gunzTarPerm modified mode [ 'app/templates/partials/calendar/episode.html', 420, 438 ]
+345 silly gunzTarPerm extractEntry app/templates/partials/calendar/header.html
+346 silly gunzTarPerm modified mode [ 'app/templates/partials/calendar/header.html', 420, 438 ]
+347 silly gunzTarPerm extractEntry app/templates/partials/calendar/main.html
+348 silly gunzTarPerm modified mode [ 'app/templates/partials/calendar/main.html', 420, 438 ]
+349 silly gunzTarPerm extractEntry app/templates/partials/calendar/navigation.html
+350 silly gunzTarPerm modified mode [ 'app/templates/partials/calendar/navigation.html', 420, 438 ]
+351 silly gunzTarPerm extractEntry app/templates/partials/footer/primary.html
+352 silly gunzTarPerm modified mode [ 'app/templates/partials/footer/primary.html', 420, 438 ]
+353 silly gunzTarPerm extractEntry app/templates/partials/footer.html
+354 silly gunzTarPerm modified mode [ 'app/templates/partials/footer.html', 420, 438 ]
+355 silly gunzTarPerm extractEntry app/templates/partials/header/item.html
+356 silly gunzTarPerm modified mode [ 'app/templates/partials/header/item.html', 420, 438 ]
+357 silly gunzTarPerm extractEntry app/templates/partials/header/sysheader.html
+358 silly gunzTarPerm modified mode [ 'app/templates/partials/header/sysheader.html', 420, 438 ]
+359 silly gunzTarPerm extractEntry app/templates/partials/header.html
+360 silly gunzTarPerm modified mode [ 'app/templates/partials/header.html', 420, 438 ]
+361 silly gunzTarPerm extractEntry app/templates/partials/episode/list.html
+362 silly gunzTarPerm modified mode [ 'app/templates/partials/episode/list.html', 420, 438 ]
+363 silly gunzTarPerm extractEntry app/templates/partials/episode/break.html
+364 silly gunzTarPerm modified mode [ 'app/templates/partials/episode/break.html', 420, 438 ]
+365 silly gunzTarPerm extractEntry app/templates/partials/episode/day.html
+366 silly gunzTarPerm modified mode [ 'app/templates/partials/episode/day.html', 420, 438 ]
+367 silly gunzTarPerm extractEntry app/templates/partials/episode/detail.html
+368 silly gunzTarPerm modified mode [ 'app/templates/partials/episode/detail.html', 420, 438 ]
+369 silly gunzTarPerm extractEntry app/templates/partials/episode/episodeitem.html
+370 silly gunzTarPerm modified mode [ 'app/templates/partials/episode/episodeitem.html', 420, 438 ]
+371 silly gunzTarPerm extractEntry app/templates/partials/episode/episodeSelector.html
+372 silly gunzTarPerm modified mode [ 'app/templates/partials/episode/episodeSelector.html',
+372 silly gunzTarPerm   420,
+372 silly gunzTarPerm   438 ]
+373 silly gunzTarPerm extractEntry app/templates/partials/episode/buttons.html
+374 silly gunzTarPerm modified mode [ 'app/templates/partials/episode/buttons.html', 420, 438 ]
+375 silly gunzTarPerm extractEntry app/templates/partials/episode/navigation.html
+376 silly gunzTarPerm modified mode [ 'app/templates/partials/episode/navigation.html', 420, 438 ]
+377 silly gunzTarPerm extractEntry app/templates/partials/episode/playlist.html
+378 silly gunzTarPerm modified mode [ 'app/templates/partials/episode/playlist.html', 420, 438 ]
+379 silly gunzTarPerm extractEntry app/templates/partials/episode/program.html
+380 silly gunzTarPerm modified mode [ 'app/templates/partials/episode/program.html', 420, 438 ]
+381 silly gunzTarPerm extractEntry app/templates/partials/episode/section.html
+382 silly gunzTarPerm modified mode [ 'app/templates/partials/episode/section.html', 420, 438 ]
+383 silly gunzTarPerm extractEntry app/templates/partials/episode/song.html
+384 silly gunzTarPerm modified mode [ 'app/templates/partials/episode/song.html', 420, 438 ]
+385 silly gunzTarPerm extractEntry app/templates/partials/login/login-prompt.html
+386 silly gunzTarPerm modified mode [ 'app/templates/partials/login/login-prompt.html', 420, 438 ]
+387 silly gunzTarPerm extractEntry app/templates/partials/program/add-host-button.html
+388 silly gunzTarPerm modified mode [ 'app/templates/partials/program/add-host-button.html',
+388 silly gunzTarPerm   420,
+388 silly gunzTarPerm   438 ]
+389 silly gunzTarPerm extractEntry app/templates/partials/program/airtime.html
+390 silly gunzTarPerm modified mode [ 'app/templates/partials/program/airtime.html', 420, 438 ]
+391 silly gunzTarPerm extractEntry app/templates/partials/program/airtimes/date.html
+392 silly gunzTarPerm modified mode [ 'app/templates/partials/program/airtimes/date.html', 420, 438 ]
+393 silly gunzTarPerm extractEntry app/templates/partials/program/airtimes/day.html
+394 silly gunzTarPerm modified mode [ 'app/templates/partials/program/airtimes/day.html', 420, 438 ]
+395 silly gunzTarPerm extractEntry app/templates/partials/program/airtimes/time.html
+396 silly gunzTarPerm modified mode [ 'app/templates/partials/program/airtimes/time.html', 420, 438 ]
+397 silly gunzTarPerm extractEntry app/templates/partials/program/details.html
+398 silly gunzTarPerm modified mode [ 'app/templates/partials/program/details.html', 420, 438 ]
+399 silly gunzTarPerm extractEntry app/templates/partials/program/host.html
+400 silly gunzTarPerm modified mode [ 'app/templates/partials/program/host.html', 420, 438 ]
+401 silly gunzTarPerm extractEntry app/templates/partials/program/program.html
+402 silly gunzTarPerm modified mode [ 'app/templates/partials/program/program.html', 420, 438 ]
+403 silly gunzTarPerm extractEntry app/templates/partials/search/main.html
+404 silly gunzTarPerm modified mode [ 'app/templates/partials/search/main.html', 420, 438 ]
+405 silly gunzTarPerm extractEntry app/templates/partials/search/manual-add.html
+406 silly gunzTarPerm modified mode [ 'app/templates/partials/search/manual-add.html', 420, 438 ]
+407 silly gunzTarPerm extractEntry app/templates/partials/search/results.html
+408 silly gunzTarPerm modified mode [ 'app/templates/partials/search/results.html', 420, 438 ]
+409 silly gunzTarPerm extractEntry app/templates/partials/streams/header.html
+410 silly gunzTarPerm modified mode [ 'app/templates/partials/streams/header.html', 420, 438 ]
+411 silly gunzTarPerm extractEntry app/templates/partials/streams/section.html
+412 silly gunzTarPerm modified mode [ 'app/templates/partials/streams/section.html', 420, 438 ]
+413 silly gunzTarPerm extractEntry app/templates/partials/streams/streams-button.html
+414 silly gunzTarPerm modified mode [ 'app/templates/partials/streams/streams-button.html',
+414 silly gunzTarPerm   420,
+414 silly gunzTarPerm   438 ]
+415 silly gunzTarPerm extractEntry app/templates/partials/ucs/detail.html
+416 silly gunzTarPerm modified mode [ 'app/templates/partials/ucs/detail.html', 420, 438 ]
+417 silly gunzTarPerm extractEntry app/templates/partials/ucs/item.html
+418 silly gunzTarPerm modified mode [ 'app/templates/partials/ucs/item.html', 420, 438 ]
+419 silly gunzTarPerm extractEntry app/templates/partials/ucs/section.html
+420 silly gunzTarPerm modified mode [ 'app/templates/partials/ucs/section.html', 420, 438 ]
+421 silly gunzTarPerm extractEntry public/widgets/README.md
+422 silly gunzTarPerm modified mode [ 'public/widgets/README.md', 420, 438 ]
+423 silly gunzTarPerm extractEntry public/widgets/songsearch.html
+424 silly gunzTarPerm modified mode [ 'public/widgets/songsearch.html', 420, 438 ]
+425 silly gunzTarPerm extractEntry public/widgets/js/dev.js
+426 silly gunzTarPerm modified mode [ 'public/widgets/js/dev.js', 420, 438 ]
+427 silly gunzTarPerm extractEntry public/widgets/js/jquery-ui-1.10.1.custom.min.js
+428 silly gunzTarPerm modified mode [ 'public/widgets/js/jquery-ui-1.10.1.custom.min.js', 420, 438 ]
+429 silly gunzTarPerm extractEntry public/widgets/js/moment.isocalendar.js
+430 silly gunzTarPerm modified mode [ 'public/widgets/js/moment.isocalendar.js', 420, 438 ]
+431 silly gunzTarPerm extractEntry public/widgets/js/moment.js
+432 silly gunzTarPerm modified mode [ 'public/widgets/js/moment.js', 420, 438 ]
+433 silly gunzTarPerm extractEntry public/widgets/css/composer-calendar.css
+434 silly gunzTarPerm modified mode [ 'public/widgets/css/composer-calendar.css', 420, 438 ]
+435 silly gunzTarPerm extractEntry public/widgets/css/composer-schedule.css
+436 silly gunzTarPerm modified mode [ 'public/widgets/css/composer-schedule.css', 420, 438 ]
+437 silly gunzTarPerm extractEntry public/widgets/css/sass-dir/config.rb
+438 silly gunzTarPerm modified mode [ 'public/widgets/css/sass-dir/config.rb', 420, 438 ]
+439 silly gunzTarPerm extractEntry public/widgets/css/sass-dir/css/grid.css
+440 silly gunzTarPerm modified mode [ 'public/widgets/css/sass-dir/css/grid.css', 420, 438 ]
+441 silly gunzTarPerm extractEntry public/widgets/css/sass-dir/css/list.css
+442 silly gunzTarPerm modified mode [ 'public/widgets/css/sass-dir/css/list.css', 420, 438 ]
+443 silly gunzTarPerm extractEntry public/widgets/css/sass-dir/css/screen.css
+444 silly gunzTarPerm modified mode [ 'public/widgets/css/sass-dir/css/screen.css', 420, 438 ]
+445 silly gunzTarPerm extractEntry public/widgets/css/sass-dir/sass/grid.scss
+446 silly gunzTarPerm modified mode [ 'public/widgets/css/sass-dir/sass/grid.scss', 420, 438 ]
+447 silly gunzTarPerm extractEntry public/widgets/css/sass-dir/sass/list.scss
+448 silly gunzTarPerm modified mode [ 'public/widgets/css/sass-dir/sass/list.scss', 420, 438 ]
+449 silly gunzTarPerm extractEntry public/widgets/css/sass-dir/sass/screen.scss
+450 silly gunzTarPerm modified mode [ 'public/widgets/css/sass-dir/sass/screen.scss', 420, 438 ]
+451 silly gunzTarPerm extractEntry public/widgets/css/songlist/images/ui-bg_highlight-hard_70_000000_1x100.png
+452 silly gunzTarPerm modified mode [ 'public/widgets/css/songlist/images/ui-bg_highlight-hard_70_000000_1x100.png',
+452 silly gunzTarPerm   420,
+452 silly gunzTarPerm   438 ]
+453 silly gunzTarPerm extractEntry public/widgets/css/songlist/images/animated-overlay.gif
+454 silly gunzTarPerm modified mode [ 'public/widgets/css/songlist/images/animated-overlay.gif',
+454 silly gunzTarPerm   420,
+454 silly gunzTarPerm   438 ]
+455 silly gunzTarPerm extractEntry public/widgets/css/songlist/images/ui-bg_flat_15_cd0a0a_40x100.png
+456 silly gunzTarPerm modified mode [ 'public/widgets/css/songlist/images/ui-bg_flat_15_cd0a0a_40x100.png',
+456 silly gunzTarPerm   420,
+456 silly gunzTarPerm   438 ]
+457 silly gunzTarPerm extractEntry public/widgets/css/songlist/images/ui-bg_glass_100_e4f1fb_1x400.png
+458 silly gunzTarPerm modified mode [ 'public/widgets/css/songlist/images/ui-bg_glass_100_e4f1fb_1x400.png',
+458 silly gunzTarPerm   420,
+458 silly gunzTarPerm   438 ]
+459 silly gunzTarPerm extractEntry public/widgets/css/songlist/images/ui-bg_glass_50_3baae3_1x400.png
+460 silly gunzTarPerm modified mode [ 'public/widgets/css/songlist/images/ui-bg_glass_50_3baae3_1x400.png',
+460 silly gunzTarPerm   420,
+460 silly gunzTarPerm   438 ]
+461 silly gunzTarPerm extractEntry public/widgets/css/songlist/images/ui-bg_glass_80_d7ebf9_1x400.png
+462 silly gunzTarPerm modified mode [ 'public/widgets/css/songlist/images/ui-bg_glass_80_d7ebf9_1x400.png',
+462 silly gunzTarPerm   420,
+462 silly gunzTarPerm   438 ]
+463 silly gunzTarPerm extractEntry public/widgets/css/songlist/images/ui-bg_highlight-hard_100_f2f5f7_1x100.png
+464 silly gunzTarPerm modified mode [ 'public/widgets/css/songlist/images/ui-bg_highlight-hard_100_f2f5f7_1x100.png',
+464 silly gunzTarPerm   420,
+464 silly gunzTarPerm   438 ]
+465 silly gunzTarPerm extractEntry public/widgets/css/songlist/images/ui-bg_diagonals-thick_90_eeeeee_40x40.png
+466 silly gunzTarPerm modified mode [ 'public/widgets/css/songlist/images/ui-bg_diagonals-thick_90_eeeeee_40x40.png',
+466 silly gunzTarPerm   420,
+466 silly gunzTarPerm   438 ]
+467 silly gunzTarPerm extractEntry public/widgets/css/songlist/images/ui-bg_highlight-soft_100_deedf7_1x100.png
+468 silly gunzTarPerm modified mode [ 'public/widgets/css/songlist/images/ui-bg_highlight-soft_100_deedf7_1x100.png',
+468 silly gunzTarPerm   420,
+468 silly gunzTarPerm   438 ]
+469 silly gunzTarPerm extractEntry public/widgets/css/songlist/images/ui-bg_highlight-soft_10_f5b800_1x100.png
+470 silly gunzTarPerm modified mode [ 'public/widgets/css/songlist/images/ui-bg_highlight-soft_10_f5b800_1x100.png',
+470 silly gunzTarPerm   420,
+470 silly gunzTarPerm   438 ]
+471 silly gunzTarPerm extractEntry public/widgets/css/songlist/images/ui-icons_2694e8_256x240.png
+472 silly gunzTarPerm modified mode [ 'public/widgets/css/songlist/images/ui-icons_2694e8_256x240.png',
+472 silly gunzTarPerm   420,
+472 silly gunzTarPerm   438 ]
+473 silly gunzTarPerm extractEntry public/widgets/css/songlist/images/ui-icons_2e83ff_256x240.png
+474 silly gunzTarPerm modified mode [ 'public/widgets/css/songlist/images/ui-icons_2e83ff_256x240.png',
+474 silly gunzTarPerm   420,
+474 silly gunzTarPerm   438 ]
+475 silly gunzTarPerm extractEntry public/widgets/css/songlist/images/ui-icons_3d80b3_256x240.png
+476 silly gunzTarPerm modified mode [ 'public/widgets/css/songlist/images/ui-icons_3d80b3_256x240.png',
+476 silly gunzTarPerm   420,
+476 silly gunzTarPerm   438 ]
+477 silly gunzTarPerm extractEntry public/widgets/css/songlist/images/ui-icons_72a7cf_256x240.png
+478 silly gunzTarPerm modified mode [ 'public/widgets/css/songlist/images/ui-icons_72a7cf_256x240.png',
+478 silly gunzTarPerm   420,
+478 silly gunzTarPerm   438 ]
+479 silly gunzTarPerm extractEntry public/widgets/css/songlist/images/ui-icons_ffffff_256x240.png
+480 silly gunzTarPerm modified mode [ 'public/widgets/css/songlist/images/ui-icons_ffffff_256x240.png',
+480 silly gunzTarPerm   420,
+480 silly gunzTarPerm   438 ]
+481 silly gunzTarPerm extractEntry public/widgets/css/songlist/jquery-ui-1.10.1.custom.css
+482 silly gunzTarPerm modified mode [ 'public/widgets/css/songlist/jquery-ui-1.10.1.custom.css',
+482 silly gunzTarPerm   420,
+482 silly gunzTarPerm   438 ]
+483 silly gunzTarPerm extractEntry public/widgets/css/songlist/jquery-ui-1.10.1.custom.min.css
+484 silly gunzTarPerm modified mode [ 'public/widgets/css/songlist/jquery-ui-1.10.1.custom.min.css',
+484 silly gunzTarPerm   420,
+484 silly gunzTarPerm   438 ]
+485 silly gunzTarPerm extractEntry public/widgets/songgrid.html
+486 silly gunzTarPerm modified mode [ 'public/widgets/songgrid.html', 420, 438 ]
+487 silly gunzTarPerm extractEntry public/widgets/songlist.html
+488 silly gunzTarPerm modified mode [ 'public/widgets/songlist.html', 420, 438 ]
+489 silly gunzTarPerm extractEntry public/widgets/index.html
+490 silly gunzTarPerm modified mode [ 'public/widgets/index.html', 420, 438 ]
+491 silly gunzTarPerm extractEntry public/widgets/songsearchlist.html
+492 silly gunzTarPerm modified mode [ 'public/widgets/songsearchlist.html', 420, 438 ]
+493 silly gunzTarPerm extractEntry public/widgets/src/searchlist.js
+494 silly gunzTarPerm modified mode [ 'public/widgets/src/searchlist.js', 420, 438 ]
+495 silly gunzTarPerm extractEntry public/widgets/src/songgrid.js
+496 silly gunzTarPerm modified mode [ 'public/widgets/src/songgrid.js', 420, 438 ]
+497 silly gunzTarPerm extractEntry public/widgets/src/songlist.js
+498 silly gunzTarPerm modified mode [ 'public/widgets/src/songlist.js', 420, 438 ]
+499 silly gunzTarPerm extractEntry public/widgets/src/whatson.js
+500 silly gunzTarPerm modified mode [ 'public/widgets/src/whatson.js', 420, 438 ]
+501 silly gunzTarPerm extractEntry public/widgets/widget-searchMe-testMarkup.html
+502 silly gunzTarPerm modified mode [ 'public/widgets/widget-searchMe-testMarkup.html', 420, 438 ]
+503 silly gunzTarPerm extractEntry public/widgets/widget-songgrid-testMarkup.html
+504 silly gunzTarPerm modified mode [ 'public/widgets/widget-songgrid-testMarkup.html', 420, 438 ]
+505 silly gunzTarPerm extractEntry public/widgets/widget-songlist-testMarkup.html
+506 silly gunzTarPerm modified mode [ 'public/widgets/widget-songlist-testMarkup.html', 420, 438 ]
+507 silly gunzTarPerm extractEntry public/widgets/widgets-testMarkup.html
+508 silly gunzTarPerm modified mode [ 'public/widgets/widgets-testMarkup.html', 420, 438 ]
+509 silly gunzTarPerm extractEntry routes/import.js
+510 silly gunzTarPerm modified mode [ 'routes/import.js', 420, 438 ]
+511 silly gunzTarPerm extractEntry routes/index.js
+512 silly gunzTarPerm modified mode [ 'routes/index.js', 420, 438 ]
+513 silly gunzTarPerm extractEntry routes/sample.out
+514 silly gunzTarPerm modified mode [ 'routes/sample.out', 420, 438 ]
+515 silly gunzTarPerm extractEntry .env
+516 silly gunzTarPerm modified mode [ '.env', 420, 438 ]
+517 silly gunzTarPerm extractEntry spec/cover.js
+518 silly gunzTarPerm modified mode [ 'spec/cover.js', 420, 438 ]
+519 silly gunzTarPerm extractEntry spec/requireConfig.js
+520 silly gunzTarPerm modified mode [ 'spec/requireConfig.js', 420, 438 ]
+521 silly gunzTarPerm extractEntry spec/index.html
+522 silly gunzTarPerm modified mode [ 'spec/index.html', 420, 438 ]
+523 silly gunzTarPerm extractEntry spec/frame.html
+524 silly gunzTarPerm modified mode [ 'spec/frame.html', 420, 438 ]
+525 silly gunzTarPerm extractEntry spec/index-api.html
+526 silly gunzTarPerm modified mode [ 'spec/index-api.html', 420, 438 ]
+527 silly gunzTarPerm extractEntry spec/index-node.html
+528 silly gunzTarPerm modified mode [ 'spec/index-node.html', 420, 438 ]
+529 silly gunzTarPerm extractEntry spec/backbone/airtime.js
+530 silly gunzTarPerm modified mode [ 'spec/backbone/airtime.js', 420, 438 ]
+531 silly gunzTarPerm extractEntry spec/backbone/details.js
+532 silly gunzTarPerm modified mode [ 'spec/backbone/details.js', 420, 438 ]
+533 silly gunzTarPerm extractEntry spec/backbone/episode.js
+534 silly gunzTarPerm modified mode [ 'spec/backbone/episode.js', 420, 438 ]
+535 silly gunzTarPerm extractEntry spec/backbone/hosts.js
+536 silly gunzTarPerm modified mode [ 'spec/backbone/hosts.js', 420, 438 ]
+537 silly gunzTarPerm extractEntry spec/backbone/login.js
+538 silly gunzTarPerm modified mode [ 'spec/backbone/login.js', 420, 438 ]
+539 silly gunzTarPerm extractEntry spec/backbone/calendar.js
+540 silly gunzTarPerm modified mode [ 'spec/backbone/calendar.js', 420, 438 ]
+541 silly gunzTarPerm extractEntry spec/backbone/streams.js
+542 silly gunzTarPerm modified mode [ 'spec/backbone/streams.js', 420, 438 ]
+543 silly gunzTarPerm extractEntry spec/backbone/program.js
+544 silly gunzTarPerm modified mode [ 'spec/backbone/program.js', 420, 438 ]
+545 silly gunzTarPerm extractEntry spec/backbone/session.js
+546 silly gunzTarPerm modified mode [ 'spec/backbone/session.js', 420, 438 ]
+547 silly gunzTarPerm extractEntry spec/backbone/ucs.js
+548 silly gunzTarPerm modified mode [ 'spec/backbone/ucs.js', 420, 438 ]
+549 silly gunzTarPerm extractEntry spec/backbone/my_episodes.js
+550 silly gunzTarPerm modified mode [ 'spec/backbone/my_episodes.js', 420, 438 ]
+551 silly gunzTarPerm extractEntry spec/backbone/old-tests.js_old
+552 silly gunzTarPerm modified mode [ 'spec/backbone/old-tests.js_old', 493, 511 ]
+553 silly gunzTarPerm extractEntry spec/node/_upgradeProgramRecurrences_spec.js
+554 silly gunzTarPerm modified mode [ 'spec/node/_upgradeProgramRecurrences_spec.js', 420, 438 ]
+555 silly gunzTarPerm extractEntry spec/node/api_program_spec.js
+556 silly gunzTarPerm modified mode [ 'spec/node/api_program_spec.js', 420, 438 ]
+557 silly gunzTarPerm extractEntry spec/node/api_ucs_spec.js
+558 silly gunzTarPerm modified mode [ 'spec/node/api_ucs_spec.js', 420, 438 ]
+559 silly gunzTarPerm extractEntry spec/node/buildProgramEpisodeDocumentsRaw_spec.js
+560 silly gunzTarPerm modified mode [ 'spec/node/buildProgramEpisodeDocumentsRaw_spec.js', 420, 438 ]
+561 silly gunzTarPerm extractEntry spec/node/calcEpisodeDates_spec.js
+562 silly gunzTarPerm modified mode [ 'spec/node/calcEpisodeDates_spec.js', 420, 438 ]
+563 silly gunzTarPerm extractEntry spec/node/pad_spec.js
+564 silly gunzTarPerm modified mode [ 'spec/node/pad_spec.js', 420, 438 ]
+565 silly gunzTarPerm extractEntry spec/node/provision_spec.js
+566 silly gunzTarPerm modified mode [ 'spec/node/provision_spec.js', 420, 438 ]
+567 silly gunzTarPerm extractEntry spec/node/validate_spec.js
+568 silly gunzTarPerm modified mode [ 'spec/node/validate_spec.js', 420, 438 ]
+569 silly gunzTarPerm extractEntry spec/node/tests_disabled.js_old
+570 silly gunzTarPerm modified mode [ 'spec/node/tests_disabled.js_old', 493, 511 ]
+571 silly gunzTarPerm extractEntry spec/api/functional.js
+572 silly gunzTarPerm modified mode [ 'spec/api/functional.js', 420, 438 ]
+573 silly gunzTarPerm extractEntry spec/api/playlist.js
+574 silly gunzTarPerm modified mode [ 'spec/api/playlist.js', 420, 438 ]
+575 silly gunzTarPerm extractEntry spec/api/program.js
+576 silly gunzTarPerm modified mode [ 'spec/api/program.js', 420, 438 ]
+577 silly gunzTarPerm extractEntry spec/api/station.js
+578 silly gunzTarPerm modified mode [ 'spec/api/station.js', 420, 438 ]
+579 silly gunzTarPerm extractEntry spec/api/ucs.js
+580 silly gunzTarPerm modified mode [ 'spec/api/ucs.js', 420, 438 ]
+581 silly gunzTarPerm extractEntry spec/api/user.js
+582 silly gunzTarPerm modified mode [ 'spec/api/user.js', 420, 438 ]
+583 silly gunzTarPerm extractEntry spec/runner-backup.html
+584 silly gunzTarPerm modified mode [ 'spec/runner-backup.html', 420, 438 ]
+585 silly gunzTarPerm extractEntry spec/security/security.spec.js
+586 silly gunzTarPerm modified mode [ 'spec/security/security.spec.js', 420, 438 ]
+587 silly gunzTarPerm extractEntry spec/vendor/almond.js
+588 silly gunzTarPerm modified mode [ 'spec/vendor/almond.js', 420, 438 ]
+589 silly gunzTarPerm extractEntry spec/vendor/coffee-script.js
+590 silly gunzTarPerm modified mode [ 'spec/vendor/coffee-script.js', 420, 438 ]
+591 silly gunzTarPerm extractEntry spec/vendor/cs.js
+592 silly gunzTarPerm modified mode [ 'spec/vendor/cs.js', 420, 438 ]
+593 silly gunzTarPerm extractEntry spec/vendor/r.js
+594 silly gunzTarPerm modified mode [ 'spec/vendor/r.js', 420, 438 ]
+595 silly gunzTarPerm extractEntry spec/vendor/require.js
+596 silly gunzTarPerm modified mode [ 'spec/vendor/require.js', 420, 438 ]
+597 silly gunzTarPerm extractEntry spec/vendor/jasmine/jasmine-grunt.js
+598 silly gunzTarPerm modified mode [ 'spec/vendor/jasmine/jasmine-grunt.js', 420, 438 ]
+599 silly gunzTarPerm extractEntry spec/vendor/jasmine/jasmine-html.js
+600 silly gunzTarPerm modified mode [ 'spec/vendor/jasmine/jasmine-html.js', 420, 438 ]
+601 silly gunzTarPerm extractEntry spec/vendor/jasmine/jasmine.js
+602 silly gunzTarPerm modified mode [ 'spec/vendor/jasmine/jasmine.js', 420, 438 ]
+603 silly gunzTarPerm extractEntry spec/vendor/jasmine/jasmine.css
+604 silly gunzTarPerm modified mode [ 'spec/vendor/jasmine/jasmine.css', 420, 438 ]
+605 silly gunzTarPerm extractEntry spec/vendor/jasmine/MIT.LICENSE
+606 silly gunzTarPerm modified mode [ 'spec/vendor/jasmine/MIT.LICENSE', 420, 438 ]
+607 silly gunzTarPerm extractEntry spec/vendor/jasmine-jquery/jasmine-jquery.js
+608 silly gunzTarPerm modified mode [ 'spec/vendor/jasmine-jquery/jasmine-jquery.js', 420, 438 ]
+609 silly gunzTarPerm extractEntry spec/vendor/mockjax/jquery.mockjax.js
+610 silly gunzTarPerm modified mode [ 'spec/vendor/mockjax/jquery.mockjax.js', 493, 511 ]
+611 verbose read json /var/folders/dd/s_scwdrs2r74q3sgmfc9zcz80000gn/T/npm-11907/1361995571299-0.7669767779298127/package/package.json
+612 silly lockFile 6bcb85eb-71299-0-7669767779298127-package /var/folders/dd/s_scwdrs2r74q3sgmfc9zcz80000gn/T/npm-11907/1361995571299-0.7669767779298127/package
+613 verbose from cache /var/folders/dd/s_scwdrs2r74q3sgmfc9zcz80000gn/T/npm-11907/1361995571299-0.7669767779298127/package/package.json
+614 verbose tar pack [ '/Users/steve/.npm/Composer/0.1.22/package.tgz',
+614 verbose tar pack   '/var/folders/dd/s_scwdrs2r74q3sgmfc9zcz80000gn/T/npm-11907/1361995571299-0.7669767779298127/package' ]
+615 verbose tarball /Users/steve/.npm/Composer/0.1.22/package.tgz
+616 verbose folder /var/folders/dd/s_scwdrs2r74q3sgmfc9zcz80000gn/T/npm-11907/1361995571299-0.7669767779298127/package
+617 silly lockFile 066a886a--npm-Composer-0-1-22-package-tgz /Users/steve/.npm/Composer/0.1.22/package.tgz
+618 verbose lock /Users/steve/.npm/Composer/0.1.22/package.tgz /Users/steve/.npm/066a886a--npm-Composer-0-1-22-package-tgz.lock
+619 silly lockFile 066a886a--npm-Composer-0-1-22-package-tgz /Users/steve/.npm/Composer/0.1.22/package.tgz
+620 silly lockFile 10762df5-teve-npm-Composer-0-1-22-package /Users/steve/.npm/Composer/0.1.22/package
+621 verbose lock /Users/steve/.npm/Composer/0.1.22/package /Users/steve/.npm/10762df5-teve-npm-Composer-0-1-22-package.lock
+622 silly lockFile 10762df5-teve-npm-Composer-0-1-22-package /Users/steve/.npm/Composer/0.1.22/package
+623 verbose tar unpack /Users/steve/.npm/Composer/0.1.22/package.tgz
+624 silly lockFile 10762df5-teve-npm-Composer-0-1-22-package /Users/steve/.npm/Composer/0.1.22/package
+625 verbose lock /Users/steve/.npm/Composer/0.1.22/package /Users/steve/.npm/10762df5-teve-npm-Composer-0-1-22-package.lock
+626 silly gunzTarPerm modes [ '777', '666' ]
+627 silly gunzTarPerm extractEntry package.json
+628 silly gunzTarPerm extractEntry .npmignore
+629 silly gunzTarPerm extractEntry grunt.js
+630 silly gunzTarPerm extractEntry app.js
+631 silly gunzTarPerm extractEntry ci.js
+632 silly gunzTarPerm extractEntry db.js
+633 silly gunzTarPerm extractEntry Load-Testing.js
+634 silly gunzTarPerm extractEntry loadtest.js
+635 silly gunzTarPerm extractEntry server.js
+636 silly gunzTarPerm extractEntry index.html
+637 silly gunzTarPerm extractEntry assets/version.js
+638 silly gunzTarPerm extractEntry assets/css/custom/images/ui-icons_255b88_256x240.png
+639 silly gunzTarPerm extractEntry assets/css/custom/images/ui-bg_flat_0_aaaaaa_40x100.png
+640 silly gunzTarPerm extractEntry assets/css/custom/images/ui-bg_flat_100_31a601_40x100.png
+641 silly gunzTarPerm extractEntry assets/css/custom/images/ui-bg_flat_100_84d5ee_40x100.png
+642 silly gunzTarPerm extractEntry assets/css/custom/images/ui-bg_flat_100_ffffff_40x100.png
+643 silly gunzTarPerm extractEntry assets/css/custom/images/ui-bg_inset-soft_95_fef1ec_1x100.png
+644 silly gunzTarPerm extractEntry assets/css/custom/images/ui-bg_flat_100_255b88_40x100.png
+645 silly gunzTarPerm extractEntry assets/css/custom/images/ui-icons_2e83ff_256x240.png
+646 silly gunzTarPerm extractEntry assets/css/custom/images/ui-icons_333333_256x240.png
+647 silly gunzTarPerm extractEntry assets/css/custom/images/ui-icons_454545_256x240.png
+648 silly gunzTarPerm extractEntry assets/css/custom/images/ui-icons_888888_256x240.png
+649 silly gunzTarPerm extractEntry assets/css/custom/images/ui-icons_cd0a0a_256x240.png
+650 silly gunzTarPerm extractEntry assets/css/custom/images/ui-icons_dddddd_256x240.png
+651 silly gunzTarPerm extractEntry assets/css/custom/jquery-ui-1.8.19.custom.css
+652 silly gunzTarPerm extractEntry assets/css/fonts/bitter-bold/bitter-bold-webfont.eot
+653 silly gunzTarPerm extractEntry assets/css/fonts/bitter-bold/bitter-bold-webfont.svg
+654 silly gunzTarPerm extractEntry assets/css/fonts/bitter-bold/bitter-bold-webfont.ttf
+655 silly gunzTarPerm extractEntry assets/css/fonts/bitter-bold/bitter-bold-webfont.woff
+656 silly gunzTarPerm extractEntry assets/css/fonts/bitter-regular/bitter-regular-webfont.eot
+657 silly gunzTarPerm extractEntry assets/css/fonts/bitter-regular/bitter-regular-webfont.svg
+658 silly gunzTarPerm extractEntry assets/css/fonts/bitter-regular/bitter-regular-webfont.ttf
+659 silly gunzTarPerm extractEntry assets/css/fonts/bitter-regular/bitter-regular-webfont.woff
+660 silly gunzTarPerm extractEntry assets/css/fonts/iconfont/iconfont.eot
+661 silly gunzTarPerm extractEntry assets/css/fonts/iconfont/iconfont.svg
+662 silly gunzTarPerm extractEntry assets/css/fonts/iconfont/iconfont.ttf
+663 silly gunzTarPerm extractEntry assets/css/fonts/iconfont/iconfont.woff
+664 silly gunzTarPerm extractEntry assets/css/fonts/opensans-bold/opensans-bold-webfont.eot
+665 silly gunzTarPerm extractEntry assets/css/fonts/opensans-bold/opensans-bold-webfont.svg
+666 silly gunzTarPerm extractEntry assets/css/fonts/opensans-bold/opensans-bold-webfont.ttf
+667 silly gunzTarPerm extractEntry assets/css/fonts/opensans-bold/opensans-bold-webfont.woff
+668 silly gunzTarPerm extractEntry assets/css/fonts/opensans-regular/opensans-regular-webfont.eot
+669 silly gunzTarPerm extractEntry assets/css/fonts/opensans-regular/opensans-regular-webfont.svg
+670 silly gunzTarPerm extractEntry assets/css/fonts/opensans-regular/opensans-regular-webfont.ttf
+671 silly gunzTarPerm extractEntry assets/css/fonts/opensans-regular/opensans-regular-webfont.woff
+672 silly gunzTarPerm extractEntry assets/css/fonts/proximanova-bold/proximanova-bold-webfont.eot
+673 silly gunzTarPerm extractEntry assets/css/fonts/proximanova-bold/proximanova-bold-webfont.svg
+674 silly gunzTarPerm extractEntry assets/css/fonts/proximanova-bold/proximanova-bold-webfont.ttf
+675 silly gunzTarPerm extractEntry assets/css/fonts/proximanova-bold/proximanova-bold-webfont.woff
+676 silly gunzTarPerm extractEntry assets/css/global/normalize.css
+677 silly gunzTarPerm extractEntry assets/css/index.css
+678 silly gunzTarPerm extractEntry assets/css/screen.css
+679 silly gunzTarPerm extractEntry assets/demo-import/main-episodedetails_importer.html
+680 silly gunzTarPerm extractEntry assets/demo-import/main-episodedetails_start-screen.html
+681 silly gunzTarPerm extractEntry assets/demo.csv
+682 silly gunzTarPerm extractEntry assets/demo2.csv
+683 silly gunzTarPerm extractEntry assets/img/ajax-loader.gif
+684 silly gunzTarPerm extractEntry assets/img/album-60x60.png
+685 silly gunzTarPerm extractEntry assets/img/icon-datepicker.gif
+686 silly gunzTarPerm extractEntry assets/img/icon-error.png
+687 silly gunzTarPerm extractEntry assets/img/icon-search.png
+688 silly gunzTarPerm extractEntry assets/img/remove.png
+689 silly gunzTarPerm extractEntry assets/js/libs/almond.js
+690 silly gunzTarPerm extractEntry assets/js/libs/backbone.js
+691 silly gunzTarPerm extractEntry assets/js/libs/jquery.js
+692 silly gunzTarPerm extractEntry assets/js/libs/lodash.js
+693 silly gunzTarPerm extractEntry assets/js/libs/moment.js
+694 silly gunzTarPerm extractEntry assets/js/libs/require.js
+695 silly gunzTarPerm extractEntry assets/js/plugins/backbone.layoutmanager.js
+696 silly gunzTarPerm extractEntry assets/js/plugins/Backbone.validateAll.js
+697 silly gunzTarPerm extractEntry assets/js/plugins/jquery.cookie.js
+698 silly gunzTarPerm extractEntry assets/js/plugins/moment.isocalendar.js
+699 silly gunzTarPerm extractEntry assets/js/plugins/wsse.js
+700 silly gunzTarPerm extractEntry assets/sample.csv
+701 silly gunzTarPerm extractEntry assets/vendor/swagger/index.js
+702 silly gunzTarPerm extractEntry assets/vendor/swagger/paramTypes.js
+703 silly gunzTarPerm extractEntry assets/vendor/swagger/randomizer.js
+704 silly gunzTarPerm extractEntry assets/vendor/swagger/swagger.js
+705 silly gunzTarPerm extractEntry api/account.js
+706 silly gunzTarPerm extractEntry api/validate.js
+707 silly gunzTarPerm extractEntry api/info.js
+708 silly gunzTarPerm extractEntry api/utility.js
+709 silly gunzTarPerm extractEntry api/experimental.js
+710 silly gunzTarPerm extractEntry api/models.js
+711 silly gunzTarPerm extractEntry api/ucs.js
+712 silly gunzTarPerm extractEntry api/program.js
+713 silly gunzTarPerm extractEntry api/resources.js
+714 silly gunzTarPerm extractEntry api/security.js
+715 silly gunzTarPerm extractEntry api/env.js
+716 silly gunzTarPerm extractEntry api/session.js
+717 silly gunzTarPerm extractEntry api/elastic.js
+718 silly gunzTarPerm extractEntry api/song.js
+719 silly gunzTarPerm extractEntry api/composer.js
+720 silly gunzTarPerm extractEntry api/station.js
+721 silly gunzTarPerm extractEntry api/loader.js
+722 silly gunzTarPerm extractEntry api/widget.js
+723 silly gunzTarPerm extractEntry api/playlist.js
+724 silly gunzTarPerm extractEntry api/assets/swagger-ui.js
+725 silly gunzTarPerm extractEntry api/assets/swagger-ui.min.js
+726 silly gunzTarPerm extractEntry api/assets/css/custom.css
+727 silly gunzTarPerm extractEntry api/assets/css/screen.css
+728 silly gunzTarPerm extractEntry api/assets/images/pet_store_api.png
+729 silly gunzTarPerm extractEntry api/assets/images/throbber.gif
+730 silly gunzTarPerm extractEntry api/assets/images/wordnik_api.png
+731 silly gunzTarPerm extractEntry api/assets/lib/backbone-min.js
+732 silly gunzTarPerm extractEntry api/assets/lib/handlebars.runtime-1.0.0.beta.6.js
+733 silly gunzTarPerm extractEntry api/assets/lib/highlight.7.3.pack.js
+734 silly gunzTarPerm extractEntry api/assets/lib/jquery.1.8.0.js
+735 silly gunzTarPerm extractEntry api/assets/lib/jquery.ba-bbq.min.js
+736 silly gunzTarPerm extractEntry api/assets/lib/jquery.min.js
+737 silly gunzTarPerm extractEntry api/assets/lib/jquery.slideto.min.js
+738 silly gunzTarPerm extractEntry api/assets/lib/jquery.wiggle.min.js
+739 silly gunzTarPerm extractEntry api/assets/lib/swagger.js
+740 silly gunzTarPerm extractEntry api/assets/lib/underscore-min.js
+741 silly gunzTarPerm extractEntry api/lib/common.js
+742 silly gunzTarPerm extractEntry api/lib/episode.js
+743 silly gunzTarPerm extractEntry api/lib/es.js
+744 silly gunzTarPerm extractEntry api/lib/program.js
+745 silly gunzTarPerm extractEntry api/lib/security.js
+746 silly gunzTarPerm extractEntry api/lib/ucs.js
+747 silly gunzTarPerm extractEntry api/index.html
+748 silly gunzTarPerm extractEntry api/views/daily.jade
+749 silly gunzTarPerm extractEntry api/views/importform.jade
+750 silly gunzTarPerm extractEntry api/views/layout.jade
+751 silly gunzTarPerm extractEntry api/views/now.jade
+752 silly gunzTarPerm extractEntry api/views/search.jade
+753 silly gunzTarPerm extractEntry api/views/songlist.jade
+754 silly gunzTarPerm extractEntry api/views/weekly.jade
+755 silly gunzTarPerm extractEntry app/app.js
+756 silly gunzTarPerm extractEntry app/config.js
+757 silly gunzTarPerm extractEntry app/main.js
+758 silly gunzTarPerm extractEntry app/router.js
+759 silly gunzTarPerm extractEntry app/modules/airtime.js
+760 silly gunzTarPerm extractEntry app/modules/episode.js
+761 silly gunzTarPerm extractEntry app/modules/hosts.js
+762 silly gunzTarPerm extractEntry app/modules/import.js
+763 silly gunzTarPerm extractEntry app/modules/login.js
+764 silly gunzTarPerm extractEntry app/modules/details.js
+765 silly gunzTarPerm extractEntry app/modules/program.js
+766 silly gunzTarPerm extractEntry app/modules/search.js
+767 silly gunzTarPerm extractEntry app/modules/session.js
+768 silly gunzTarPerm extractEntry app/modules/streams.js
+769 silly gunzTarPerm extractEntry app/modules/structure.js
+770 silly gunzTarPerm extractEntry app/modules/calendar.js
+771 silly gunzTarPerm extractEntry app/modules/ucs.js
+772 silly gunzTarPerm extractEntry app/modules/menus.js
+773 silly gunzTarPerm extractEntry app/templates/layouts/footer.html
+774 silly gunzTarPerm extractEntry app/templates/layouts/header.html
+775 silly gunzTarPerm extractEntry app/templates/layouts/main.html
+776 silly gunzTarPerm extractEntry app/templates/partials/import/import.html
+777 silly gunzTarPerm extractEntry app/templates/partials/calendar/_markup.html
+778 silly gunzTarPerm extractEntry app/templates/partials/calendar/addprogram.html
+779 silly gunzTarPerm extractEntry app/templates/partials/calendar/day.html
+780 silly gunzTarPerm extractEntry app/templates/partials/calendar/episode.html
+781 silly gunzTarPerm extractEntry app/templates/partials/calendar/header.html
+782 silly gunzTarPerm extractEntry app/templates/partials/calendar/main.html
+783 silly gunzTarPerm extractEntry app/templates/partials/calendar/navigation.html
+784 silly gunzTarPerm extractEntry app/templates/partials/footer/primary.html
+785 silly gunzTarPerm extractEntry app/templates/partials/footer.html
+786 silly gunzTarPerm extractEntry app/templates/partials/header/item.html
+787 silly gunzTarPerm extractEntry app/templates/partials/header/sysheader.html
+788 silly gunzTarPerm extractEntry app/templates/partials/header.html
+789 silly gunzTarPerm extractEntry app/templates/partials/episode/list.html
+790 silly gunzTarPerm extractEntry app/templates/partials/episode/break.html
+791 silly gunzTarPerm extractEntry app/templates/partials/episode/day.html
+792 silly gunzTarPerm extractEntry app/templates/partials/episode/detail.html
+793 silly gunzTarPerm extractEntry app/templates/partials/episode/episodeitem.html
+794 silly gunzTarPerm extractEntry app/templates/partials/episode/episodeSelector.html
+795 silly gunzTarPerm extractEntry app/templates/partials/episode/buttons.html
+796 silly gunzTarPerm extractEntry app/templates/partials/episode/navigation.html
+797 silly gunzTarPerm extractEntry app/templates/partials/episode/playlist.html
+798 silly gunzTarPerm extractEntry app/templates/partials/episode/program.html
+799 silly gunzTarPerm extractEntry app/templates/partials/episode/section.html
+800 silly gunzTarPerm extractEntry app/templates/partials/episode/song.html
+801 silly gunzTarPerm extractEntry app/templates/partials/login/login-prompt.html
+802 silly gunzTarPerm extractEntry app/templates/partials/program/add-host-button.html
+803 silly gunzTarPerm extractEntry app/templates/partials/program/airtime.html
+804 silly gunzTarPerm extractEntry app/templates/partials/program/airtimes/date.html
+805 silly gunzTarPerm extractEntry app/templates/partials/program/airtimes/day.html
+806 silly gunzTarPerm extractEntry app/templates/partials/program/airtimes/time.html
+807 silly gunzTarPerm extractEntry app/templates/partials/program/details.html
+808 silly gunzTarPerm extractEntry app/templates/partials/program/host.html
+809 silly gunzTarPerm extractEntry app/templates/partials/program/program.html
+810 silly gunzTarPerm extractEntry app/templates/partials/search/main.html
+811 silly gunzTarPerm extractEntry app/templates/partials/search/manual-add.html
+812 silly gunzTarPerm extractEntry app/templates/partials/search/results.html
+813 silly gunzTarPerm extractEntry app/templates/partials/streams/header.html
+814 silly gunzTarPerm extractEntry app/templates/partials/streams/section.html
+815 silly gunzTarPerm extractEntry app/templates/partials/streams/streams-button.html
+816 silly gunzTarPerm extractEntry app/templates/partials/ucs/detail.html
+817 silly gunzTarPerm extractEntry app/templates/partials/ucs/item.html
+818 silly gunzTarPerm extractEntry app/templates/partials/ucs/section.html
+819 silly gunzTarPerm extractEntry public/widgets/README.md
+820 silly gunzTarPerm extractEntry public/widgets/songsearch.html
+821 silly gunzTarPerm extractEntry public/widgets/js/dev.js
+822 silly gunzTarPerm extractEntry public/widgets/js/jquery-ui-1.10.1.custom.min.js
+823 silly gunzTarPerm extractEntry public/widgets/js/moment.isocalendar.js
+824 silly gunzTarPerm extractEntry public/widgets/js/moment.js
+825 silly gunzTarPerm extractEntry public/widgets/css/composer-calendar.css
+826 silly gunzTarPerm extractEntry public/widgets/css/composer-schedule.css
+827 silly gunzTarPerm extractEntry public/widgets/css/sass-dir/config.rb
+828 silly gunzTarPerm extractEntry public/widgets/css/sass-dir/css/grid.css
+829 silly gunzTarPerm extractEntry public/widgets/css/sass-dir/css/list.css
+830 silly gunzTarPerm extractEntry public/widgets/css/sass-dir/css/screen.css
+831 silly gunzTarPerm extractEntry public/widgets/css/sass-dir/sass/grid.scss
+832 silly gunzTarPerm extractEntry public/widgets/css/sass-dir/sass/list.scss
+833 silly gunzTarPerm extractEntry public/widgets/css/sass-dir/sass/screen.scss
+834 silly gunzTarPerm extractEntry public/widgets/css/songlist/images/ui-bg_highlight-hard_70_000000_1x100.png
+835 silly gunzTarPerm extractEntry public/widgets/css/songlist/images/animated-overlay.gif
+836 silly gunzTarPerm extractEntry public/widgets/css/songlist/images/ui-bg_flat_15_cd0a0a_40x100.png
+837 silly gunzTarPerm extractEntry public/widgets/css/songlist/images/ui-bg_glass_100_e4f1fb_1x400.png
+838 silly gunzTarPerm extractEntry public/widgets/css/songlist/images/ui-bg_glass_50_3baae3_1x400.png
+839 silly gunzTarPerm extractEntry public/widgets/css/songlist/images/ui-bg_glass_80_d7ebf9_1x400.png
+840 silly gunzTarPerm extractEntry public/widgets/css/songlist/images/ui-bg_highlight-hard_100_f2f5f7_1x100.png
+841 silly gunzTarPerm extractEntry public/widgets/css/songlist/images/ui-bg_diagonals-thick_90_eeeeee_40x40.png
+842 silly gunzTarPerm extractEntry public/widgets/css/songlist/images/ui-bg_highlight-soft_100_deedf7_1x100.png
+843 silly gunzTarPerm extractEntry public/widgets/css/songlist/images/ui-bg_highlight-soft_10_f5b800_1x100.png
+844 silly gunzTarPerm extractEntry public/widgets/css/songlist/images/ui-icons_2694e8_256x240.png
+845 silly gunzTarPerm extractEntry public/widgets/css/songlist/images/ui-icons_2e83ff_256x240.png
+846 silly gunzTarPerm extractEntry public/widgets/css/songlist/images/ui-icons_3d80b3_256x240.png
+847 silly gunzTarPerm extractEntry public/widgets/css/songlist/images/ui-icons_72a7cf_256x240.png
+848 silly gunzTarPerm extractEntry public/widgets/css/songlist/images/ui-icons_ffffff_256x240.png
+849 silly gunzTarPerm extractEntry public/widgets/css/songlist/jquery-ui-1.10.1.custom.css
+850 silly gunzTarPerm extractEntry public/widgets/css/songlist/jquery-ui-1.10.1.custom.min.css
+851 silly gunzTarPerm extractEntry public/widgets/songgrid.html
+852 silly gunzTarPerm extractEntry public/widgets/songlist.html
+853 silly gunzTarPerm extractEntry public/widgets/index.html
+854 silly gunzTarPerm extractEntry public/widgets/songsearchlist.html
+855 silly gunzTarPerm extractEntry public/widgets/src/searchlist.js
+856 silly gunzTarPerm extractEntry public/widgets/src/songgrid.js
+857 silly gunzTarPerm extractEntry public/widgets/src/songlist.js
+858 silly gunzTarPerm extractEntry public/widgets/src/whatson.js
+859 silly gunzTarPerm extractEntry public/widgets/widget-searchMe-testMarkup.html
+860 silly gunzTarPerm extractEntry public/widgets/widget-songgrid-testMarkup.html
+861 silly gunzTarPerm extractEntry public/widgets/widget-songlist-testMarkup.html
+862 silly gunzTarPerm extractEntry public/widgets/widgets-testMarkup.html
+863 silly gunzTarPerm extractEntry routes/import.js
+864 silly gunzTarPerm extractEntry routes/index.js
+865 silly gunzTarPerm extractEntry routes/sample.out
+866 silly gunzTarPerm extractEntry .env
+867 silly gunzTarPerm extractEntry spec/cover.js
+868 silly gunzTarPerm extractEntry spec/requireConfig.js
+869 silly gunzTarPerm extractEntry spec/index.html
+870 silly gunzTarPerm extractEntry spec/frame.html
+871 silly gunzTarPerm extractEntry spec/index-api.html
+872 silly gunzTarPerm extractEntry spec/index-node.html
+873 silly gunzTarPerm extractEntry spec/backbone/airtime.js
+874 silly gunzTarPerm extractEntry spec/backbone/details.js
+875 silly gunzTarPerm extractEntry spec/backbone/episode.js
+876 silly gunzTarPerm extractEntry spec/backbone/hosts.js
+877 silly gunzTarPerm extractEntry spec/backbone/login.js
+878 silly gunzTarPerm extractEntry spec/backbone/calendar.js
+879 silly gunzTarPerm extractEntry spec/backbone/streams.js
+880 silly gunzTarPerm extractEntry spec/backbone/program.js
+881 silly gunzTarPerm extractEntry spec/backbone/session.js
+882 silly gunzTarPerm extractEntry spec/backbone/ucs.js
+883 silly gunzTarPerm extractEntry spec/backbone/my_episodes.js
+884 silly gunzTarPerm extractEntry spec/backbone/old-tests.js_old
+885 silly gunzTarPerm extractEntry spec/node/_upgradeProgramRecurrences_spec.js
+886 silly gunzTarPerm extractEntry spec/node/api_program_spec.js
+887 silly gunzTarPerm extractEntry spec/node/api_ucs_spec.js
+888 silly gunzTarPerm extractEntry spec/node/buildProgramEpisodeDocumentsRaw_spec.js
+889 silly gunzTarPerm extractEntry spec/node/calcEpisodeDates_spec.js
+890 silly gunzTarPerm extractEntry spec/node/pad_spec.js
+891 silly gunzTarPerm extractEntry spec/node/provision_spec.js
+892 silly gunzTarPerm extractEntry spec/node/validate_spec.js
+893 silly gunzTarPerm extractEntry spec/node/tests_disabled.js_old
+894 silly gunzTarPerm extractEntry spec/api/functional.js
+895 silly gunzTarPerm extractEntry spec/api/playlist.js
+896 silly gunzTarPerm extractEntry spec/api/program.js
+897 silly gunzTarPerm extractEntry spec/api/station.js
+898 silly gunzTarPerm extractEntry spec/api/ucs.js
+899 silly gunzTarPerm extractEntry spec/api/user.js
+900 silly gunzTarPerm extractEntry spec/runner-backup.html
+901 silly gunzTarPerm extractEntry spec/security/security.spec.js
+902 silly gunzTarPerm extractEntry spec/vendor/almond.js
+903 silly gunzTarPerm extractEntry spec/vendor/coffee-script.js
+904 silly gunzTarPerm extractEntry spec/vendor/cs.js
+905 silly gunzTarPerm extractEntry spec/vendor/r.js
+906 silly gunzTarPerm extractEntry spec/vendor/require.js
+907 silly gunzTarPerm extractEntry spec/vendor/jasmine/jasmine-grunt.js
+908 silly gunzTarPerm extractEntry spec/vendor/jasmine/jasmine-html.js
+909 silly gunzTarPerm extractEntry spec/vendor/jasmine/jasmine.js
+910 silly gunzTarPerm extractEntry spec/vendor/jasmine/jasmine.css
+911 silly gunzTarPerm extractEntry spec/vendor/jasmine/MIT.LICENSE
+912 silly gunzTarPerm extractEntry spec/vendor/jasmine-jquery/jasmine-jquery.js
+913 silly gunzTarPerm extractEntry spec/vendor/mockjax/jquery.mockjax.js
+914 verbose read json /Users/steve/.npm/Composer/0.1.22/package/package.json
+915 silly lockFile 10762df5-teve-npm-Composer-0-1-22-package /Users/steve/.npm/Composer/0.1.22/package
+916 silly shasum updated bytes 40960
+917 silly shasum updated bytes 40960
+918 silly shasum updated bytes 40960
+919 silly shasum updated bytes 40960
+920 silly shasum updated bytes 40960
+921 silly shasum updated bytes 40960
+922 silly shasum updated bytes 40960
+923 silly shasum updated bytes 40960
+924 silly shasum updated bytes 40960
+925 silly shasum updated bytes 40960
+926 silly shasum updated bytes 40960
+927 silly shasum updated bytes 40960
+928 silly shasum updated bytes 40960
+929 silly shasum updated bytes 40960
+930 silly shasum updated bytes 40960
+931 silly shasum updated bytes 40960
+932 silly shasum updated bytes 40960
+933 silly shasum updated bytes 40960
+934 silly shasum updated bytes 40960
+935 silly shasum updated bytes 40960
+936 silly shasum updated bytes 40960
+937 silly shasum updated bytes 40960
+938 silly shasum updated bytes 40960
+939 silly shasum updated bytes 40960
+940 silly shasum updated bytes 40960
+941 silly shasum updated bytes 40960
+942 silly shasum updated bytes 40960
+943 silly shasum updated bytes 40960
+944 silly shasum updated bytes 40960
+945 silly shasum updated bytes 40960
+946 silly shasum updated bytes 5965
+947 info shasum 7c98bfc2d8070577213104d0e48d193477d224b7
+947 info shasum /Users/steve/.npm/Composer/0.1.22/package.tgz
+948 verbose from cache /Users/steve/.npm/Composer/0.1.22/package/package.json
+949 verbose chmod /Users/steve/.npm/Composer/0.1.22/package.tgz 666
+950 verbose chown /Users/steve/.npm/Composer/0.1.22/package.tgz [ 501, 20 ]
+951 silly lockFile 4c2b673a-tmp-36b762a962 tmp/36b762a962
+952 silly resolved [ { name: 'Composer',
+952 silly resolved     author: { name: 'NPR Digital Services - Team Sharktopus' },
+952 silly resolved     version: '0.1.22',
+952 silly resolved     homepage: 'http://composer.nprstations.org/',
+952 silly resolved     dependencies:
+952 silly resolved      { express: '~3.0.4',
+952 silly resolved        connect: '2.7.1',
+952 silly resolved        request: '2.9.202',
+952 silly resolved        moment: '1.7.0',
+952 silly resolved        underscore: '1.3.3',
+952 silly resolved        mongodb: '1.2.10',
+952 silly resolved        validator: '~0.4.13',
+952 silly resolved        jade: '~0.27.7',
+952 silly resolved        csv: '~0.2.4',
+952 silly resolved        optimist: '~0.3.5',
+952 silly resolved        'connect-mongodb': '~1.1.5',
+952 silly resolved        nodefly: '~0.1.16a',
+952 silly resolved        async: '~0.1.22',
+952 silly resolved        elasticsearchclient: '~0.2.2',
+952 silly resolved        'swagger-node-express': '~1.2.2' },
+952 silly resolved     devDependencies:
+952 silly resolved      { 'jasmine-node': '1.0.26',
+952 silly resolved        'jscoverage-reporter': '0.1.0',
+952 silly resolved        'grunt-jasmine-task': '0.2.0',
+952 silly resolved        nodeload: '~0.4.0' },
+952 silly resolved     repository: { type: 'git', url: 'git@github.com:npr/composer.git' },
+952 silly resolved     scripts: { start: 'node server.js' },
+952 silly resolved     _id: 'Composer@0.1.22',
+952 silly resolved     readme: 'ERROR: No README.md file found!',
+952 silly resolved     description: 'ERROR: No README.md file found!',
+952 silly resolved     dist: { shasum: '7c98bfc2d8070577213104d0e48d193477d224b7' },
+952 silly resolved     _from: 'tmp/36b762a962' } ]
+953 info install Composer@0.1.22 into /Users/steve/Dropbox/github/RandD/node-ci
+954 info installOne Composer@0.1.22
+955 verbose from cache /Users/steve/.npm/Composer/0.1.22/package/package.json
+956 info /Users/steve/Dropbox/github/RandD/node-ci/node_modules/Composer unbuild
+957 verbose read json /Users/steve/Dropbox/github/RandD/node-ci/node_modules/Composer/package.json
+958 verbose tar unpack /Users/steve/.npm/Composer/0.1.22/package.tgz
+959 silly lockFile 27b7675a-dD-node-ci-node-modules-Composer /Users/steve/Dropbox/github/RandD/node-ci/node_modules/Composer
+960 verbose lock /Users/steve/Dropbox/github/RandD/node-ci/node_modules/Composer /Users/steve/.npm/27b7675a-dD-node-ci-node-modules-Composer.lock
+961 silly gunzTarPerm modes [ '777', '666' ]
+962 silly gunzTarPerm extractEntry package.json
+963 silly gunzTarPerm extractEntry .npmignore
+964 silly gunzTarPerm extractEntry grunt.js
+965 silly gunzTarPerm extractEntry app.js
+966 silly gunzTarPerm extractEntry ci.js
+967 silly gunzTarPerm extractEntry db.js
+968 silly gunzTarPerm extractEntry Load-Testing.js
+969 silly gunzTarPerm extractEntry loadtest.js
+970 silly gunzTarPerm extractEntry server.js
+971 silly gunzTarPerm extractEntry index.html
+972 silly gunzTarPerm extractEntry assets/version.js
+973 silly gunzTarPerm extractEntry assets/css/custom/images/ui-icons_255b88_256x240.png
+974 silly gunzTarPerm extractEntry assets/css/custom/images/ui-bg_flat_0_aaaaaa_40x100.png
+975 silly gunzTarPerm extractEntry assets/css/custom/images/ui-bg_flat_100_31a601_40x100.png
+976 silly gunzTarPerm extractEntry assets/css/custom/images/ui-bg_flat_100_84d5ee_40x100.png
+977 silly gunzTarPerm extractEntry assets/css/custom/images/ui-bg_flat_100_ffffff_40x100.png
+978 silly gunzTarPerm extractEntry assets/css/custom/images/ui-bg_inset-soft_95_fef1ec_1x100.png
+979 silly gunzTarPerm extractEntry assets/css/custom/images/ui-bg_flat_100_255b88_40x100.png
+980 silly gunzTarPerm extractEntry assets/css/custom/images/ui-icons_2e83ff_256x240.png
+981 silly gunzTarPerm extractEntry assets/css/custom/images/ui-icons_333333_256x240.png
+982 silly gunzTarPerm extractEntry assets/css/custom/images/ui-icons_454545_256x240.png
+983 silly gunzTarPerm extractEntry assets/css/custom/images/ui-icons_888888_256x240.png
+984 silly gunzTarPerm extractEntry assets/css/custom/images/ui-icons_cd0a0a_256x240.png
+985 silly gunzTarPerm extractEntry assets/css/custom/images/ui-icons_dddddd_256x240.png
+986 silly gunzTarPerm extractEntry assets/css/custom/jquery-ui-1.8.19.custom.css
+987 silly gunzTarPerm extractEntry assets/css/fonts/bitter-bold/bitter-bold-webfont.eot
+988 silly gunzTarPerm extractEntry assets/css/fonts/bitter-bold/bitter-bold-webfont.svg
+989 silly gunzTarPerm extractEntry assets/css/fonts/bitter-bold/bitter-bold-webfont.ttf
+990 silly gunzTarPerm extractEntry assets/css/fonts/bitter-bold/bitter-bold-webfont.woff
+991 silly gunzTarPerm extractEntry assets/css/fonts/bitter-regular/bitter-regular-webfont.eot
+992 silly gunzTarPerm extractEntry assets/css/fonts/bitter-regular/bitter-regular-webfont.svg
+993 silly gunzTarPerm extractEntry assets/css/fonts/bitter-regular/bitter-regular-webfont.ttf
+994 silly gunzTarPerm extractEntry assets/css/fonts/bitter-regular/bitter-regular-webfont.woff
+995 silly gunzTarPerm extractEntry assets/css/fonts/iconfont/iconfont.eot
+996 silly gunzTarPerm extractEntry assets/css/fonts/iconfont/iconfont.svg
+997 silly gunzTarPerm extractEntry assets/css/fonts/iconfont/iconfont.ttf
+998 silly gunzTarPerm extractEntry assets/css/fonts/iconfont/iconfont.woff
+999 silly gunzTarPerm extractEntry assets/css/fonts/opensans-bold/opensans-bold-webfont.eot
+1000 silly gunzTarPerm extractEntry assets/css/fonts/opensans-bold/opensans-bold-webfont.svg
+1001 silly gunzTarPerm extractEntry assets/css/fonts/opensans-bold/opensans-bold-webfont.ttf
+1002 silly gunzTarPerm extractEntry assets/css/fonts/opensans-bold/opensans-bold-webfont.woff
+1003 silly gunzTarPerm extractEntry assets/css/fonts/opensans-regular/opensans-regular-webfont.eot
+1004 silly gunzTarPerm extractEntry assets/css/fonts/opensans-regular/opensans-regular-webfont.svg
+1005 silly gunzTarPerm extractEntry assets/css/fonts/opensans-regular/opensans-regular-webfont.ttf
+1006 silly gunzTarPerm extractEntry assets/css/fonts/opensans-regular/opensans-regular-webfont.woff
+1007 silly gunzTarPerm extractEntry assets/css/fonts/proximanova-bold/proximanova-bold-webfont.eot
+1008 silly gunzTarPerm extractEntry assets/css/fonts/proximanova-bold/proximanova-bold-webfont.svg
+1009 silly gunzTarPerm extractEntry assets/css/fonts/proximanova-bold/proximanova-bold-webfont.ttf
+1010 silly gunzTarPerm extractEntry assets/css/fonts/proximanova-bold/proximanova-bold-webfont.woff
+1011 silly gunzTarPerm extractEntry assets/css/global/normalize.css
+1012 silly gunzTarPerm extractEntry assets/css/index.css
+1013 silly gunzTarPerm extractEntry assets/css/screen.css
+1014 silly gunzTarPerm extractEntry assets/demo-import/main-episodedetails_importer.html
+1015 silly gunzTarPerm extractEntry assets/demo-import/main-episodedetails_start-screen.html
+1016 silly gunzTarPerm extractEntry assets/demo.csv
+1017 silly gunzTarPerm extractEntry assets/demo2.csv
+1018 silly gunzTarPerm extractEntry assets/img/ajax-loader.gif
+1019 silly gunzTarPerm extractEntry assets/img/album-60x60.png
+1020 silly gunzTarPerm extractEntry assets/img/icon-datepicker.gif
+1021 silly gunzTarPerm extractEntry assets/img/icon-error.png
+1022 silly gunzTarPerm extractEntry assets/img/icon-search.png
+1023 silly gunzTarPerm extractEntry assets/img/remove.png
+1024 silly gunzTarPerm extractEntry assets/js/libs/almond.js
+1025 silly gunzTarPerm extractEntry assets/js/libs/backbone.js
+1026 silly gunzTarPerm extractEntry assets/js/libs/jquery.js
+1027 silly gunzTarPerm extractEntry assets/js/libs/lodash.js
+1028 silly gunzTarPerm extractEntry assets/js/libs/moment.js
+1029 silly gunzTarPerm extractEntry assets/js/libs/require.js
+1030 silly gunzTarPerm extractEntry assets/js/plugins/backbone.layoutmanager.js
+1031 silly gunzTarPerm extractEntry assets/js/plugins/Backbone.validateAll.js
+1032 silly gunzTarPerm extractEntry assets/js/plugins/jquery.cookie.js
+1033 silly gunzTarPerm extractEntry assets/js/plugins/moment.isocalendar.js
+1034 silly gunzTarPerm extractEntry assets/js/plugins/wsse.js
+1035 silly gunzTarPerm extractEntry assets/sample.csv
+1036 silly gunzTarPerm extractEntry assets/vendor/swagger/index.js
+1037 silly gunzTarPerm extractEntry assets/vendor/swagger/paramTypes.js
+1038 silly gunzTarPerm extractEntry assets/vendor/swagger/randomizer.js
+1039 silly gunzTarPerm extractEntry assets/vendor/swagger/swagger.js
+1040 silly gunzTarPerm extractEntry api/account.js
+1041 silly gunzTarPerm extractEntry api/validate.js
+1042 silly gunzTarPerm extractEntry api/info.js
+1043 silly gunzTarPerm extractEntry api/utility.js
+1044 silly gunzTarPerm extractEntry api/experimental.js
+1045 silly gunzTarPerm extractEntry api/models.js
+1046 silly gunzTarPerm extractEntry api/ucs.js
+1047 silly gunzTarPerm extractEntry api/program.js
+1048 silly gunzTarPerm extractEntry api/resources.js
+1049 silly gunzTarPerm extractEntry api/security.js
+1050 silly gunzTarPerm extractEntry api/env.js
+1051 silly gunzTarPerm extractEntry api/session.js
+1052 silly gunzTarPerm extractEntry api/elastic.js
+1053 silly gunzTarPerm extractEntry api/song.js
+1054 silly gunzTarPerm extractEntry api/composer.js
+1055 silly gunzTarPerm extractEntry api/station.js
+1056 silly gunzTarPerm extractEntry api/loader.js
+1057 silly gunzTarPerm extractEntry api/widget.js
+1058 silly gunzTarPerm extractEntry api/playlist.js
+1059 silly gunzTarPerm extractEntry api/assets/swagger-ui.js
+1060 silly gunzTarPerm extractEntry api/assets/swagger-ui.min.js
+1061 silly gunzTarPerm extractEntry api/assets/css/custom.css
+1062 silly gunzTarPerm extractEntry api/assets/css/screen.css
+1063 silly gunzTarPerm extractEntry api/assets/images/pet_store_api.png
+1064 silly gunzTarPerm extractEntry api/assets/images/throbber.gif
+1065 silly gunzTarPerm extractEntry api/assets/images/wordnik_api.png
+1066 silly gunzTarPerm extractEntry api/assets/lib/backbone-min.js
+1067 silly gunzTarPerm extractEntry api/assets/lib/handlebars.runtime-1.0.0.beta.6.js
+1068 silly gunzTarPerm extractEntry api/assets/lib/highlight.7.3.pack.js
+1069 silly gunzTarPerm extractEntry api/assets/lib/jquery.1.8.0.js
+1070 silly gunzTarPerm extractEntry api/assets/lib/jquery.ba-bbq.min.js
+1071 silly gunzTarPerm extractEntry api/assets/lib/jquery.min.js
+1072 silly gunzTarPerm extractEntry api/assets/lib/jquery.slideto.min.js
+1073 silly gunzTarPerm extractEntry api/assets/lib/jquery.wiggle.min.js
+1074 silly gunzTarPerm extractEntry api/assets/lib/swagger.js
+1075 silly gunzTarPerm extractEntry api/assets/lib/underscore-min.js
+1076 silly gunzTarPerm extractEntry api/lib/common.js
+1077 silly gunzTarPerm extractEntry api/lib/episode.js
+1078 silly gunzTarPerm extractEntry api/lib/es.js
+1079 silly gunzTarPerm extractEntry api/lib/program.js
+1080 silly gunzTarPerm extractEntry api/lib/security.js
+1081 silly gunzTarPerm extractEntry api/lib/ucs.js
+1082 silly gunzTarPerm extractEntry api/index.html
+1083 silly gunzTarPerm extractEntry api/views/daily.jade
+1084 silly gunzTarPerm extractEntry api/views/importform.jade
+1085 silly gunzTarPerm extractEntry api/views/layout.jade
+1086 silly gunzTarPerm extractEntry api/views/now.jade
+1087 silly gunzTarPerm extractEntry api/views/search.jade
+1088 silly gunzTarPerm extractEntry api/views/songlist.jade
+1089 silly gunzTarPerm extractEntry api/views/weekly.jade
+1090 silly gunzTarPerm extractEntry app/app.js
+1091 silly gunzTarPerm extractEntry app/config.js
+1092 silly gunzTarPerm extractEntry app/main.js
+1093 silly gunzTarPerm extractEntry app/router.js
+1094 silly gunzTarPerm extractEntry app/modules/airtime.js
+1095 silly gunzTarPerm extractEntry app/modules/episode.js
+1096 silly gunzTarPerm extractEntry app/modules/hosts.js
+1097 silly gunzTarPerm extractEntry app/modules/import.js
+1098 silly gunzTarPerm extractEntry app/modules/login.js
+1099 silly gunzTarPerm extractEntry app/modules/details.js
+1100 silly gunzTarPerm extractEntry app/modules/program.js
+1101 silly gunzTarPerm extractEntry app/modules/search.js
+1102 silly gunzTarPerm extractEntry app/modules/session.js
+1103 silly gunzTarPerm extractEntry app/modules/streams.js
+1104 silly gunzTarPerm extractEntry app/modules/structure.js
+1105 silly gunzTarPerm extractEntry app/modules/calendar.js
+1106 silly gunzTarPerm extractEntry app/modules/ucs.js
+1107 silly gunzTarPerm extractEntry app/modules/menus.js
+1108 silly gunzTarPerm extractEntry app/templates/layouts/footer.html
+1109 silly gunzTarPerm extractEntry app/templates/layouts/header.html
+1110 silly gunzTarPerm extractEntry app/templates/layouts/main.html
+1111 silly gunzTarPerm extractEntry app/templates/partials/import/import.html
+1112 silly gunzTarPerm extractEntry app/templates/partials/calendar/_markup.html
+1113 silly gunzTarPerm extractEntry app/templates/partials/calendar/addprogram.html
+1114 silly gunzTarPerm extractEntry app/templates/partials/calendar/day.html
+1115 silly gunzTarPerm extractEntry app/templates/partials/calendar/episode.html
+1116 silly gunzTarPerm extractEntry app/templates/partials/calendar/header.html
+1117 silly gunzTarPerm extractEntry app/templates/partials/calendar/main.html
+1118 silly gunzTarPerm extractEntry app/templates/partials/calendar/navigation.html
+1119 silly gunzTarPerm extractEntry app/templates/partials/footer/primary.html
+1120 silly gunzTarPerm extractEntry app/templates/partials/footer.html
+1121 silly gunzTarPerm extractEntry app/templates/partials/header/item.html
+1122 silly gunzTarPerm extractEntry app/templates/partials/header/sysheader.html
+1123 silly gunzTarPerm extractEntry app/templates/partials/header.html
+1124 silly gunzTarPerm extractEntry app/templates/partials/episode/list.html
+1125 silly gunzTarPerm extractEntry app/templates/partials/episode/break.html
+1126 silly gunzTarPerm extractEntry app/templates/partials/episode/day.html
+1127 silly gunzTarPerm extractEntry app/templates/partials/episode/detail.html
+1128 silly gunzTarPerm extractEntry app/templates/partials/episode/episodeitem.html
+1129 silly gunzTarPerm extractEntry app/templates/partials/episode/episodeSelector.html
+1130 silly gunzTarPerm extractEntry app/templates/partials/episode/buttons.html
+1131 silly gunzTarPerm extractEntry app/templates/partials/episode/navigation.html
+1132 silly gunzTarPerm extractEntry app/templates/partials/episode/playlist.html
+1133 silly gunzTarPerm extractEntry app/templates/partials/episode/program.html
+1134 silly gunzTarPerm extractEntry app/templates/partials/episode/section.html
+1135 silly gunzTarPerm extractEntry app/templates/partials/episode/song.html
+1136 silly gunzTarPerm extractEntry app/templates/partials/login/login-prompt.html
+1137 silly gunzTarPerm extractEntry app/templates/partials/program/add-host-button.html
+1138 silly gunzTarPerm extractEntry app/templates/partials/program/airtime.html
+1139 silly gunzTarPerm extractEntry app/templates/partials/program/airtimes/date.html
+1140 silly gunzTarPerm extractEntry app/templates/partials/program/airtimes/day.html
+1141 silly gunzTarPerm extractEntry app/templates/partials/program/airtimes/time.html
+1142 silly gunzTarPerm extractEntry app/templates/partials/program/details.html
+1143 silly gunzTarPerm extractEntry app/templates/partials/program/host.html
+1144 silly gunzTarPerm extractEntry app/templates/partials/program/program.html
+1145 silly gunzTarPerm extractEntry app/templates/partials/search/main.html
+1146 silly gunzTarPerm extractEntry app/templates/partials/search/manual-add.html
+1147 silly gunzTarPerm extractEntry app/templates/partials/search/results.html
+1148 silly gunzTarPerm extractEntry app/templates/partials/streams/header.html
+1149 silly gunzTarPerm extractEntry app/templates/partials/streams/section.html
+1150 silly gunzTarPerm extractEntry app/templates/partials/streams/streams-button.html
+1151 silly gunzTarPerm extractEntry app/templates/partials/ucs/detail.html
+1152 silly gunzTarPerm extractEntry app/templates/partials/ucs/item.html
+1153 silly gunzTarPerm extractEntry app/templates/partials/ucs/section.html
+1154 silly gunzTarPerm extractEntry public/widgets/README.md
+1155 silly gunzTarPerm extractEntry public/widgets/songsearch.html
+1156 silly gunzTarPerm extractEntry public/widgets/js/dev.js
+1157 silly gunzTarPerm extractEntry public/widgets/js/jquery-ui-1.10.1.custom.min.js
+1158 silly gunzTarPerm extractEntry public/widgets/js/moment.isocalendar.js
+1159 silly gunzTarPerm extractEntry public/widgets/js/moment.js
+1160 silly gunzTarPerm extractEntry public/widgets/css/composer-calendar.css
+1161 silly gunzTarPerm extractEntry public/widgets/css/composer-schedule.css
+1162 silly gunzTarPerm extractEntry public/widgets/css/sass-dir/config.rb
+1163 silly gunzTarPerm extractEntry public/widgets/css/sass-dir/css/grid.css
+1164 silly gunzTarPerm extractEntry public/widgets/css/sass-dir/css/list.css
+1165 silly gunzTarPerm extractEntry public/widgets/css/sass-dir/css/screen.css
+1166 silly gunzTarPerm extractEntry public/widgets/css/sass-dir/sass/grid.scss
+1167 silly gunzTarPerm extractEntry public/widgets/css/sass-dir/sass/list.scss
+1168 silly gunzTarPerm extractEntry public/widgets/css/sass-dir/sass/screen.scss
+1169 silly gunzTarPerm extractEntry public/widgets/css/songlist/images/ui-bg_highlight-hard_70_000000_1x100.png
+1170 silly gunzTarPerm extractEntry public/widgets/css/songlist/images/animated-overlay.gif
+1171 silly gunzTarPerm extractEntry public/widgets/css/songlist/images/ui-bg_flat_15_cd0a0a_40x100.png
+1172 silly gunzTarPerm extractEntry public/widgets/css/songlist/images/ui-bg_glass_100_e4f1fb_1x400.png
+1173 silly gunzTarPerm extractEntry public/widgets/css/songlist/images/ui-bg_glass_50_3baae3_1x400.png
+1174 silly gunzTarPerm extractEntry public/widgets/css/songlist/images/ui-bg_glass_80_d7ebf9_1x400.png
+1175 silly gunzTarPerm extractEntry public/widgets/css/songlist/images/ui-bg_highlight-hard_100_f2f5f7_1x100.png
+1176 silly gunzTarPerm extractEntry public/widgets/css/songlist/images/ui-bg_diagonals-thick_90_eeeeee_40x40.png
+1177 silly gunzTarPerm extractEntry public/widgets/css/songlist/images/ui-bg_highlight-soft_100_deedf7_1x100.png
+1178 silly gunzTarPerm extractEntry public/widgets/css/songlist/images/ui-bg_highlight-soft_10_f5b800_1x100.png
+1179 silly gunzTarPerm extractEntry public/widgets/css/songlist/images/ui-icons_2694e8_256x240.png
+1180 silly gunzTarPerm extractEntry public/widgets/css/songlist/images/ui-icons_2e83ff_256x240.png
+1181 silly gunzTarPerm extractEntry public/widgets/css/songlist/images/ui-icons_3d80b3_256x240.png
+1182 silly gunzTarPerm extractEntry public/widgets/css/songlist/images/ui-icons_72a7cf_256x240.png
+1183 silly gunzTarPerm extractEntry public/widgets/css/songlist/images/ui-icons_ffffff_256x240.png
+1184 silly gunzTarPerm extractEntry public/widgets/css/songlist/jquery-ui-1.10.1.custom.css
+1185 silly gunzTarPerm extractEntry public/widgets/css/songlist/jquery-ui-1.10.1.custom.min.css
+1186 silly gunzTarPerm extractEntry public/widgets/songgrid.html
+1187 silly gunzTarPerm extractEntry public/widgets/songlist.html
+1188 silly gunzTarPerm extractEntry public/widgets/index.html
+1189 silly gunzTarPerm extractEntry public/widgets/songsearchlist.html
+1190 silly gunzTarPerm extractEntry public/widgets/src/searchlist.js
+1191 silly gunzTarPerm extractEntry public/widgets/src/songgrid.js
+1192 silly gunzTarPerm extractEntry public/widgets/src/songlist.js
+1193 silly gunzTarPerm extractEntry public/widgets/src/whatson.js
+1194 silly gunzTarPerm extractEntry public/widgets/widget-searchMe-testMarkup.html
+1195 silly gunzTarPerm extractEntry public/widgets/widget-songgrid-testMarkup.html
+1196 silly gunzTarPerm extractEntry public/widgets/widget-songlist-testMarkup.html
+1197 silly gunzTarPerm extractEntry public/widgets/widgets-testMarkup.html
+1198 silly gunzTarPerm extractEntry routes/import.js
+1199 silly gunzTarPerm extractEntry routes/index.js
+1200 silly gunzTarPerm extractEntry routes/sample.out
+1201 silly gunzTarPerm extractEntry .env
+1202 silly gunzTarPerm extractEntry spec/cover.js
+1203 silly gunzTarPerm extractEntry spec/requireConfig.js
+1204 silly gunzTarPerm extractEntry spec/index.html
+1205 silly gunzTarPerm extractEntry spec/frame.html
+1206 silly gunzTarPerm extractEntry spec/index-api.html
+1207 silly gunzTarPerm extractEntry spec/index-node.html
+1208 silly gunzTarPerm extractEntry spec/backbone/airtime.js
+1209 silly gunzTarPerm extractEntry spec/backbone/details.js
+1210 silly gunzTarPerm extractEntry spec/backbone/episode.js
+1211 silly gunzTarPerm extractEntry spec/backbone/hosts.js
+1212 silly gunzTarPerm extractEntry spec/backbone/login.js
+1213 silly gunzTarPerm extractEntry spec/backbone/calendar.js
+1214 silly gunzTarPerm extractEntry spec/backbone/streams.js
+1215 silly gunzTarPerm extractEntry spec/backbone/program.js
+1216 silly gunzTarPerm extractEntry spec/backbone/session.js
+1217 silly gunzTarPerm extractEntry spec/backbone/ucs.js
+1218 silly gunzTarPerm extractEntry spec/backbone/my_episodes.js
+1219 silly gunzTarPerm extractEntry spec/backbone/old-tests.js_old
+1220 silly gunzTarPerm extractEntry spec/node/_upgradeProgramRecurrences_spec.js
+1221 silly gunzTarPerm extractEntry spec/node/api_program_spec.js
+1222 silly gunzTarPerm extractEntry spec/node/api_ucs_spec.js
+1223 silly gunzTarPerm extractEntry spec/node/buildProgramEpisodeDocumentsRaw_spec.js
+1224 silly gunzTarPerm extractEntry spec/node/calcEpisodeDates_spec.js
+1225 silly gunzTarPerm extractEntry spec/node/pad_spec.js
+1226 silly gunzTarPerm extractEntry spec/node/provision_spec.js
+1227 silly gunzTarPerm extractEntry spec/node/validate_spec.js
+1228 silly gunzTarPerm extractEntry spec/node/tests_disabled.js_old
+1229 silly gunzTarPerm extractEntry spec/api/functional.js
+1230 silly gunzTarPerm extractEntry spec/api/playlist.js
+1231 silly gunzTarPerm extractEntry spec/api/program.js
+1232 silly gunzTarPerm extractEntry spec/api/station.js
+1233 silly gunzTarPerm extractEntry spec/api/ucs.js
+1234 silly gunzTarPerm extractEntry spec/api/user.js
+1235 silly gunzTarPerm extractEntry spec/runner-backup.html
+1236 silly gunzTarPerm extractEntry spec/security/security.spec.js
+1237 silly gunzTarPerm extractEntry spec/vendor/almond.js
+1238 silly gunzTarPerm extractEntry spec/vendor/coffee-script.js
+1239 silly gunzTarPerm extractEntry spec/vendor/cs.js
+1240 silly gunzTarPerm extractEntry spec/vendor/r.js
+1241 silly gunzTarPerm extractEntry spec/vendor/require.js
+1242 silly gunzTarPerm extractEntry spec/vendor/jasmine/jasmine-grunt.js
+1243 silly gunzTarPerm extractEntry spec/vendor/jasmine/jasmine-html.js
+1244 silly gunzTarPerm extractEntry spec/vendor/jasmine/jasmine.js
+1245 silly gunzTarPerm extractEntry spec/vendor/jasmine/jasmine.css
+1246 silly gunzTarPerm extractEntry spec/vendor/jasmine/MIT.LICENSE
+1247 silly gunzTarPerm extractEntry spec/vendor/jasmine-jquery/jasmine-jquery.js
+1248 silly gunzTarPerm extractEntry spec/vendor/mockjax/jquery.mockjax.js
+1249 verbose read json /Users/steve/Dropbox/github/RandD/node-ci/node_modules/Composer/package.json
+1250 silly lockFile 27b7675a-dD-node-ci-node-modules-Composer /Users/steve/Dropbox/github/RandD/node-ci/node_modules/Composer
+1251 info preinstall Composer@0.1.22
+1252 verbose from cache /Users/steve/Dropbox/github/RandD/node-ci/node_modules/Composer/package.json
+1253 verbose readDependencies using package.json deps
+1254 verbose from cache /Users/steve/Dropbox/github/RandD/node-ci/node_modules/Composer/package.json
+1255 verbose readDependencies using package.json deps
+1256 verbose cache add [ 'express@~3.0.4', null ]
+1257 silly cache add name=undefined spec="express@~3.0.4" args=["express@~3.0.4",null]
+1258 verbose parsed url { pathname: 'express@~3.0.4',
+1258 verbose parsed url   path: 'express@~3.0.4',
+1258 verbose parsed url   href: 'express@~3.0.4' }
+1259 silly cache add name="express" spec="~3.0.4" args=["express","~3.0.4"]
+1260 verbose parsed url { pathname: '~3.0.4', path: '~3.0.4', href: '~3.0.4' }
+1261 verbose addNamed [ 'express', '~3.0.4' ]
+1262 verbose addNamed [ null, '>=3.0.4- <3.1.0-' ]
+1263 silly lockFile d5c4e823-express-3-0-4 express@~3.0.4
+1264 verbose lock express@~3.0.4 /Users/steve/.npm/d5c4e823-express-3-0-4.lock
+1265 verbose cache add [ 'connect@2.7.1', null ]
+1266 silly cache add name=undefined spec="connect@2.7.1" args=["connect@2.7.1",null]
+1267 verbose parsed url { pathname: 'connect@2.7.1',
+1267 verbose parsed url   path: 'connect@2.7.1',
+1267 verbose parsed url   href: 'connect@2.7.1' }
+1268 silly cache add name="connect" spec="2.7.1" args=["connect","2.7.1"]
+1269 verbose parsed url { pathname: '2.7.1', path: '2.7.1', href: '2.7.1' }
+1270 verbose addNamed [ 'connect', '2.7.1' ]
+1271 verbose addNamed [ '2.7.1', '2.7.1' ]
+1272 silly lockFile 6d424c20-connect-2-7-1 connect@2.7.1
+1273 verbose lock connect@2.7.1 /Users/steve/.npm/6d424c20-connect-2-7-1.lock
+1274 silly addNameRange { name: 'express', range: '>=3.0.4- <3.1.0-', hasData: false }
+1275 verbose cache add [ 'request@2.9.202', null ]
+1276 silly cache add name=undefined spec="request@2.9.202" args=["request@2.9.202",null]
+1277 verbose parsed url { pathname: 'request@2.9.202',
+1277 verbose parsed url   path: 'request@2.9.202',
+1277 verbose parsed url   href: 'request@2.9.202' }
+1278 silly cache add name="request" spec="2.9.202" args=["request","2.9.202"]
+1279 verbose parsed url { pathname: '2.9.202', path: '2.9.202', href: '2.9.202' }
+1280 verbose addNamed [ 'request', '2.9.202' ]
+1281 verbose addNamed [ '2.9.202', '2.9.202' ]
+1282 silly lockFile f7ac4bcd-request-2-9-202 request@2.9.202
+1283 verbose lock request@2.9.202 /Users/steve/.npm/f7ac4bcd-request-2-9-202.lock
+1284 verbose cache add [ 'mongodb@1.2.10', null ]
+1285 silly cache add name=undefined spec="mongodb@1.2.10" args=["mongodb@1.2.10",null]
+1286 verbose parsed url { pathname: 'mongodb@1.2.10',
+1286 verbose parsed url   path: 'mongodb@1.2.10',
+1286 verbose parsed url   href: 'mongodb@1.2.10' }
+1287 silly cache add name="mongodb" spec="1.2.10" args=["mongodb","1.2.10"]
+1288 verbose parsed url { pathname: '1.2.10', path: '1.2.10', href: '1.2.10' }
+1289 verbose addNamed [ 'mongodb', '1.2.10' ]
+1290 verbose addNamed [ '1.2.10', '1.2.10' ]
+1291 silly lockFile 069b4d0f-mongodb-1-2-10 mongodb@1.2.10
+1292 verbose lock mongodb@1.2.10 /Users/steve/.npm/069b4d0f-mongodb-1-2-10.lock
+1293 verbose cache add [ 'validator@~0.4.13', null ]
+1294 silly cache add name=undefined spec="validator@~0.4.13" args=["validator@~0.4.13",null]
+1295 verbose parsed url { pathname: 'validator@~0.4.13',
+1295 verbose parsed url   path: 'validator@~0.4.13',
+1295 verbose parsed url   href: 'validator@~0.4.13' }
+1296 silly cache add name="validator" spec="~0.4.13" args=["validator","~0.4.13"]
+1297 verbose parsed url { pathname: '~0.4.13', path: '~0.4.13', href: '~0.4.13' }
+1298 verbose addNamed [ 'validator', '~0.4.13' ]
+1299 verbose addNamed [ null, '>=0.4.13- <0.5.0-' ]
+1300 silly lockFile c22087b8-validator-0-4-13 validator@~0.4.13
+1301 verbose lock validator@~0.4.13 /Users/steve/.npm/c22087b8-validator-0-4-13.lock
+1302 verbose cache add [ 'jade@~0.27.7', null ]
+1303 silly cache add name=undefined spec="jade@~0.27.7" args=["jade@~0.27.7",null]
+1304 verbose parsed url { pathname: 'jade@~0.27.7',
+1304 verbose parsed url   path: 'jade@~0.27.7',
+1304 verbose parsed url   href: 'jade@~0.27.7' }
+1305 silly cache add name="jade" spec="~0.27.7" args=["jade","~0.27.7"]
+1306 verbose parsed url { pathname: '~0.27.7', path: '~0.27.7', href: '~0.27.7' }
+1307 verbose addNamed [ 'jade', '~0.27.7' ]
+1308 verbose addNamed [ null, '>=0.27.7- <0.28.0-' ]
+1309 silly lockFile 071853a2-jade-0-27-7 jade@~0.27.7
+1310 verbose lock jade@~0.27.7 /Users/steve/.npm/071853a2-jade-0-27-7.lock
+1311 silly addNameRange { name: 'validator', range: '>=0.4.13- <0.5.0-', hasData: false }
+1312 verbose url raw connect/2.7.1
+1313 verbose url resolving [ 'https://registry.npmjs.org/', './connect/2.7.1' ]
+1314 verbose url resolved https://registry.npmjs.org/connect/2.7.1
+1315 info retry registry request attempt 1 at 15:06:15
+1316 verbose etag "B8ZOTUP6VCCQ9HPP5ABE923JE"
+1317 http GET https://registry.npmjs.org/connect/2.7.1
+1318 verbose url raw express
+1319 verbose url resolving [ 'https://registry.npmjs.org/', './express' ]
+1320 verbose url resolved https://registry.npmjs.org/express
+1321 info retry registry request attempt 1 at 15:06:15
+1322 verbose etag "4QWRZ2FCWDDQ3G2INYH68Y4E"
+1323 http GET https://registry.npmjs.org/express
+1324 silly addNameRange { name: 'jade', range: '>=0.27.7- <0.28.0-', hasData: false }
+1325 verbose url raw request/2.9.202
+1326 verbose url resolving [ 'https://registry.npmjs.org/', './request/2.9.202' ]
+1327 verbose url resolved https://registry.npmjs.org/request/2.9.202
+1328 info retry registry request attempt 1 at 15:06:15
+1329 verbose etag "979KS6XLZJ6OVRH2QP25TWQSL"
+1330 http GET https://registry.npmjs.org/request/2.9.202
+1331 verbose url raw mongodb/1.2.10
+1332 verbose url resolving [ 'https://registry.npmjs.org/', './mongodb/1.2.10' ]
+1333 verbose url resolved https://registry.npmjs.org/mongodb/1.2.10
+1334 info retry registry request attempt 1 at 15:06:15
+1335 verbose etag "C7QFW7TR03ESO8Y8IFH4D4SCK"
+1336 http GET https://registry.npmjs.org/mongodb/1.2.10
+1337 verbose url raw validator
+1338 verbose url resolving [ 'https://registry.npmjs.org/', './validator' ]
+1339 verbose url resolved https://registry.npmjs.org/validator
+1340 info retry registry request attempt 1 at 15:06:15
+1341 verbose etag "EEDF3SFH5VOKPGELHOWCPOTQM"
+1342 http GET https://registry.npmjs.org/validator
+1343 verbose cache add [ 'csv@~0.2.4', null ]
+1344 silly cache add name=undefined spec="csv@~0.2.4" args=["csv@~0.2.4",null]
+1345 verbose parsed url { pathname: 'csv@~0.2.4',
+1345 verbose parsed url   path: 'csv@~0.2.4',
+1345 verbose parsed url   href: 'csv@~0.2.4' }
+1346 silly cache add name="csv" spec="~0.2.4" args=["csv","~0.2.4"]
+1347 verbose parsed url { pathname: '~0.2.4', path: '~0.2.4', href: '~0.2.4' }
+1348 verbose addNamed [ 'csv', '~0.2.4' ]
+1349 verbose addNamed [ null, '>=0.2.4- <0.3.0-' ]
+1350 silly lockFile d66c906e-csv-0-2-4 csv@~0.2.4
+1351 verbose lock csv@~0.2.4 /Users/steve/.npm/d66c906e-csv-0-2-4.lock
+1352 verbose cache add [ 'optimist@~0.3.5', null ]
+1353 silly cache add name=undefined spec="optimist@~0.3.5" args=["optimist@~0.3.5",null]
+1354 verbose parsed url { pathname: 'optimist@~0.3.5',
+1354 verbose parsed url   path: 'optimist@~0.3.5',
+1354 verbose parsed url   href: 'optimist@~0.3.5' }
+1355 silly cache add name="optimist" spec="~0.3.5" args=["optimist","~0.3.5"]
+1356 verbose parsed url { pathname: '~0.3.5', path: '~0.3.5', href: '~0.3.5' }
+1357 verbose addNamed [ 'optimist', '~0.3.5' ]
+1358 verbose addNamed [ null, '>=0.3.5- <0.4.0-' ]
+1359 silly lockFile a1f99b53-optimist-0-3-5 optimist@~0.3.5
+1360 verbose lock optimist@~0.3.5 /Users/steve/.npm/a1f99b53-optimist-0-3-5.lock
+1361 verbose cache add [ 'connect-mongodb@~1.1.5', null ]
+1362 silly cache add name=undefined spec="connect-mongodb@~1.1.5" args=["connect-mongodb@~1.1.5",null]
+1363 verbose parsed url { pathname: 'connect-mongodb@~1.1.5',
+1363 verbose parsed url   path: 'connect-mongodb@~1.1.5',
+1363 verbose parsed url   href: 'connect-mongodb@~1.1.5' }
+1364 silly cache add name="connect-mongodb" spec="~1.1.5" args=["connect-mongodb","~1.1.5"]
+1365 verbose parsed url { pathname: '~1.1.5', path: '~1.1.5', href: '~1.1.5' }
+1366 verbose addNamed [ 'connect-mongodb', '~1.1.5' ]
+1367 verbose addNamed [ null, '>=1.1.5- <1.2.0-' ]
+1368 silly lockFile d9ed9461-connect-mongodb-1-1-5 connect-mongodb@~1.1.5
+1369 verbose lock connect-mongodb@~1.1.5 /Users/steve/.npm/d9ed9461-connect-mongodb-1-1-5.lock
+1370 verbose cache add [ 'nodefly@~0.1.16a', null ]
+1371 silly cache add name=undefined spec="nodefly@~0.1.16a" args=["nodefly@~0.1.16a",null]
+1372 verbose parsed url { pathname: 'nodefly@~0.1.16a',
+1372 verbose parsed url   path: 'nodefly@~0.1.16a',
+1372 verbose parsed url   href: 'nodefly@~0.1.16a' }
+1373 silly cache add name="nodefly" spec="~0.1.16a" args=["nodefly","~0.1.16a"]
+1374 verbose parsed url { pathname: '~0.1.16a', path: '~0.1.16a', href: '~0.1.16a' }
+1375 verbose addNamed [ 'nodefly', '~0.1.16a' ]
+1376 verbose addNamed [ null, '>=0.1.16a <0.2.0-' ]
+1377 silly lockFile 37cd155e-nodefly-0-1-16a nodefly@~0.1.16a
+1378 verbose lock nodefly@~0.1.16a /Users/steve/.npm/37cd155e-nodefly-0-1-16a.lock
+1379 verbose cache add [ 'async@~0.1.22', null ]
+1380 silly cache add name=undefined spec="async@~0.1.22" args=["async@~0.1.22",null]
+1381 verbose parsed url { pathname: 'async@~0.1.22',
+1381 verbose parsed url   path: 'async@~0.1.22',
+1381 verbose parsed url   href: 'async@~0.1.22' }
+1382 silly cache add name="async" spec="~0.1.22" args=["async","~0.1.22"]
+1383 verbose parsed url { pathname: '~0.1.22', path: '~0.1.22', href: '~0.1.22' }
+1384 verbose addNamed [ 'async', '~0.1.22' ]
+1385 verbose addNamed [ null, '>=0.1.22- <0.2.0-' ]
+1386 silly lockFile 3af71045-async-0-1-22 async@~0.1.22
+1387 verbose lock async@~0.1.22 /Users/steve/.npm/3af71045-async-0-1-22.lock
+1388 verbose cache add [ 'elasticsearchclient@~0.2.2', null ]
+1389 silly cache add name=undefined spec="elasticsearchclient@~0.2.2" args=["elasticsearchclient@~0.2.2",null]
+1390 verbose parsed url { pathname: 'elasticsearchclient@~0.2.2',
+1390 verbose parsed url   path: 'elasticsearchclient@~0.2.2',
+1390 verbose parsed url   href: 'elasticsearchclient@~0.2.2' }
+1391 silly cache add name="elasticsearchclient" spec="~0.2.2" args=["elasticsearchclient","~0.2.2"]
+1392 verbose parsed url { pathname: '~0.2.2', path: '~0.2.2', href: '~0.2.2' }
+1393 verbose addNamed [ 'elasticsearchclient', '~0.2.2' ]
+1394 verbose addNamed [ null, '>=0.2.2- <0.3.0-' ]
+1395 silly lockFile 8b1d6ab4-elasticsearchclient-0-2-2 elasticsearchclient@~0.2.2
+1396 verbose lock elasticsearchclient@~0.2.2 /Users/steve/.npm/8b1d6ab4-elasticsearchclient-0-2-2.lock
+1397 verbose cache add [ 'swagger-node-express@~1.2.2', null ]
+1398 silly cache add name=undefined spec="swagger-node-express@~1.2.2" args=["swagger-node-express@~1.2.2",null]
+1399 verbose parsed url { pathname: 'swagger-node-express@~1.2.2',
+1399 verbose parsed url   path: 'swagger-node-express@~1.2.2',
+1399 verbose parsed url   href: 'swagger-node-express@~1.2.2' }
+1400 silly cache add name="swagger-node-express" spec="~1.2.2" args=["swagger-node-express","~1.2.2"]
+1401 verbose parsed url { pathname: '~1.2.2', path: '~1.2.2', href: '~1.2.2' }
+1402 verbose addNamed [ 'swagger-node-express', '~1.2.2' ]
+1403 verbose addNamed [ null, '>=1.2.2- <1.3.0-' ]
+1404 silly lockFile 3fa54159-swagger-node-express-1-2-2 swagger-node-express@~1.2.2
+1405 verbose lock swagger-node-express@~1.2.2 /Users/steve/.npm/3fa54159-swagger-node-express-1-2-2.lock
+1406 verbose url raw jade
+1407 verbose url resolving [ 'https://registry.npmjs.org/', './jade' ]
+1408 verbose url resolved https://registry.npmjs.org/jade
+1409 info retry registry request attempt 1 at 15:06:15
+1410 verbose etag "9OMXWJDSV2K1MCJ3MKQBFXTJH"
+1411 http GET https://registry.npmjs.org/jade
+1412 silly addNameRange { name: 'csv', range: '>=0.2.4- <0.3.0-', hasData: false }
+1413 silly addNameRange { name: 'nodefly', range: '>=0.1.16a <0.2.0-', hasData: false }
+1414 silly addNameRange { name: 'optimist', range: '>=0.3.5- <0.4.0-', hasData: false }
+1415 silly addNameRange { name: 'elasticsearchclient',
+1415 silly addNameRange   range: '>=0.2.2- <0.3.0-',
+1415 silly addNameRange   hasData: false }
+1416 silly addNameRange { name: 'swagger-node-express',
+1416 silly addNameRange   range: '>=1.2.2- <1.3.0-',
+1416 silly addNameRange   hasData: false }
+1417 silly addNameRange { name: 'connect-mongodb',
+1417 silly addNameRange   range: '>=1.1.5- <1.2.0-',
+1417 silly addNameRange   hasData: false }
+1418 silly addNameRange { name: 'async', range: '>=0.1.22- <0.2.0-', hasData: false }
+1419 verbose url raw csv
+1420 verbose url resolving [ 'https://registry.npmjs.org/', './csv' ]
+1421 verbose url resolved https://registry.npmjs.org/csv
+1422 info retry registry request attempt 1 at 15:06:16
+1423 verbose etag "4XNLT67REGMQPHMYLB038BLXH"
+1424 http GET https://registry.npmjs.org/csv
+1425 verbose url raw nodefly
+1426 verbose url resolving [ 'https://registry.npmjs.org/', './nodefly' ]
+1427 verbose url resolved https://registry.npmjs.org/nodefly
+1428 info retry registry request attempt 1 at 15:06:16
+1429 verbose etag "AOM882D958LK4AYYC15HPHRIQ"
+1430 http GET https://registry.npmjs.org/nodefly
+1431 verbose url raw optimist
+1432 verbose url resolving [ 'https://registry.npmjs.org/', './optimist' ]
+1433 verbose url resolved https://registry.npmjs.org/optimist
+1434 info retry registry request attempt 1 at 15:06:16
+1435 verbose etag "DINJX8JJJF3SUM849RJWMQAS"
+1436 http GET https://registry.npmjs.org/optimist
+1437 verbose url raw elasticsearchclient
+1438 verbose url resolving [ 'https://registry.npmjs.org/', './elasticsearchclient' ]
+1439 verbose url resolved https://registry.npmjs.org/elasticsearchclient
+1440 info retry registry request attempt 1 at 15:06:16
+1441 verbose etag "114TYPNQ1XLLBHVSL53TUHHAO"
+1442 http GET https://registry.npmjs.org/elasticsearchclient
+1443 verbose url raw swagger-node-express
+1444 verbose url resolving [ 'https://registry.npmjs.org/', './swagger-node-express' ]
+1445 verbose url resolved https://registry.npmjs.org/swagger-node-express
+1446 info retry registry request attempt 1 at 15:06:16
+1447 verbose etag "BN5IPI2DKFYL10WLM2IYN0450"
+1448 http GET https://registry.npmjs.org/swagger-node-express
+1449 verbose url raw connect-mongodb
+1450 verbose url resolving [ 'https://registry.npmjs.org/', './connect-mongodb' ]
+1451 verbose url resolved https://registry.npmjs.org/connect-mongodb
+1452 info retry registry request attempt 1 at 15:06:16
+1453 verbose etag "7T29JFBUSPVXHT4THTKOVV93F"
+1454 http GET https://registry.npmjs.org/connect-mongodb
+1455 verbose url raw async
+1456 verbose url resolving [ 'https://registry.npmjs.org/', './async' ]
+1457 verbose url resolved https://registry.npmjs.org/async
+1458 info retry registry request attempt 1 at 15:06:16
+1459 verbose etag "DLDGBWOC59RG4E5CF1JGEXQQP"
+1460 http GET https://registry.npmjs.org/async
+1461 http 304 https://registry.npmjs.org/connect/2.7.1
+1462 silly registry.get cb [ 304,
+1462 silly registry.get   { server: 'CouchDB/1.2.1 (Erlang OTP/R15B03)',
+1462 silly registry.get     etag: '"B8ZOTUP6VCCQ9HPP5ABE923JE"',
+1462 silly registry.get     date: 'Wed, 27 Feb 2013 20:06:16 GMT',
+1462 silly registry.get     'content-length': '0' } ]
+1463 verbose etag connect/2.7.1 from cache
+1464 verbose read json /Users/steve/.npm/connect/2.7.1/package/package.json
+1465 silly lockFile 6d424c20-connect-2-7-1 connect@2.7.1
+1466 http 304 https://registry.npmjs.org/express
+1467 silly registry.get cb [ 304,
+1467 silly registry.get   { server: 'CouchDB/1.2.1 (Erlang OTP/R15B03)',
+1467 silly registry.get     etag: '"4QWRZ2FCWDDQ3G2INYH68Y4E"',
+1467 silly registry.get     date: 'Wed, 27 Feb 2013 20:06:16 GMT',
+1467 silly registry.get     'content-length': '0' } ]
+1468 verbose etag express from cache
+1469 http 304 https://registry.npmjs.org/validator
+1470 silly registry.get cb [ 304,
+1470 silly registry.get   { server: 'CouchDB/1.2.1 (Erlang OTP/R15B03)',
+1470 silly registry.get     etag: '"EEDF3SFH5VOKPGELHOWCPOTQM"',
+1470 silly registry.get     date: 'Wed, 27 Feb 2013 20:06:16 GMT',
+1470 silly registry.get     'content-length': '0' } ]
+1471 verbose etag validator from cache
+1472 http 304 https://registry.npmjs.org/request/2.9.202
+1473 silly registry.get cb [ 304,
+1473 silly registry.get   { server: 'CouchDB/1.2.1 (Erlang OTP/R15B03)',
+1473 silly registry.get     etag: '"979KS6XLZJ6OVRH2QP25TWQSL"',
+1473 silly registry.get     date: 'Wed, 27 Feb 2013 20:06:16 GMT',
+1473 silly registry.get     'content-length': '0' } ]
+1474 verbose etag request/2.9.202 from cache
+1475 silly addNameRange number 2 { name: 'express', range: '>=3.0.4- <3.1.0-', hasData: true }
+1476 silly addNameRange versions [ 'express',
+1476 silly addNameRange   [ '0.14.0',
+1476 silly addNameRange     '0.14.1',
+1476 silly addNameRange     '1.0.0beta',
+1476 silly addNameRange     '1.0.0beta2',
+1476 silly addNameRange     '1.0.0rc',
+1476 silly addNameRange     '1.0.0rc2',
+1476 silly addNameRange     '1.0.0rc3',
+1476 silly addNameRange     '1.0.0rc4',
+1476 silly addNameRange     '1.0.0',
+1476 silly addNameRange     '1.0.1',
+1476 silly addNameRange     '1.0.2',
+1476 silly addNameRange     '1.0.3',
+1476 silly addNameRange     '1.0.4',
+1476 silly addNameRange     '1.0.5',
+1476 silly addNameRange     '1.0.6',
+1476 silly addNameRange     '1.0.7',
+1476 silly addNameRange     '2.0.0beta',
+1476 silly addNameRange     '1.0.8',
+1476 silly addNameRange     '2.0.0beta2',
+1476 silly addNameRange     '2.0.0beta3',
+1476 silly addNameRange     '2.0.0rc',
+1476 silly addNameRange     '2.0.0rc2',
+1476 silly addNameRange     '2.0.0rc3',
+1476 silly addNameRange     '2.0.0',
+1476 silly addNameRange     '2.1.0',
+1476 silly addNameRange     '2.1.1',
+1476 silly addNameRange     '2.2.0',
+1476 silly addNameRange     '2.2.1',
+1476 silly addNameRange     '2.2.2',
+1476 silly addNameRange     '2.3.0',
+1476 silly addNameRange     '2.3.1',
+1476 silly addNameRange     '2.3.2',
+1476 silly addNameRange     '2.3.3',
+1476 silly addNameRange     '2.3.4',
+1476 silly addNameRange     '2.3.5',
+1476 silly addNameRange     '2.3.6',
+1476 silly addNameRange     '2.3.7',
+1476 silly addNameRange     '2.3.8',
+1476 silly addNameRange     '2.3.9',
+1476 silly addNameRange     '2.3.10',
+1476 silly addNameRange     '2.3.11',
+1476 silly addNameRange     '2.3.12',
+1476 silly addNameRange     '2.4.0',
+1476 silly addNameRange     '2.4.1',
+1476 silly addNameRange     '2.4.2',
+1476 silly addNameRange     '2.4.3',
+1476 silly addNameRange     '2.4.4',
+1476 silly addNameRange     '2.4.5',
+1476 silly addNameRange     '2.4.6',
+1476 silly addNameRange     '2.4.7',
+1476 silly addNameRange     '2.5.0',
+1476 silly addNameRange     '2.5.1',
+1476 silly addNameRange     '2.5.2',
+1476 silly addNameRange     '2.5.3',
+1476 silly addNameRange     '2.5.4',
+1476 silly addNameRange     '2.5.5',
+1476 silly addNameRange     '2.5.6',
+1476 silly addNameRange     '2.5.7',
+1476 silly addNameRange     '2.5.8',
+1476 silly addNameRange     '2.5.9',
+1476 silly addNameRange     '3.0.0alpha1',
+1476 silly addNameRange     '3.0.0alpha2',
+1476 silly addNameRange     '3.0.0alpha3',
+1476 silly addNameRange     '3.0.0alpha4',
+1476 silly addNameRange     '3.0.0alpha5',
+1476 silly addNameRange     '3.0.0beta1',
+1476 silly addNameRange     '3.0.0beta2',
+1476 silly addNameRange     '3.0.0beta3',
+1476 silly addNameRange     '2.5.10',
+1476 silly addNameRange     '3.0.0beta4',
+1476 silly addNameRange     '2.5.11',
+1476 silly addNameRange     '3.0.0beta6',
+1476 silly addNameRange     '3.0.0beta7',
+1476 silly addNameRange     '3.0.0rc1',
+1476 silly addNameRange     '3.0.0rc2',
+1476 silly addNameRange     '3.0.0rc3',
+1476 silly addNameRange     '3.0.0rc4',
+1476 silly addNameRange     '3.0.0rc5',
+1476 silly addNameRange     '3.0.0',
+1476 silly addNameRange     '3.0.1',
+1476 silly addNameRange     '3.0.2',
+1476 silly addNameRange     '3.0.3',
+1476 silly addNameRange     '3.0.4',
+1476 silly addNameRange     '3.0.5',
+1476 silly addNameRange     '3.0.6',
+1476 silly addNameRange     '3.1.0' ] ]
+1477 verbose addNamed [ 'express', '3.0.6' ]
+1478 verbose addNamed [ '3.0.6', '3.0.6' ]
+1479 silly lockFile e902e1c0-express-3-0-6 express@3.0.6
+1480 verbose lock express@3.0.6 /Users/steve/.npm/e902e1c0-express-3-0-6.lock
+1481 http 304 https://registry.npmjs.org/mongodb/1.2.10
+1482 silly registry.get cb [ 304,
+1482 silly registry.get   { server: 'CouchDB/1.2.1 (Erlang OTP/R15B03)',
+1482 silly registry.get     etag: '"C7QFW7TR03ESO8Y8IFH4D4SCK"',
+1482 silly registry.get     date: 'Wed, 27 Feb 2013 20:06:16 GMT',
+1482 silly registry.get     'content-length': '0' } ]
+1483 verbose etag mongodb/1.2.10 from cache
+1484 silly addNameRange number 2 { name: 'validator', range: '>=0.4.13- <0.5.0-', hasData: true }
+1485 silly addNameRange versions [ 'validator',
+1485 silly addNameRange   [ '0.1.0',
+1485 silly addNameRange     '0.1.1',
+1485 silly addNameRange     '0.1.2',
+1485 silly addNameRange     '0.1.3',
+1485 silly addNameRange     '0.1.4',
+1485 silly addNameRange     '0.1.5',
+1485 silly addNameRange     '0.1.6',
+1485 silly addNameRange     '0.1.7',
+1485 silly addNameRange     '0.1.8',
+1485 silly addNameRange     '0.1.9',
+1485 silly addNameRange     '0.2.0',
+1485 silly addNameRange     '0.2.1',
+1485 silly addNameRange     '0.2.2',
+1485 silly addNameRange     '0.2.3',
+1485 silly addNameRange     '0.2.4',
+1485 silly addNameRange     '0.2.5',
+1485 silly addNameRange     '0.2.6',
+1485 silly addNameRange     '0.2.7',
+1485 silly addNameRange     '0.2.8',
+1485 silly addNameRange     '0.2.9',
+1485 silly addNameRange     '0.3.0',
+1485 silly addNameRange     '0.3.1',
+1485 silly addNameRange     '0.3.2',
+1485 silly addNameRange     '0.3.4',
+1485 silly addNameRange     '0.3.5',
+1485 silly addNameRange     '0.3.6',
+1485 silly addNameRange     '0.3.7',
+1485 silly addNameRange     '0.3.8',
+1485 silly addNameRange     '0.3.9',
+1485 silly addNameRange     '0.4.0',
+1485 silly addNameRange     '0.4.1',
+1485 silly addNameRange     '0.4.2',
+1485 silly addNameRange     '0.4.3',
+1485 silly addNameRange     '0.4.4',
+1485 silly addNameRange     '0.4.5',
+1485 silly addNameRange     '0.4.6',
+1485 silly addNameRange     '0.4.6-1',
+1485 silly addNameRange     '0.4.6-2',
+1485 silly addNameRange     '0.4.6-3',
+1485 silly addNameRange     '0.4.7',
+1485 silly addNameRange     '0.4.8',
+1485 silly addNameRange     '0.4.9',
+1485 silly addNameRange     '0.4.10',
+1485 silly addNameRange     '0.4.11',
+1485 silly addNameRange     '0.4.12',
+1485 silly addNameRange     '0.4.13',
+1485 silly addNameRange     '0.4.15',
+1485 silly addNameRange     '0.4.16',
+1485 silly addNameRange     '0.4.17',
+1485 silly addNameRange     '0.4.18',
+1485 silly addNameRange     '0.4.19',
+1485 silly addNameRange     '0.4.20',
+1485 silly addNameRange     '0.4.21',
+1485 silly addNameRange     '0.4.22',
+1485 silly addNameRange     '0.4.23',
+1485 silly addNameRange     '0.4.24',
+1485 silly addNameRange     '0.4.25' ] ]
+1486 verbose addNamed [ 'validator', '0.4.25' ]
+1487 verbose addNamed [ '0.4.25', '0.4.25' ]
+1488 silly lockFile 23a509a2-validator-0-4-25 validator@0.4.25
+1489 verbose lock validator@0.4.25 /Users/steve/.npm/23a509a2-validator-0-4-25.lock
+1490 verbose read json /Users/steve/.npm/express/3.0.6/package/package.json
+1491 verbose read json /Users/steve/.npm/validator/0.4.25/package/package.json
+1492 verbose read json /Users/steve/.npm/request/2.9.202/package/package.json
+1493 silly lockFile 6d437357--org-request-request-2-9-202-tgz https://registry.npmjs.org/request/-/request-2.9.202.tgz
+1494 verbose lock https://registry.npmjs.org/request/-/request-2.9.202.tgz /Users/steve/.npm/6d437357--org-request-request-2-9-202-tgz.lock
+1495 verbose addRemoteTarball [ 'https://registry.npmjs.org/request/-/request-2.9.202.tgz',
+1495 verbose addRemoteTarball   'c61399cdfbbefda5dc48653b0e9bea517d9f8497' ]
+1496 verbose read json /Users/steve/.npm/mongodb/1.2.10/package/package.json
+1497 info retry fetch attempt 1 at 15:06:16
+1498 verbose fetch to= /var/folders/dd/s_scwdrs2r74q3sgmfc9zcz80000gn/T/npm-11907/1361995576582-0.4125904112588614/tmp.tgz
+1499 silly lockFile e902e1c0-express-3-0-6 express@3.0.6
+1500 http GET https://registry.npmjs.org/request/-/request-2.9.202.tgz
+1501 silly lockFile d5c4e823-express-3-0-4 express@~3.0.4
+1502 silly lockFile 23a509a2-validator-0-4-25 validator@0.4.25
+1503 silly lockFile c22087b8-validator-0-4-13 validator@~0.4.13
+1504 http 304 https://registry.npmjs.org/jade
+1505 silly registry.get cb [ 304,
+1505 silly registry.get   { server: 'CouchDB/1.2.1 (Erlang OTP/R15B03)',
+1505 silly registry.get     etag: '"9OMXWJDSV2K1MCJ3MKQBFXTJH"',
+1505 silly registry.get     date: 'Wed, 27 Feb 2013 20:06:16 GMT',
+1505 silly registry.get     'content-length': '0' } ]
+1506 verbose etag jade from cache
+1507 silly lockFile 069b4d0f-mongodb-1-2-10 mongodb@1.2.10
+1508 silly addNameRange number 2 { name: 'jade', range: '>=0.27.7- <0.28.0-', hasData: true }
+1509 silly addNameRange versions [ 'jade',
+1509 silly addNameRange   [ '0.0.1',
+1509 silly addNameRange     '0.0.2',
+1509 silly addNameRange     '0.1.0',
+1509 silly addNameRange     '0.2.0',
+1509 silly addNameRange     '0.2.1',
+1509 silly addNameRange     '0.2.2',
+1509 silly addNameRange     '0.2.3',
+1509 silly addNameRange     '0.2.4',
+1509 silly addNameRange     '0.3.0',
+1509 silly addNameRange     '0.4.0',
+1509 silly addNameRange     '0.4.1',
+1509 silly addNameRange     '0.5.0',
+1509 silly addNameRange     '0.5.1',
+1509 silly addNameRange     '0.5.2',
+1509 silly addNameRange     '0.5.3',
+1509 silly addNameRange     '0.5.4',
+1509 silly addNameRange     '0.5.5',
+1509 silly addNameRange     '0.5.6',
+1509 silly addNameRange     '0.5.7',
+1509 silly addNameRange     '0.6.0',
+1509 silly addNameRange     '0.6.1',
+1509 silly addNameRange     '0.6.3',
+1509 silly addNameRange     '0.7.0',
+1509 silly addNameRange     '0.7.1',
+1509 silly addNameRange     '0.8.0',
+1509 silly addNameRange     '0.8.1',
+1509 silly addNameRange     '0.8.2',
+1509 silly addNameRange     '0.8.3',
+1509 silly addNameRange     '0.8.4',
+1509 silly addNameRange     '0.8.5',
+1509 silly addNameRange     '0.8.6',
+1509 silly addNameRange     '0.8.7',
+1509 silly addNameRange     '0.8.8',
+1509 silly addNameRange     '0.8.9',
+1509 silly addNameRange     '0.9.0',
+1509 silly addNameRange     '0.9.1',
+1509 silly addNameRange     '0.9.2',
+1509 silly addNameRange     '0.9.3',
+1509 silly addNameRange     '0.10.0',
+1509 silly addNameRange     '0.10.1',
+1509 silly addNameRange     '0.10.2',
+1509 silly addNameRange     '0.10.3',
+1509 silly addNameRange     '0.10.4',
+1509 silly addNameRange     '0.10.5',
+1509 silly addNameRange     '0.10.6',
+1509 silly addNameRange     '0.10.7',
+1509 silly addNameRange     '0.11.0',
+1509 silly addNameRange     '0.11.1',
+1509 silly addNameRange     '0.12.0',
+1509 silly addNameRange     '0.12.1',
+1509 silly addNameRange     '0.12.2',
+1509 silly addNameRange     '0.12.3',
+1509 silly addNameRange     '0.12.4',
+1509 silly addNameRange     '0.13.0',
+1509 silly addNameRange     '0.14.0',
+1509 silly addNameRange     '0.14.1',
+1509 silly addNameRange     '0.14.2',
+1509 silly addNameRange     '0.15.0',
+1509 silly addNameRange     '0.15.1',
+1509 silly addNameRange     '0.15.2',
+1509 silly addNameRange     '0.15.3',
+1509 silly addNameRange     '0.15.4',
+1509 silly addNameRange     '0.16.0',
+1509 silly addNameRange     '0.16.1',
+1509 silly addNameRange     '0.16.2',
+1509 silly addNameRange     '0.16.3',
+1509 silly addNameRange     '0.16.4',
+1509 silly addNameRange     '0.17.0',
+1509 silly addNameRange     '0.18.0',
+1509 silly addNameRange     '0.19.0',
+1509 silly addNameRange     '0.20.0',
+1509 silly addNameRange     '0.20.1',
+1509 silly addNameRange     '0.20.2',
+1509 silly addNameRange     '0.20.3',
+1509 silly addNameRange     '0.21.0',
+1509 silly addNameRange     '0.22.0',
+1509 silly addNameRange     '0.22.1',
+1509 silly addNameRange     '0.23.0',
+1509 silly addNameRange     '0.24.0',
+1509 silly addNameRange     '0.25.0',
+1509 silly addNameRange     '0.26.0',
+1509 silly addNameRange     '0.26.1',
+1509 silly addNameRange     '0.26.2',
+1509 silly addNameRange     '0.26.3',
+1509 silly addNameRange     '0.27.0',
+1509 silly addNameRange     '0.27.1',
+1509 silly addNameRange     '0.27.2',
+1509 silly addNameRange     '0.27.3',
+1509 silly addNameRange     '0.27.4',
+1509 silly addNameRange     '0.27.5',
+1509 silly addNameRange     '0.27.6',
+1509 silly addNameRange     '0.27.7',
+1509 silly addNameRange     '0.28.0',
+1509 silly addNameRange     '0.28.1' ] ]
+1510 verbose addNamed [ 'jade', '0.27.7' ]
+1511 verbose addNamed [ '0.27.7', '0.27.7' ]
+1512 silly lockFile 45ba1fa8-jade-0-27-7 jade@0.27.7
+1513 verbose lock jade@0.27.7 /Users/steve/.npm/45ba1fa8-jade-0-27-7.lock
+1514 http 304 https://registry.npmjs.org/csv
+1515 silly registry.get cb [ 304,
+1515 silly registry.get   { server: 'CouchDB/1.2.1 (Erlang OTP/R15B03)',
+1515 silly registry.get     etag: '"4XNLT67REGMQPHMYLB038BLXH"',
+1515 silly registry.get     date: 'Wed, 27 Feb 2013 20:06:16 GMT',
+1515 silly registry.get     'content-length': '0' } ]
+1516 verbose etag csv from cache
+1517 verbose read json /Users/steve/.npm/jade/0.27.7/package/package.json
+1518 silly addNameRange number 2 { name: 'csv', range: '>=0.2.4- <0.3.0-', hasData: true }
+1519 silly addNameRange versions [ 'csv',
+1519 silly addNameRange   [ '0.0.1',
+1519 silly addNameRange     '0.0.2',
+1519 silly addNameRange     '0.0.3',
+1519 silly addNameRange     '0.0.5',
+1519 silly addNameRange     '0.0.6',
+1519 silly addNameRange     '0.0.7',
+1519 silly addNameRange     '0.0.9',
+1519 silly addNameRange     '0.0.10',
+1519 silly addNameRange     '0.0.11',
+1519 silly addNameRange     '0.0.12',
+1519 silly addNameRange     '0.0.13',
+1519 silly addNameRange     '0.0.14',
+1519 silly addNameRange     '0.0.15',
+1519 silly addNameRange     '0.0.16',
+1519 silly addNameRange     '0.0.17',
+1519 silly addNameRange     '0.0.18',
+1519 silly addNameRange     '0.0.19',
+1519 silly addNameRange     '0.2.0',
+1519 silly addNameRange     '0.2.1',
+1519 silly addNameRange     '0.2.2',
+1519 silly addNameRange     '0.2.3',
+1519 silly addNameRange     '0.1.0',
+1519 silly addNameRange     '0.2.4',
+1519 silly addNameRange     '0.2.6',
+1519 silly addNameRange     '0.2.7' ] ]
+1520 verbose addNamed [ 'csv', '0.2.7' ]
+1521 verbose addNamed [ '0.2.7', '0.2.7' ]
+1522 silly lockFile fe97fe33-csv-0-2-7 csv@0.2.7
+1523 verbose lock csv@0.2.7 /Users/steve/.npm/fe97fe33-csv-0-2-7.lock
+1524 silly lockFile 45ba1fa8-jade-0-27-7 jade@0.27.7
+1525 verbose read json /Users/steve/.npm/csv/0.2.7/package/package.json
+1526 silly lockFile 071853a2-jade-0-27-7 jade@~0.27.7
+1527 silly lockFile fe97fe33-csv-0-2-7 csv@0.2.7
+1528 silly lockFile d66c906e-csv-0-2-4 csv@~0.2.4
+1529 http 304 https://registry.npmjs.org/nodefly
+1530 silly registry.get cb [ 304,
+1530 silly registry.get   { server: 'CouchDB/1.2.1 (Erlang OTP/R15B03)',
+1530 silly registry.get     etag: '"AOM882D958LK4AYYC15HPHRIQ"',
+1530 silly registry.get     date: 'Wed, 27 Feb 2013 20:06:16 GMT',
+1530 silly registry.get     'content-length': '0' } ]
+1531 verbose etag nodefly from cache
+1532 silly addNameRange number 2 { name: 'nodefly', range: '>=0.1.16a <0.2.0-', hasData: true }
+1533 silly addNameRange versions [ 'nodefly',
+1533 silly addNameRange   [ '0.0.1',
+1533 silly addNameRange     '0.1.6',
+1533 silly addNameRange     '0.1.7',
+1533 silly addNameRange     '0.1.8',
+1533 silly addNameRange     '0.1.9',
+1533 silly addNameRange     '0.1.10',
+1533 silly addNameRange     '0.1.11',
+1533 silly addNameRange     '0.1.12a',
+1533 silly addNameRange     '0.1.12b',
+1533 silly addNameRange     '0.1.13',
+1533 silly addNameRange     '0.1.14a',
+1533 silly addNameRange     '0.1.14b',
+1533 silly addNameRange     '0.1.15',
+1533 silly addNameRange     '0.1.16a',
+1533 silly addNameRange     '0.1.17',
+1533 silly addNameRange     '0.1.18',
+1533 silly addNameRange     '0.1.19',
+1533 silly addNameRange     '0.1.20',
+1533 silly addNameRange     '0.1.21',
+1533 silly addNameRange     '0.1.22',
+1533 silly addNameRange     '0.1.23',
+1533 silly addNameRange     '0.1.24',
+1533 silly addNameRange     '0.1.25',
+1533 silly addNameRange     '0.1.26',
+1533 silly addNameRange     '0.1.27',
+1533 silly addNameRange     '0.1.28',
+1533 silly addNameRange     '0.1.29' ] ]
+1534 verbose addNamed [ 'nodefly', '0.1.29' ]
+1535 verbose addNamed [ '0.1.29', '0.1.29' ]
+1536 silly lockFile 1b2a0ecc-nodefly-0-1-29 nodefly@0.1.29
+1537 verbose lock nodefly@0.1.29 /Users/steve/.npm/1b2a0ecc-nodefly-0-1-29.lock
+1538 verbose read json /Users/steve/.npm/nodefly/0.1.29/package/package.json
+1539 silly lockFile 1b2a0ecc-nodefly-0-1-29 nodefly@0.1.29
+1540 silly lockFile 37cd155e-nodefly-0-1-16a nodefly@~0.1.16a
+1541 http 304 https://registry.npmjs.org/optimist
+1542 silly registry.get cb [ 304,
+1542 silly registry.get   { server: 'CouchDB/1.2.1 (Erlang OTP/R15B03)',
+1542 silly registry.get     etag: '"DINJX8JJJF3SUM849RJWMQAS"',
+1542 silly registry.get     date: 'Wed, 27 Feb 2013 20:06:16 GMT',
+1542 silly registry.get     'content-length': '0' } ]
+1543 verbose etag optimist from cache
+1544 silly addNameRange number 2 { name: 'optimist', range: '>=0.3.5- <0.4.0-', hasData: true }
+1545 silly addNameRange versions [ 'optimist',
+1545 silly addNameRange   [ '0.0.1',
+1545 silly addNameRange     '0.0.2',
+1545 silly addNameRange     '0.0.4',
+1545 silly addNameRange     '0.0.5',
+1545 silly addNameRange     '0.0.6',
+1545 silly addNameRange     '0.0.7',
+1545 silly addNameRange     '0.1.0',
+1545 silly addNameRange     '0.1.1',
+1545 silly addNameRange     '0.1.2',
+1545 silly addNameRange     '0.1.3',
+1545 silly addNameRange     '0.1.4',
+1545 silly addNameRange     '0.1.5',
+1545 silly addNameRange     '0.1.6',
+1545 silly addNameRange     '0.1.7',
+1545 silly addNameRange     '0.1.8',
+1545 silly addNameRange     '0.1.9',
+1545 silly addNameRange     '0.0.3',
+1545 silly addNameRange     '0.2.0',
+1545 silly addNameRange     '0.2.1',
+1545 silly addNameRange     '0.2.2',
+1545 silly addNameRange     '0.2.3',
+1545 silly addNameRange     '0.2.4',
+1545 silly addNameRange     '0.2.5',
+1545 silly addNameRange     '0.2.6',
+1545 silly addNameRange     '0.2.7',
+1545 silly addNameRange     '0.2.8',
+1545 silly addNameRange     '0.3.0',
+1545 silly addNameRange     '0.3.1',
+1545 silly addNameRange     '0.3.3',
+1545 silly addNameRange     '0.3.4',
+1545 silly addNameRange     '0.3.5' ] ]
+1546 verbose addNamed [ 'optimist', '0.3.5' ]
+1547 verbose addNamed [ '0.3.5', '0.3.5' ]
+1548 silly lockFile 72e2da2d-optimist-0-3-5 optimist@0.3.5
+1549 verbose lock optimist@0.3.5 /Users/steve/.npm/72e2da2d-optimist-0-3-5.lock
+1550 verbose read json /Users/steve/.npm/optimist/0.3.5/package/package.json
+1551 silly lockFile 72e2da2d-optimist-0-3-5 optimist@0.3.5
+1552 silly lockFile a1f99b53-optimist-0-3-5 optimist@~0.3.5
+1553 http 304 https://registry.npmjs.org/elasticsearchclient
+1554 silly registry.get cb [ 304,
+1554 silly registry.get   { server: 'CouchDB/1.2.1 (Erlang OTP/R15B03)',
+1554 silly registry.get     etag: '"114TYPNQ1XLLBHVSL53TUHHAO"',
+1554 silly registry.get     date: 'Wed, 27 Feb 2013 20:06:16 GMT',
+1554 silly registry.get     'content-length': '0' } ]
+1555 verbose etag elasticsearchclient from cache
+1556 silly addNameRange number 2 { name: 'elasticsearchclient',
+1556 silly addNameRange   range: '>=0.2.2- <0.3.0-',
+1556 silly addNameRange   hasData: true }
+1557 silly addNameRange versions [ 'elasticsearchclient',
+1557 silly addNameRange   [ '0.2.0', '0.1.8', '0.2.1', '0.2.2', '0.2.3', '0.3.0' ] ]
+1558 verbose addNamed [ 'elasticsearchclient', '0.2.3' ]
+1559 verbose addNamed [ '0.2.3', '0.2.3' ]
+1560 silly lockFile e8edd2c7-elasticsearchclient-0-2-3 elasticsearchclient@0.2.3
+1561 verbose lock elasticsearchclient@0.2.3 /Users/steve/.npm/e8edd2c7-elasticsearchclient-0-2-3.lock
+1562 verbose read json /Users/steve/.npm/elasticsearchclient/0.2.3/package/package.json
+1563 silly lockFile e8edd2c7-elasticsearchclient-0-2-3 elasticsearchclient@0.2.3
+1564 silly lockFile 8b1d6ab4-elasticsearchclient-0-2-2 elasticsearchclient@~0.2.2
+1565 http 304 https://registry.npmjs.org/swagger-node-express
+1566 silly registry.get cb [ 304,
+1566 silly registry.get   { server: 'CouchDB/1.2.1 (Erlang OTP/R15B03)',
+1566 silly registry.get     etag: '"BN5IPI2DKFYL10WLM2IYN0450"',
+1566 silly registry.get     date: 'Wed, 27 Feb 2013 20:06:16 GMT',
+1566 silly registry.get     'content-length': '0' } ]
+1567 verbose etag swagger-node-express from cache
+1568 silly addNameRange number 2 { name: 'swagger-node-express',
+1568 silly addNameRange   range: '>=1.2.2- <1.3.0-',
+1568 silly addNameRange   hasData: true }
+1569 silly addNameRange versions [ 'swagger-node-express',
+1569 silly addNameRange   [ '1.2.0', '1.2.1', '1.2.2', '1.2.3' ] ]
+1570 verbose addNamed [ 'swagger-node-express', '1.2.3' ]
+1571 verbose addNamed [ '1.2.3', '1.2.3' ]
+1572 silly lockFile 1fefcd83-swagger-node-express-1-2-3 swagger-node-express@1.2.3
+1573 verbose lock swagger-node-express@1.2.3 /Users/steve/.npm/1fefcd83-swagger-node-express-1-2-3.lock
+1574 verbose read json /Users/steve/.npm/swagger-node-express/1.2.3/package/package.json
+1575 silly lockFile 1fefcd83-swagger-node-express-1-2-3 swagger-node-express@1.2.3
+1576 silly lockFile 3fa54159-swagger-node-express-1-2-2 swagger-node-express@~1.2.2
+1577 http 304 https://registry.npmjs.org/connect-mongodb
+1578 silly registry.get cb [ 304,
+1578 silly registry.get   { server: 'CouchDB/1.2.1 (Erlang OTP/R15B03)',
+1578 silly registry.get     etag: '"7T29JFBUSPVXHT4THTKOVV93F"',
+1578 silly registry.get     date: 'Wed, 27 Feb 2013 20:06:16 GMT',
+1578 silly registry.get     'content-length': '0' } ]
+1579 verbose etag connect-mongodb from cache
+1580 http 304 https://registry.npmjs.org/async
+1581 silly registry.get cb [ 304,
+1581 silly registry.get   { server: 'CouchDB/1.2.1 (Erlang OTP/R15B03)',
+1581 silly registry.get     etag: '"DLDGBWOC59RG4E5CF1JGEXQQP"',
+1581 silly registry.get     date: 'Wed, 27 Feb 2013 20:06:16 GMT',
+1581 silly registry.get     'content-length': '0' } ]
+1582 verbose etag async from cache
+1583 silly addNameRange number 2 { name: 'connect-mongodb',
+1583 silly addNameRange   range: '>=1.1.5- <1.2.0-',
+1583 silly addNameRange   hasData: true }
+1584 silly addNameRange versions [ 'connect-mongodb',
+1584 silly addNameRange   [ '0.0.2',
+1584 silly addNameRange     '0.0.4',
+1584 silly addNameRange     '0.1.0',
+1584 silly addNameRange     '0.1.1',
+1584 silly addNameRange     '0.2.0',
+1584 silly addNameRange     '0.2.1',
+1584 silly addNameRange     '0.2.2',
+1584 silly addNameRange     '0.3.0',
+1584 silly addNameRange     '0.4.0',
+1584 silly addNameRange     '1.0.0beta',
+1584 silly addNameRange     '1.0.0rc',
+1584 silly addNameRange     '1.0.0rc2',
+1584 silly addNameRange     '1.0.0',
+1584 silly addNameRange     '1.1.0',
+1584 silly addNameRange     '1.1.1',
+1584 silly addNameRange     '1.1.2',
+1584 silly addNameRange     '1.1.3',
+1584 silly addNameRange     '1.1.4',
+1584 silly addNameRange     '1.1.5' ] ]
+1585 verbose addNamed [ 'connect-mongodb', '1.1.5' ]
+1586 verbose addNamed [ '1.1.5', '1.1.5' ]
+1587 silly lockFile 0ebddfc7-connect-mongodb-1-1-5 connect-mongodb@1.1.5
+1588 verbose lock connect-mongodb@1.1.5 /Users/steve/.npm/0ebddfc7-connect-mongodb-1-1-5.lock
+1589 verbose read json /Users/steve/.npm/connect-mongodb/1.1.5/package/package.json
+1590 silly addNameRange number 2 { name: 'async', range: '>=0.1.22- <0.2.0-', hasData: true }
+1591 silly addNameRange versions [ 'async',
+1591 silly addNameRange   [ '0.1.0',
+1591 silly addNameRange     '0.1.1',
+1591 silly addNameRange     '0.1.2',
+1591 silly addNameRange     '0.1.3',
+1591 silly addNameRange     '0.1.4',
+1591 silly addNameRange     '0.1.5',
+1591 silly addNameRange     '0.1.6',
+1591 silly addNameRange     '0.1.7',
+1591 silly addNameRange     '0.1.8',
+1591 silly addNameRange     '0.1.9',
+1591 silly addNameRange     '0.1.10',
+1591 silly addNameRange     '0.1.11',
+1591 silly addNameRange     '0.1.12',
+1591 silly addNameRange     '0.1.13',
+1591 silly addNameRange     '0.1.14',
+1591 silly addNameRange     '0.1.15',
+1591 silly addNameRange     '0.1.16',
+1591 silly addNameRange     '0.1.17',
+1591 silly addNameRange     '0.1.18',
+1591 silly addNameRange     '0.1.19',
+1591 silly addNameRange     '0.1.20',
+1591 silly addNameRange     '0.1.21',
+1591 silly addNameRange     '0.1.22',
+1591 silly addNameRange     '0.2.0',
+1591 silly addNameRange     '0.2.1',
+1591 silly addNameRange     '0.2.2',
+1591 silly addNameRange     '0.2.3',
+1591 silly addNameRange     '0.2.4',
+1591 silly addNameRange     '0.2.5' ] ]
+1592 verbose addNamed [ 'async', '0.1.22' ]
+1593 verbose addNamed [ '0.1.22', '0.1.22' ]
+1594 silly lockFile 09d21715-async-0-1-22 async@0.1.22
+1595 verbose lock async@0.1.22 /Users/steve/.npm/09d21715-async-0-1-22.lock
+1596 verbose read json /Users/steve/.npm/async/0.1.22/package/package.json
+1597 silly lockFile 0ebddfc7-connect-mongodb-1-1-5 connect-mongodb@1.1.5
+1598 silly lockFile d9ed9461-connect-mongodb-1-1-5 connect-mongodb@~1.1.5
+1599 silly lockFile 09d21715-async-0-1-22 async@0.1.22
+1600 silly lockFile 3af71045-async-0-1-22 async@~0.1.22
+1601 http 200 https://registry.npmjs.org/request/-/request-2.9.202.tgz
+1602 silly shasum updated bytes 40960
+1603 silly shasum updated bytes 33317
+1604 info shasum c61399cdfbbefda5dc48653b0e9bea517d9f8497
+1604 info shasum /var/folders/dd/s_scwdrs2r74q3sgmfc9zcz80000gn/T/npm-11907/1361995576582-0.4125904112588614/tmp.tgz
+1605 verbose tar unpack /var/folders/dd/s_scwdrs2r74q3sgmfc9zcz80000gn/T/npm-11907/1361995576582-0.4125904112588614/tmp.tgz
+1606 silly lockFile 3ff8e72e-76582-0-4125904112588614-package /var/folders/dd/s_scwdrs2r74q3sgmfc9zcz80000gn/T/npm-11907/1361995576582-0.4125904112588614/package
+1607 verbose lock /var/folders/dd/s_scwdrs2r74q3sgmfc9zcz80000gn/T/npm-11907/1361995576582-0.4125904112588614/package /Users/steve/.npm/3ff8e72e-76582-0-4125904112588614-package.lock
+1608 silly gunzTarPerm modes [ '777', '666' ]
+1609 silly gunzTarPerm extractEntry package.json
+1610 silly gunzTarPerm modified mode [ 'package.json', 420, 438 ]
+1611 silly gunzTarPerm extractEntry README.md
+1612 silly gunzTarPerm modified mode [ 'README.md', 420, 438 ]
+1613 silly gunzTarPerm extractEntry LICENSE
+1614 silly gunzTarPerm modified mode [ 'LICENSE', 420, 438 ]
+1615 silly gunzTarPerm extractEntry main.js
+1616 silly gunzTarPerm modified mode [ 'main.js', 420, 438 ]
+1617 silly gunzTarPerm extractEntry mimetypes.js
+1618 silly gunzTarPerm modified mode [ 'mimetypes.js', 420, 438 ]
+1619 silly gunzTarPerm extractEntry oauth.js
+1620 silly gunzTarPerm modified mode [ 'oauth.js', 420, 438 ]
+1621 silly gunzTarPerm extractEntry uuid.js
+1622 silly gunzTarPerm modified mode [ 'uuid.js', 420, 438 ]
+1623 silly gunzTarPerm extractEntry tunnel.js
+1624 silly gunzTarPerm modified mode [ 'tunnel.js', 420, 438 ]
+1625 silly gunzTarPerm extractEntry forever.js
+1626 silly gunzTarPerm modified mode [ 'forever.js', 420, 438 ]
+1627 silly gunzTarPerm extractEntry tests/test-tunnel.js
+1628 silly gunzTarPerm modified mode [ 'tests/test-tunnel.js', 420, 438 ]
+1629 silly gunzTarPerm extractEntry tests/test-cookiejar.js
+1630 silly gunzTarPerm modified mode [ 'tests/test-cookiejar.js', 420, 438 ]
+1631 silly gunzTarPerm extractEntry tests/test-defaults.js
+1632 silly gunzTarPerm modified mode [ 'tests/test-defaults.js', 420, 438 ]
+1633 silly gunzTarPerm extractEntry tests/test-errors.js
+1634 silly gunzTarPerm modified mode [ 'tests/test-errors.js', 420, 438 ]
+1635 silly gunzTarPerm extractEntry tests/test-cookie.js
+1636 silly gunzTarPerm modified mode [ 'tests/test-cookie.js', 420, 438 ]
+1637 silly gunzTarPerm extractEntry tests/run.js
+1638 silly gunzTarPerm modified mode [ 'tests/run.js', 420, 438 ]
+1639 silly gunzTarPerm extractEntry tests/test-https-strict.js
+1640 silly gunzTarPerm modified mode [ 'tests/test-https-strict.js', 420, 438 ]
+1641 silly gunzTarPerm extractEntry tests/test-https.js
+1642 silly gunzTarPerm modified mode [ 'tests/test-https.js', 420, 438 ]
+1643 silly gunzTarPerm extractEntry tests/test-oauth.js
+1644 silly gunzTarPerm modified mode [ 'tests/test-oauth.js', 420, 438 ]
+1645 silly gunzTarPerm extractEntry tests/test-params.js
+1646 silly gunzTarPerm modified mode [ 'tests/test-params.js', 420, 438 ]
+1647 silly gunzTarPerm extractEntry tests/test-body.js
+1648 silly gunzTarPerm modified mode [ 'tests/test-body.js', 420, 438 ]
+1649 silly gunzTarPerm extractEntry tests/test-pipes.js
+1650 silly gunzTarPerm modified mode [ 'tests/test-pipes.js', 420, 438 ]
+1651 silly gunzTarPerm extractEntry tests/test-timeout.js
+1652 silly gunzTarPerm modified mode [ 'tests/test-timeout.js', 420, 438 ]
+1653 silly gunzTarPerm extractEntry tests/test-proxy.js
+1654 silly gunzTarPerm modified mode [ 'tests/test-proxy.js', 420, 438 ]
+1655 silly gunzTarPerm extractEntry tests/test-toJSON.js
+1656 silly gunzTarPerm modified mode [ 'tests/test-toJSON.js', 420, 438 ]
+1657 silly gunzTarPerm extractEntry tests/test-qs.js
+1658 silly gunzTarPerm modified mode [ 'tests/test-qs.js', 420, 438 ]
+1659 silly gunzTarPerm extractEntry tests/server.js
+1660 silly gunzTarPerm modified mode [ 'tests/server.js', 420, 438 ]
+1661 silly gunzTarPerm extractEntry tests/test-redirect.js
+1662 silly gunzTarPerm modified mode [ 'tests/test-redirect.js', 420, 438 ]
+1663 silly gunzTarPerm extractEntry tests/test-headers.js
+1664 silly gunzTarPerm modified mode [ 'tests/test-headers.js', 420, 438 ]
+1665 silly gunzTarPerm extractEntry tests/test-httpModule.js
+1666 silly gunzTarPerm modified mode [ 'tests/test-httpModule.js', 420, 438 ]
+1667 silly gunzTarPerm extractEntry tests/ssl/ca/server.js
+1668 silly gunzTarPerm modified mode [ 'tests/ssl/ca/server.js', 420, 438 ]
+1669 silly gunzTarPerm extractEntry tests/ssl/ca/ca.srl
+1670 silly gunzTarPerm modified mode [ 'tests/ssl/ca/ca.srl', 420, 438 ]
+1671 silly gunzTarPerm extractEntry tests/ssl/ca/ca.crt
+1672 silly gunzTarPerm modified mode [ 'tests/ssl/ca/ca.crt', 420, 438 ]
+1673 silly gunzTarPerm extractEntry tests/ssl/ca/ca.csr
+1674 silly gunzTarPerm modified mode [ 'tests/ssl/ca/ca.csr', 420, 438 ]
+1675 silly gunzTarPerm extractEntry tests/ssl/ca/ca.key
+1676 silly gunzTarPerm modified mode [ 'tests/ssl/ca/ca.key', 420, 438 ]
+1677 silly gunzTarPerm extractEntry tests/ssl/ca/ca.crl
+1678 silly gunzTarPerm modified mode [ 'tests/ssl/ca/ca.crl', 420, 438 ]
+1679 silly gunzTarPerm extractEntry tests/ssl/ca/server.cnf
+1680 silly gunzTarPerm modified mode [ 'tests/ssl/ca/server.cnf', 420, 438 ]
+1681 silly gunzTarPerm extractEntry tests/ssl/ca/server.crt
+1682 silly gunzTarPerm modified mode [ 'tests/ssl/ca/server.crt', 420, 438 ]
+1683 silly gunzTarPerm extractEntry tests/ssl/ca/server.csr
+1684 silly gunzTarPerm modified mode [ 'tests/ssl/ca/server.csr', 420, 438 ]
+1685 silly gunzTarPerm extractEntry tests/ssl/ca/ca.cnf
+1686 silly gunzTarPerm modified mode [ 'tests/ssl/ca/ca.cnf', 420, 438 ]
+1687 silly gunzTarPerm extractEntry tests/ssl/ca/server.key
+1688 silly gunzTarPerm modified mode [ 'tests/ssl/ca/server.key', 420, 438 ]
+1689 silly gunzTarPerm extractEntry tests/ssl/npm-ca.crt
+1690 silly gunzTarPerm modified mode [ 'tests/ssl/npm-ca.crt', 420, 438 ]
+1691 silly gunzTarPerm extractEntry tests/ssl/test.crt
+1692 silly gunzTarPerm modified mode [ 'tests/ssl/test.crt', 420, 438 ]
+1693 silly gunzTarPerm extractEntry tests/ssl/test.key
+1694 silly gunzTarPerm modified mode [ 'tests/ssl/test.key', 420, 438 ]
+1695 silly gunzTarPerm extractEntry tests/squid.conf
+1696 silly gunzTarPerm modified mode [ 'tests/squid.conf', 420, 438 ]
+1697 silly gunzTarPerm extractEntry tests/googledoodle.png
+1698 silly gunzTarPerm modified mode [ 'tests/googledoodle.png', 420, 438 ]
+1699 silly gunzTarPerm extractEntry vendor/cookie/index.js
+1700 silly gunzTarPerm modified mode [ 'vendor/cookie/index.js', 420, 438 ]
+1701 silly gunzTarPerm extractEntry vendor/cookie/jar.js
+1702 silly gunzTarPerm modified mode [ 'vendor/cookie/jar.js', 420, 438 ]
+1703 verbose read json /var/folders/dd/s_scwdrs2r74q3sgmfc9zcz80000gn/T/npm-11907/1361995576582-0.4125904112588614/package/package.json
+1704 silly lockFile 3ff8e72e-76582-0-4125904112588614-package /var/folders/dd/s_scwdrs2r74q3sgmfc9zcz80000gn/T/npm-11907/1361995576582-0.4125904112588614/package
+1705 verbose from cache /var/folders/dd/s_scwdrs2r74q3sgmfc9zcz80000gn/T/npm-11907/1361995576582-0.4125904112588614/package/package.json
+1706 verbose tar pack [ '/Users/steve/.npm/request/2.9.202/package.tgz',
+1706 verbose tar pack   '/var/folders/dd/s_scwdrs2r74q3sgmfc9zcz80000gn/T/npm-11907/1361995576582-0.4125904112588614/package' ]
+1707 verbose tarball /Users/steve/.npm/request/2.9.202/package.tgz
+1708 verbose folder /var/folders/dd/s_scwdrs2r74q3sgmfc9zcz80000gn/T/npm-11907/1361995576582-0.4125904112588614/package
+1709 silly lockFile d627163b--npm-request-2-9-202-package-tgz /Users/steve/.npm/request/2.9.202/package.tgz
+1710 verbose lock /Users/steve/.npm/request/2.9.202/package.tgz /Users/steve/.npm/d627163b--npm-request-2-9-202-package-tgz.lock
+1711 silly lockFile d627163b--npm-request-2-9-202-package-tgz /Users/steve/.npm/request/2.9.202/package.tgz
+1712 silly lockFile 55d0377e-teve-npm-request-2-9-202-package /Users/steve/.npm/request/2.9.202/package
+1713 verbose lock /Users/steve/.npm/request/2.9.202/package /Users/steve/.npm/55d0377e-teve-npm-request-2-9-202-package.lock
+1714 silly lockFile 55d0377e-teve-npm-request-2-9-202-package /Users/steve/.npm/request/2.9.202/package
+1715 error addPlacedTarball Could not remove "/Users/steve/.npm/request/2.9.202/package"
+1716 silly lockFile 6d437357--org-request-request-2-9-202-tgz https://registry.npmjs.org/request/-/request-2.9.202.tgz
+1717 silly lockFile f7ac4bcd-request-2-9-202 request@2.9.202
+1718 verbose about to build /Users/steve/Dropbox/github/RandD/node-ci/node_modules/Composer
+1719 info /Users/steve/Dropbox/github/RandD/node-ci/node_modules/Composer unbuild
+1720 verbose from cache /Users/steve/Dropbox/github/RandD/node-ci/node_modules/Composer/package.json
+1721 info preuninstall Composer@0.1.22
+1722 info uninstall Composer@0.1.22
+1723 verbose true,/Users/steve/Dropbox/github/RandD/node-ci/node_modules,/Users/steve/Dropbox/github/RandD/node-ci/node_modules unbuild Composer@0.1.22
+1724 info postuninstall Composer@0.1.22
+1725 error Error: EACCES, rmdir '/Users/steve/.npm/request/2.9.202/package'
+1725 error  { [Error: EACCES, rmdir '/Users/steve/.npm/request/2.9.202/package']
+1725 error   errno: 3,
+1725 error   code: 'EACCES',
+1725 error   path: '/Users/steve/.npm/request/2.9.202/package' }
+1726 error Please try running this command again as root/Administrator.
+1727 error System Darwin 12.2.0
+1728 error command "node" "/usr/local/bin/npm" "install" "tmp/36b762a962"
+1729 error cwd /Users/steve/Dropbox/github/RandD/node-ci
+1730 error node -v v0.8.8
+1731 error npm -v 1.1.59
+1732 error path /Users/steve/.npm/request/2.9.202/package
+1733 error code EACCES
+1734 error errno 3
+1735 error stack Error: EACCES, rmdir '/Users/steve/.npm/request/2.9.202/package'
+1736 verbose exit [ 3, true ]

@@ -1,0 +1,28 @@
+extends layout
+
+block header
+
+block content
+ 
+  table.table-striped.table.table-hover
+   tr
+    th(width="10%")
+     | SHA Commit
+    th(width="10%")
+     | Environment
+    th(width="40%")
+     | Log File / Source
+    th(width="20%")
+
+    - if (!data || data.length == 0) 
+       tr
+        td(colspan="4")
+         | No processes started.
+    - else
+      each commit, i in data
+       tr
+        td
+         | #{commit}
+        td
+        td
+         a(href="/start/#{commit}", class="btn btn-primary") Start
