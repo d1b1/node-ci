@@ -7,7 +7,6 @@ var url        = require('url'),
 
 exports.login = function(req, res) { 
   var url = 'https://github.com/login/oauth/authorize?state=222&client_id=' + process.env.GITHUB_CLIENTID + '&scope=user,repo';
-  console.log(url); 
   res.redirect(url);
 }
 

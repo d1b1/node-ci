@@ -50,6 +50,8 @@ app.configure(function() {
 app.locals.moment = require('moment');
 app.locals._ = require('underscore');
 
+//-------------------------------------------------------------------
+
 var routes = require('./routes/index')
 
 var check = function(req, res, next ) {
@@ -68,6 +70,26 @@ app.get('/account',  check, routes.github.userinfo );
 app.get('/login',  routes.session.login );
 app.post('/login', routes.session.loginsubmit );
 app.get('/logout', routes.session.logout );
+
+console.log('asdfasdf')
+app.get('/git/commit/:sha', function(req, res) {
+
+  console.log('here')
+  // GIT_WORK_TREE=$BUILDPATH git --git-dir=$REPO_PATH fetch origin
+  // GIT_WORK_TREE=$BUILDPATH git --git-dir=$REPO_PATH reset --hard
+  // GIT_WORK_TREE=$BUILDPATH git --git-dir=$REPO_PATH checkout -f $NEWREV
+
+  var sys = require('sys')
+  var exec = require('child_process').exec;
+  function puts(error, stdout, stderr) { sys.puts(stdout) }
+
+  var pdir = __dirname + '/tmp';
+  console.log(pdir);
+  exec("GIT_WORK_TREE=/tmp git --git-dir=$REPO_PATH fetch origin", puts);
+  exec("ls -la", puts);
+  res.send('asdfasdf')
+
+});
 
 app.get('/restart/:target', check, function(req, res) {
 
