@@ -16,3 +16,4 @@ server.ssmith.js
 dist
 repos/
 tmp/
+npm-debug.log

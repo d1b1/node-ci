@@ -115,7 +115,6 @@ app.get('/sites', function(req, res) {
 
   fs.readdir(dir, function (err, list) {
 
-    console.log(list);
     var data = [];
 
     list.forEach(function (file) {
@@ -131,8 +130,6 @@ app.get('/sites', function(req, res) {
     });
 
     res.render('sites', { session: req.session, data: list})
-    console.log('Dddd', data);
-
   });
 
 });
@@ -142,13 +139,8 @@ GLOBAL.site_ports = [];
 var getPort = function() {
 
  for (var i=3010; i<3030;i++) { 
-
-   if (_.indexOf(GLOBAL.site_ports, i) == -1) {
-    return i
-   }
-
+   if (_.indexOf(GLOBAL.site_ports, i) == -1) return i;
  }
-
 
 }
 
@@ -165,10 +157,14 @@ app.get('/start/:sha', function(req, res) {
     logfile:   appFolder + '/forever_all.log',
     append:    true,
     checkFile: false,
-    fork: false,
+    fork:      false,
     sourceDir: appFolder, 
+    name:       'Commit: ' + sha,
+    configData: { port: newPort },
     env:       { NODE_ENV: "development", PORT: newPort }
   };
+
+  console.log('Starting with port' + newPort);
 
   var sys = require('sys')
   var exec = require('child_process').exec;
@@ -177,7 +173,7 @@ app.get('/start/:sha', function(req, res) {
 
     GLOBAL.site_ports.push(newPort)
 
-    var childProcess = forever.start('server.js', options);
+    var childProcess = forever.startDaemon('server.js', options);
     
     forever.startServer(childProcess);
     res.redirect('/list')

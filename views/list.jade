@@ -25,6 +25,9 @@ block content
          | #{process.pid}
         td
          | #{process.env}
+         br
+         | Name: #{process.name}
+         | Port: #{process.configData.port}
         td
          | #{process.logFile}
          br
