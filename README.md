@@ -1,5 +1,4 @@
-Node CI Server UI
-==============
+#### Node CI Server
 
 This is a UI to support node.js development. It provides the ability to run multiple node processes, using either a
 git repo branch HEAD (persistent), or commit specific builds. Persistent branch builds are kept up to date with each
@@ -10,8 +9,8 @@ and testing.
 * Github integration.
 * CI hooks for testing.
 
-Configuration
-===============
+#### Configuration
+The following configuration options will enabled at the CLI.
 
 * Port Range (required) - Defines ports available for new processes. Defaults to 3010 to 3020. 
 * Repo Name (required) - Name of the public or private repo.
@@ -21,13 +20,11 @@ Configuration
 * Log Path (beta) - Base path for all log file.
 * Repo Build Path (beta) - Base path for storage of repo builds. Defaults to /tmp in the working folder.
 
-Setup
-===============
+#### Setup
 Clone the repo to a working folder. Start with either `node web.js` or `forever start web.js`. The process will bind to 
 port 3005. All log files drop in the install folder.
-
-CLI
-===============
+ 
+#### CLI
 This application builds upon the work done by indexZero and the forever/forever-monitor project. The UI interface will
 forever CLI activity. The current forever process lacks a few helper features needed to make the UI attach to the correct
 process. For this reason this project uses a fork of the forever and forever-monitor projects.
@@ -38,8 +35,7 @@ process. For this reason this project uses a fork of the forever and forever-mon
 To remove this requirement, you will need to change the package.json to remove the fork dependencies. Please note
 this project will not work without the patches made to these projets. 
 
-Roadmap
-===============
+#### Roadmap
 The following is a list of features still in development.
 
 * Strict github login to organization team members.
@@ -52,3 +48,6 @@ The following is a list of features still in development.
 * Alters to members.
 * Persisent testing metrics and storage.
 * Public metric report. (code coverage etc).
+
+#### License: MIT
+#### Author: [Stephan Smith](http://github.com/d1b1)
