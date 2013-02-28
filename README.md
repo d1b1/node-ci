@@ -1,4 +1,5 @@
-== Node CI Server UI
+Node CI Server UI
+==============
 
 * Provide a front end for the forever node service.
 * Github integration.
