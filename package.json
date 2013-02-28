@@ -1,6 +1,24 @@
 {
-  "name": "Manager",
+  "name": "node-ci",
+  "description": "Node.js CI Server. Provides local or server support for git integration and CI processes.",
   "version": "0.0.2",
+  "author": "d1b1 <stephan.smith.bc93@gmail.com>",
+  "maintainers": [
+    "d1b1 <stephan.smith.bc93@gmail.com>"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/d1b1/node-ci.git"
+  },
+  "keywords": [
+    "node",
+    "cli",
+    "ci",
+    "forever",
+    "forever-monitor",
+    "continuous integration",
+    "tools"
+  ],
   "engines": {
     "node": "0.8.8",
     "npm": "1.1.9"
