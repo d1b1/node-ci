@@ -193,9 +193,9 @@ app.post('/start/process', check, function(req, res) {
     var appFolder = __dirname + '/tmp/' + sha + '';
     var options = { 
       max:       max_attempts, 
-      logfile:   __dirname + '/node-ci.log',
-      errfile:   __dirname + '/node-ci.log',
-      outfile:   __dirname + '/node-ci.log',
+      logFile:   __dirname + '/node-ci.log',
+      errFile:   __dirname + '/node-ci.log',
+      outFile:   __dirname + '/node-ci.log',
       append:    true,
       checkFile: true,
       fork:      false,
@@ -210,6 +210,8 @@ app.post('/start/process', check, function(req, res) {
       ui_owner:       req.session.user.github.name
     };
 
+    console.log('Starting Process with ', options);
+    
     var exec = require('child_process').exec;
     function puts(error, stdout, stderr) { 
       GLOBAL.messages.push({ type: 'info', copy: 'CD to ' + appFolder });
