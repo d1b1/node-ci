@@ -197,10 +197,10 @@ app.post('/start/process', check, function(req, res) {
       errFile:   __dirname + '/node-ci.log',
       outFile:   __dirname + '/node-ci.log',
       append:    true,
-      checkFile: true,
+      checkFile: false,
       fork:      false,
       sourceDir: appFolder, 
-      env:       { NODE_ENV: environment, PORT: availablePort },
+      env:       { NODE_ENV: environment, PORT: parseInt(availablePort) },
 
       // User defined Values.
       ui_name:        reference_name,
@@ -211,7 +211,7 @@ app.post('/start/process', check, function(req, res) {
     };
 
     console.log('Starting Process with ', options);
-    
+
     var exec = require('child_process').exec;
     function puts(error, stdout, stderr) { 
       GLOBAL.messages.push({ type: 'info', copy: 'CD to ' + appFolder });
