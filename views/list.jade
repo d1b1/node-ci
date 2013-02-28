@@ -4,15 +4,23 @@ block header
 
 block content
  
+  p
+    | This is a list of active node process. These processes can be managed from this UI, or from the CLI. Each
+    | process binds to a unique port. 
+
   table.table-striped.table.table-hover
    tr
     th(width="10%")
-     | PID
+     | Based on
     th(width="10%")
-     | Environment
-    th(width="40%")
+     | Name
+    th(width="10%")
+     | Owner
+    th(width="10%")
+     | PID/Port
+    th(width="55%")
      | Log File / Source
-    th(width="20%")
+    th(width="5%")
 
     - if (!data || data.length == 0) 
        tr
@@ -22,19 +30,41 @@ block content
       each process, i in data
        tr
         td
-         | #{process.pid}
+         | #{process.ui_sha || 'Na'}
         td
-         | #{process.env}
+         | #{process.ui_name || 'Na'}
+        td
+         | #{process.ui_owner || 'Na'}
+        td
+         b= process.pid
          br
-         | Name: #{process.name}
-         | Port: #{process.configData.port}
+         b= process.env
+         br
+         b Port: 
+         | #{process.ui_port}
         td
+         b Log:
          | #{process.logFile}
          br
+         b Source:
          | #{process.sourceDir}
         td
-         a(href="/detail/#{i}", class="btn btn-primary") View
-         &nbsp;
-         a(href="/restart/#{i}", class="btn btn-primary") Restart
-         &nbsp;
-         a(href="/stop/#{i}", class="btn btn-primary") Stop
+
+          - if (process.ui_sha)
+              div.btn-group
+                button(class="btn btn-large dropdown-toggle", data-toggle="dropdown") 
+                  Options 
+                  span.caret
+                ul(class="dropdown-menu")
+                 li
+                   a(href="/detail/#{process.uid}") View
+                 li
+                   a(href="/tail/#{process.uid}") Logs
+                 li 
+                   a(href="/restart/#{process.uid}") Restart
+                 li
+                   a(href="/stop/#{process.uid}") Stop
+          - else
+            &nbsp;
+  
+

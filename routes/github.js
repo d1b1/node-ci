@@ -67,13 +67,16 @@ exports.callback = function(req, res) {
         req.session.user = {  
           status: true, 
           logged_in: true,
-          name: 'adsasdf',
+          name: data.name,
           email: data.email,
           access_token: jsonchunkData.access_token,
           github: data
         };
 
+        
         req.session.logged_in = true;
+
+        GLOBAL.messages.push({ type: 'info', copy: 'Session setup. Welcome ' + (data.name || '<Someone?>') + '!' });
         res.redirect('/list');
       });
     });

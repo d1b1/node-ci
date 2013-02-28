@@ -4,15 +4,22 @@ block header
 
 block content
  
+  p
+    | This is a list of git commit build slugs. Each slug is a discrete copy of the 
+    | codebase at a specific commit point. The name of the slug is the first 10 digits
+    | of the sha commit. To start/restart a commit use the option. When you are done
+    | with a slug, you need to stop and delete the build. This will remove the codebase
+    | and stop any process bound.
+
   table.table-striped.table.table-hover
    tr
     th(width="10%")
      | SHA Commit
-    th(width="10%")
-     | Environment
-    th(width="40%")
-     | Log File / Source
     th(width="20%")
+     | Site Status
+    th(width="65%")
+     | Path
+    th(width="10%")
 
     - if (!data || data.length == 0) 
        tr
@@ -24,5 +31,8 @@ block content
         td
          | #{commit}
         td
+         | Coming Soon...
         td
-         a(href="/start/#{commit}", class="btn btn-primary") Start
+         | /tmp/#{commit}
+        td
+         a(href="/start/#{commit}", class="btn btn-primary") Start/Restart

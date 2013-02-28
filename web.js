@@ -7,8 +7,11 @@ var express    = require('express'),
     OAuth      = require('oauth').OAuth,
     GitHubApi  = require("github"),
     _          = require("underscore"),
-    oa; 
+    async      = require("async"),
+    oa;
 
+
+GLOBAL.messages = [];
 
 var app = express();
 app.configure(function() {
@@ -49,8 +52,9 @@ app.configure(function() {
   });
 
 });
-app.locals.moment = require('moment');
-app.locals._ = require('underscore');
+app.locals.moment  = require('moment');
+app.locals._       = require('underscore');
+app.locals.messages = [];
 
 //-------------------------------------------------------------------
 
@@ -75,39 +79,33 @@ app.get('/logout', routes.session.logout );
 
 app.get('/git/commit/:sha', function(req, res) {
 
-  var sys = require('sys')
+  var sha = req.params.sha;
+
   var exec = require('child_process').exec;
+
   function puts(error, stdout, stderr) { 
-    sys.puts(stdout) 
-    console.log('Set the checkout status to a specific commit')
+    console.log('Completed the commit setup.')
 
-    res.send('We have rebuild the node using a specific commit.')
+    GLOBAL.messages.push({ type: 'info', copy: 'Building... Might take a bit.' });
+    res.redirect('/list');
   }
 
-  function checkout(error, stdout, stderr) {  
-    sys.puts(stdout) 
-    console.log('Preparing to checkout a commit.')
-    exec("GIT_WORK_TREE=" + pdir + " git --git-dir=" + pdir + "/.git --work-tree=" + pdir + " checkout " + req.params.sha, puts)
-  }
-
-  var pdir = __dirname + '/tmp/' + req.params.sha.substring(0,10);
+  var pdir = __dirname + '/tmp/' + sha.substring(0,10);
 
   var command = 'rm -Rf ' + pdir + '; ' +
                 'git clone git@github.com:npr/composer.git ' + pdir + '; ' + 
-                'GIT_WORK_TREE=' + pdir + ' git --git-dir=' + pdir + '/.git --work-tree=' + pdir + ' checkout ' + req.params.sha
+                'GIT_WORK_TREE=' + pdir + ' git --git-dir=' + pdir + '/.git --work-tree=' + pdir + ' checkout ' + sha
 
-  console.log(command);
+  GLOBAL.messages.push({ type: 'info', copy: 'Buidling an install from a commit.' });
+  GLOBAL.messages.push({ type: 'info', copy: 'Commit SHA: ' + sha });
+  GLOBAL.messages.push({ type: 'info', copy: 'Build Path: ' + pdir });
+  GLOBAL.messages.push({ type: 'info', copy: command });
+
   exec(command, puts);
-
-  // exec("rm -Rf " + pdir, function puts(error, stdout, stderr) { 
-  //   console.log('Removed the existing git repo.');
-
-  //   exec("git clone git@github.com:npr/composer.git " + pdir + "; ls -all", checkout);
-  // });
   
 });
 
-app.get('/sites', function(req, res) {
+app.get('/sites', check, function(req, res) {
 
   var fs = require("fs");
 
@@ -129,136 +127,248 @@ app.get('/sites', function(req, res) {
 
     });
 
-    res.render('sites', { session: req.session, data: list})
+    res.render('sites', { data: list})
   });
 
 });
 
 GLOBAL.site_ports = [];
 
-var getPort = function() {
+var getUsedPorts = function(cb) {
 
- for (var i=3010; i<3030;i++) { 
-   if (_.indexOf(GLOBAL.site_ports, i) == -1) return i;
- }
+ forever.list(false, function (err, data) {
+    if (err) return cb(err, null);
+
+    var ports = [];
+    _.each(data, function(o) {
+      if (o.ui_port && typeof o.ui_port != undefined) ports.push( parseInt(o.ui_port));
+    });
+
+    cb(null, ports);
+  })
+
 
 }
 
-app.get('/start/:sha', function(req, res) {
-
-  var sha = req.params.sha;
+var getPort = function(cb) {
  
-  var newPort = getPort();
+  forever.list(false, function (err, data) {
+    if (err) return cb(err, null);
 
-  var appFolder = __dirname + '/tmp/' + sha + '';
-  var options = { 
-    max:       3, 
-    portUsed:  22222,
-    logfile:   appFolder + '/forever_all.log',
-    append:    true,
-    checkFile: false,
-    fork:      false,
-    sourceDir: appFolder, 
-    name:       'Commit: ' + sha,
-    configData: { port: newPort },
-    env:       { NODE_ENV: "development", PORT: newPort }
-  };
+    var ports = [];
+    _.each(data, function(o) {
+      if (o.ui_port && typeof o.ui_port != undefined) ports.push( parseInt(o.ui_port));
+    });
 
-  console.log('Starting with port' + newPort);
+    for (var i=3010; i<3030;i++) { 
+      if (_.indexOf(ports, i) == -1) return cb(null, i);
+    }
 
-  var sys = require('sys')
-  var exec = require('child_process').exec;
-  function puts(error, stdout, stderr) { 
-    sys.puts(stdout) 
+    cb(null, null);
+  });
 
-    GLOBAL.site_ports.push(newPort)
+}
 
-    var childProcess = forever.startDaemon('server.js', options);
-    
-    forever.startServer(childProcess);
-    res.redirect('/list')
-  }
+app.get('/start/:sha', check, function(req, res) {
+  res.render('build_commit', { id: req.params.sha } );
+});
 
-  console.log('NPM Install starting.')
-  exec('cd ' + appFolder + ';npm install', puts)
+app.post('/start/process', check, function(req, res) {
+
+  var sha                   = req.body.sha;
+  var reference_name        = req.body.reference_name || 'Manual Build ' + sha;
+  var reference_description = req.body.reference_description || '';
+  var environment           = req.body.environment || 'development';
+  var max_attempts          = req.body.max_attempts || 5;
+
+  getPort(function(err, availablePort) {
+
+    if (err && !availablePort) { 
+      if (!availablePort) GLOBAL.messages.push({ type: 'warning', copy: 'No Ports Available to start build.' });
+      if (err) GLOBAL.messages.push({ type: 'error', copy: err.message });
+      
+      return res.redirect('/list');
+    }
+
+    var appFolder = __dirname + '/tmp/' + sha + '';
+    var options = { 
+      max:       max_attempts, 
+      logfile:   appFolder + '/forever_all.log',
+      append:    true,
+      checkFile: true,
+      fork:      false,
+      sourceDir: appFolder, 
+      env:       { NODE_ENV: environment, PORT: availablePort },
+
+      // User defined Values.
+      ui_name:        reference_name,
+      ui_sha:         sha,
+      ui_port:        availablePort,
+      ui_description: reference_description,
+      ui_owner:       req.session.user.github.name
+    };
+
+    var exec = require('child_process').exec;
+    function puts(error, stdout, stderr) { 
+      GLOBAL.messages.push({ type: 'info', copy: 'CD to ' + appFolder });
+      GLOBAL.messages.push({ type: 'info', copy: 'Completed NPM Install for ' + sha });
+      GLOBAL.messages.push({ type: 'info', copy: 'Starting site process for ' + sha });
+
+      var childProcess = forever.startDaemon('server.js', options);
+      forever.startServer(childProcess);
+
+      GLOBAL.messages.push({ type: 'info', copy: 'Starting a site on port ' + availablePort + ' for SHA ' + sha })
+    }
+
+    exec('cd ' + appFolder + ';npm install', puts);
+
+    GLOBAL.messages.push({ type: 'info', copy: 'Starting NPM install and build process. ' + availablePort + ' for SHA ' + sha });
+    GLOBAL.messages.push({ type: 'info', copy: 'Site will not show until complete. Fresh a few times...' })
+
+    res.redirect('/list');
+  });
 
 });
 
-app.get('/stop/:target', check, function(req, res) {
+app.get('/stop/:uid', check, function(req, res) {
 
-  var target = parseInt(req.params.target);
+  var uid = req.params.uid;
 
-  forever.stop(target, false, function (err, data) {
-    if (err) {
-      console.log('Error running `forever.restart()`');
-      console.dir(err);
+  getProcessIndexbyID(uid, function(err, processIndex) {
+
+    if (err || !process) {
+      GLOBAL.messages.push({ type: 'error', copy: 'Unable to find the process to stop.'});
+      res.redirect('/list');
+      return;
     }
-    res.send('Stopping ' + target);
+
+    forever.stop(processIndex);
+
+    GLOBAL.messages.push({ type: 'info', copy: 'Stopping the build process.'});
+    res.redirect('/list');
   });
 
-  res.redirect('/list');
 
 });
 
-app.get('/restart/:target', check, function(req, res) {
+app.get('/restart/:uid', check, function(req, res) {
 
-  var target = parseInt(req.params.target);
+  var uid = req.params.uid;
 
-  var childProcess = forever.restart(target, false, function (err, data) {
-    if (err) {
-      console.log('Error running `forever.restart()`');
-      console.dir(err);
+  getProcessIndexbyID(uid, function(err, processIndex) {
+
+    if (err || !process) {
+      GLOBAL.messages.push({ type: 'error', copy: 'Unable to find the process to restart.'});
+      res.redirect('/list');
+      return;
     }
-    res.send('Restarting ' + target);
-  });
 
-  res.redirect('/list');
+    forever.restart(processIndex);
+
+    GLOBAL.messages.push({ type: 'info', copy: 'Restarting and existing process.'});
+    res.redirect('/list');
+  });
 
 });
 
 app.get('/git', check, routes.github.commits );
 
 app.get('/list', check, function(req, res) {
+
   forever.list(false, function (err, data) {
-    if (err) {
-      // console.log('Error running `forever.list()`');
-      // console.dir(err);
-    }
 
-    res.render('list', { data: data } );
+    if (err || !data) {
+      GLOBAL.messages.push({ type: 'error', copy: 'Unable to fetch the existing processes..'});
+      res.redirect('/list');
+      return;
+    }
+    
+    // Loop and ensure we have config data for all processes.
+    _.each(data, function(o) {
+      o.ui_port = o.ui_port || 'NA';
+      o.ui_name = o.ui_name || 'NA';
+      o.ui_description = o.ui_description || '';
+      o.ui_owner = o.ui_owner || 'NA';
+      o.ui_sha   = o.ui_sha || 'NA';
+    });
+
+    res.render('list', { data: data, messages: GLOBAL.messages } );
+
+    // Clear out the messages queue.
+    GLOBAL.messages = [];
   })
 });
 
-app.get('/tail/:id', check, function(req, res) {
+app.get('/tail/:uid', check, function(req, res) {
 
-  var id = parseInt(req.params.id);
+  var uid = req.params.uid;
 
-  forever.tail(id, function (err, data) {
-    if (err) {
-      // console.log('Error running `forever.list()`');
-      // console.dir(err);
+  getProcessIndexbyID(uid, function(err, processIndex) {
+
+    if (err || !processIndex) {
+      GLOBAL.messages.push({ type: 'error', copy: 'Unable to fetch the requested process.'});
+      res.redirect('/list');
+      return;
     }
 
-    res.send(data);
-    return;
-    res.render('tail', { data: data } );
-  })
+    forever.tail(processIndex, function (err, data) {
+
+      if (err || !data) {
+        GLOBAL.messages.push({ type: 'error', copy: 'Unable to fetch tail information the requested process.'});
+        res.redirect('/list');
+        return;
+      }
+
+      res.render('tail', { data: data } );
+    })
+
+  });
+
 });
+
+var getProcessIndexbyID = function(uid, cb) {
+
+  forever.list(false, function (err, data) {
+    if (err) return cb(err);
+
+    var UIDs = [];
+    _.each(data, function(o) { UIDs.push(o.uid); });
+
+    var indexNum = _.indexOf(UIDs, uid);
+    cb(null, indexNum);
+  })
+
+}
+
+var getProcessByID = function(uid, cb) {
+
+  forever.list(false, function (err, data) {
+    if (err) return cb(err);
+
+    var element = _.find(data, function(o) { return o.uid == uid;});
+    cb(null, element);
+  })
+
+}
 
 app.get('/detail/:id', check, function(req, res) {
   
-  var id = parseInt(req.params.id);
+  var uid = req.params.id;
 
-  forever.list(false, function (err, data) {
-    if (err) {
-      // console.log('Error running `forever.list()`');
-      // console.dir(err);
-    }
+  getProcessByID(uid, function(err, process) {
 
-    var element = data[id];    
+    res.render('detail', { data: process } );
+  });
 
-    res.render('detail', { data: element } );
-  })
+  // forever.list(false, function (err, data) {
+
+  //   var element = _.find(data, function(o) {
+  //     return o.uid == uid;
+  //   });
+
+  //   res.render('detail', { data: element } );
+  // });
+
 });
 
 app.get('/all', check, function(req, res) {

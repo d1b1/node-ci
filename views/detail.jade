@@ -4,25 +4,90 @@ block header
 
 block content
  
+  H3 Process Details
+
+  p
+    | The following are process details.
+
   table.table-striped.table.table-hover
 
      tr
-      td=PID
+      td(widt="20%") 
+        b Owner/Started by
       td
-       | #{data.pid}
+       | #{data.ui_owner || ''}
+
      tr
-      td=Environment
+      td 
+        b SHA Commit
       td
-       | #{data.env}
+       | #{data.ui_sha || ''}
+
      tr
-      td=Log File
+      td 
+        b Reference Name
       td
-       | #{data.logFile}
+       | #{data.ui_name || ''}
+
      tr
-      td=Source Dir
+      td 
+        b Description
       td
-       | #{data.sourceDir}
+       | #{data.ui_description || ''}
+
+     tr
+      td 
+       b Port
+      td
+       | #{data.ui_port || ''}
+
+     tr
+      td(widt="20%") 
+        b Time Alive
+      td
+       | #{moment(data.ctime).fromNow() }
+
+     tr
+      td(widt="20%") 
+        b Started
+      td
+       | #{moment(data.ctime).format('MM/DD/YY HH:mm A') }
+
+     tr
+      td 
+        b PID
+      td
+       | #{data.pid || ''}
+
+     tr
+      td 
+        b UID
+      td
+       | #{data.uid || ''}
+
+     tr
+      td 
+        b Environment
+      td
+       | #{data.env || ''}
+     tr
+      td 
+        b Log File
+      td
+       | #{data.logFile || ''}
+
+     tr
+      td 
+        b Source Dir
+      td
+       | #{data.sourceDir || ''}
+
      tr
       td
+       a(href="/list", class="btn") << Back
       td
-       a(href="/restart/#{i}", class="btn btn-primary") Restart
+       a(href="/restart/#{data.uid}", disabled=true, class="btn btn-primary") Restart Build Process
+       &nbsp;
+       a(href="/restart/#{data.uid}", class="btn btn-primary") Stop Build
+       &nbsp;
+       a(href="/restart/#{data.uid}", class="btn btn-primary") Stop & Purge

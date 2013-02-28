@@ -1,0 +1,54 @@
+extends layout
+
+block header
+
+block content
+ 
+  h3 Start a Build Process
+  p
+    | This process provides the ability to start and build a process. This process
+    | will assign the next available port. It will handle the git checkout, build, 
+    | npm install and deployment. You can start more then one process for a given
+    | commit.
+
+    br
+    br
+
+    form(action="/start/process", method="post")
+
+      input(type="hidden", name="sha", value="#{id}")
+
+      b Reference Name (Required): 
+      br
+      input(name="reference_name", class="span4", placeholder="Enter Name")
+      p This will default to the SHA commit.
+
+      b Max Restarts (Required): 
+      br
+      input(name="max_attempts", class="span1", value="4", placeholder="Enter the number of Max restart attempts.")
+      p Use this option to define the maximum number of attempts for a given process.
+
+      b Environment (Required): 
+      br
+      input(name="environment", class="span4", value="development", placeholder="Enter Name")
+      p Use this to define the NODE_ENV value.
+
+      br
+
+      b Runtime Description (Optional): 
+      br
+      textarea(name="reference_description", class="span6",  placeholder="Optional Description.")
+      p This is an optional description for use in delinating a specific process.
+
+      br
+      br
+      a(type="button", class="btn", href="/sites") Cancel
+      &nbsp;
+      button(type="submit", class="btn btn-warning", name="SubmitButton") Start Build Process >>
+
+  p.well
+    | Note: A build can take a few minutes to complete. If the required node.js modules are not
+    | available in the build folder, the process will need to run the full 'npm install'. 
+      
+    
+
