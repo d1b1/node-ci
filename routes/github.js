@@ -55,10 +55,10 @@ exports.callback = function(req, res) {
       req.session.access_token = jsonchunkData.access_token;
       req.session.logged_in = true;
 
-      var github = new githubAPI({ version: "3.0.0" });
+      var github = new githubAPI({ version: '3.0.0' });
 
       github.authenticate({
-        type: "oauth",
+        type: 'oauth',
         token: jsonchunkData.access_token
       });
 
@@ -94,11 +94,11 @@ exports.callback = function(req, res) {
 exports.userinfo = function(req, res) {
 
   var github = new githubAPI({
-    version: "3.0.0"
+    version: '3.0.0'
   });
 
   github.authenticate({
-    type: "oauth",
+    type: 'oauth',
     token: req.session.user.access_token
   });
 
@@ -111,12 +111,11 @@ exports.userinfo = function(req, res) {
 exports.commits = function(req, res) {
 
   var github = new githubAPI({
-    version: "3.0.0"
+    version: '3.0.0'
   });
 
-
   github.authenticate({
-    type: "oauth",
+    type: 'oauth',
     token: req.session.user.access_token
   });
 
