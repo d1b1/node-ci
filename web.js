@@ -236,7 +236,7 @@ app.get('/stop/:uid', check, function(req, res) {
 
   getProcessIndexbyID(uid, function(err, processIndex) {
 
-    if (err || !process) {
+    if (err || !processIndex) {
       GLOBAL.messages.push({ type: 'error', copy: 'Unable to find the process to stop.'});
       res.redirect('/list');
       return;
@@ -257,7 +257,7 @@ app.get('/restart/:uid', check, function(req, res) {
 
   getProcessIndexbyID(uid, function(err, processIndex) {
 
-    if (err || !process) {
+    if (err || !processIndex) {
       GLOBAL.messages.push({ type: 'error', copy: 'Unable to find the process to restart.'});
       res.redirect('/list');
       return;
@@ -269,6 +269,17 @@ app.get('/restart/:uid', check, function(req, res) {
     res.redirect('/list');
   });
 
+});
+
+
+
+app.get('/cleanup', check, function(req, res) {
+
+  forever.cleanUp();
+
+  GLOBAL.messages.push({ type: 'info', copy: 'Running the forever cleanup processes.'});
+
+  res.redirect('/list');
 });
 
 app.get('/git', check, routes.github.commits );
@@ -335,6 +346,9 @@ var getProcessIndexbyID = function(uid, cb) {
     _.each(data, function(o) { UIDs.push(o.uid); });
 
     var indexNum = _.indexOf(UIDs, uid);
+
+    if (indexNum == -1) indexNum = null;
+
     cb(null, indexNum);
   })
 
