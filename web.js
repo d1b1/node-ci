@@ -193,7 +193,9 @@ app.post('/start/process', check, function(req, res) {
     var appFolder = __dirname + '/tmp/' + sha + '';
     var options = { 
       max:       max_attempts, 
-      logfile:   appFolder + '/forever_all.log',
+      logfile:   __dirname + '/node-ci.log',
+      errfile:   __dirname + '/node-ci.log',
+      outfile:   __dirname + '/node-ci.log',
       append:    true,
       checkFile: true,
       fork:      false,
@@ -230,16 +232,21 @@ app.post('/start/process', check, function(req, res) {
 
 });
 
-app.get('/stop/:uid', check, function(req, res) {
+app.get('/stop/:uid/:index', check, function(req, res) {
 
   var uid = req.params.uid;
 
   getProcessIndexbyID(uid, function(err, processIndex) {
 
-    if (err || !processIndex) {
+    if (err) {
       GLOBAL.messages.push({ type: 'error', copy: 'Unable to find the process to stop.'});
       res.redirect('/list');
       return;
+    }
+
+    if (!processIndex) {
+      GLOBAL.messages.push({ type: 'error', copy: 'Unable to find the process using UID, attempting Index.'});
+      processIndex = parseInt(req.params.index);
     }
 
     forever.stop(processIndex);
@@ -270,8 +277,6 @@ app.get('/restart/:uid', check, function(req, res) {
   });
 
 });
-
-
 
 app.get('/cleanup', check, function(req, res) {
 
@@ -370,34 +375,15 @@ app.get('/detail/:id', check, function(req, res) {
   var uid = req.params.id;
 
   getProcessByID(uid, function(err, process) {
+    if (err || !process) {
+      GLOBAL.messages.push({ type: 'error', copy: 'Unable to fetch the requested process.'});
+      res.redirect('/list');
+      return;
+    }
 
     res.render('detail', { data: process } );
   });
 
-  // forever.list(false, function (err, data) {
-
-  //   var element = _.find(data, function(o) {
-  //     return o.uid == uid;
-  //   });
-
-  //   res.render('detail', { data: element } );
-  // });
-
-});
-
-app.get('/all', check, function(req, res) {
-  forever.list(false, function (err, data) {
-    if (err) {
-      console.log('Error running `forever.list()`');
-      console.dir(err);
-    }
-    
-    res.send(data);
-  })
-});
-
-app.get('/test', function(req, res) {
-  res.send('Test Page');
 });
 
 app.post('/build', check, function(req, res) {

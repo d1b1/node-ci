@@ -63,12 +63,12 @@ block content
                  li 
                    a(href="/restart/#{process.uid}") Restart
                  li
-                   a(href="/stop/#{process.uid}") Stop
+                   a(href="/stop/#{process.uid}/#{i}") Stop
           - else
             &nbsp;
 
   hr
-  
+
   a(href="/cleanup", class="btn btn-warning") Cleanup Processes
   
 
