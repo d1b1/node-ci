@@ -32,3 +32,23 @@ This application builds upon the work done by indexZero and the forever/forever-
 forever CLI activity. The current forever process lacks a few helper features needed to make the UI attach to the correct
 process. For this reason this project uses a fork of the forever and forever-monitor projects.
 
+* Fork - https://github.com/d1b1/forever-monitor
+* Fork - https://github.com/d1b1/forever
+
+To remove this requirement, you will need to change the package.json to remove the fork dependencies. Please note
+this project will not work without the patches made to these projets. 
+
+Roadmap
+===============
+The following is a list of features still in development.
+
+* Strict github login to organization team members.
+* Implement the Base Domain configuration
+* Impliment the Log Path configuration.
+* Impliment the Repo Build Path configuration.
+* Impliment the startup config options in a mongod db.
+* Better domain to port mapping.
+* Better early failure and messaging of process changes.
+* Alters to members.
+* Persisent testing metrics and storage.
+* Public metric report. (code coverage etc).
