@@ -1,7 +1,6 @@
 var url        = require('url'),
     githubAPI  = require('github'),
     mongodb    = require('mongodb'),
-    db         = require('../db.js'),
     _          = require('underscore'),
     moment     = require('moment');
 
@@ -110,19 +109,29 @@ exports.userinfo = function(req, res) {
 
 exports.commits = function(req, res) {
 
-  var github = new githubAPI({
-    version: '3.0.0'
-  });
+  if (!GLOBAL.config) {
+    GLOBAL.messages.push({ type: 'error', copy: 'Missing Configuration information.'});
+    res.redirect('/list');
+    return;
+  }
+
+  var github = new githubAPI({ version: '3.0.0' });
 
   github.authenticate({
     type: 'oauth',
     token: req.session.user.access_token
   });
 
-  var since = moment().subtract('months', 24).format('YYYY-MM-DDTHH:mm:ssZ');
+  var options = {
+    repo:   GLOBAL.config.repository.repo,
+    user:   GLOBAL.config.repository.user,
+    since:  moment().subtract('months', 24).format('YYYY-MM-DDTHH:mm:ssZ'),
+    per_page: 30,
+    sha:     req.urlparams.sha || null
+  };
 
-  github.repos.getCommits({ user: 'npr', 'until': since, repo: 'composer' }, function(err, data) {
-    res.render('commits', { data: data });
+  github.repos.getCommits(options, function(err, data) {
+    res.render('commits', { data: data, options: options });
   });
 
 }

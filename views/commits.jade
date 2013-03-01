@@ -6,10 +6,17 @@ block content
  
   h3 Composer Commits
 
+  div(class="pagination pagination-small pagination-right")
+    ul
+      li 
+        a(href="/git?sha=#{_.first(data).sha}", class="btn") << Newer
+      li
+        a(href="/git?sha=#{_.last(data).sha}", class="btn") Older >>
+
   table.table-striped.table.table-hover
    tr
     th(width="10%")
-     | Sha
+     | SHA
     th(width="20%")
      | Author
     th(width="40%")
@@ -35,3 +42,10 @@ block content
          | #{commit.commit.message}
         td
          a(href="/git/commit/#{commit.sha}", class="btn btn-primary") Build
+
+  div(class="pagination pagination-small pagination-right")
+    ul
+      li 
+        a(href="/git?sha=#{_.first(data).sha}", class="btn") << Newer
+      li
+        a(href="/git?sha=#{_.last(data).sha}", class="btn") Older >>

@@ -2,9 +2,9 @@
 exports.login = function(req, res){
 
   if (req.session.user && req.session.user.logged_in) {
-    res.redirect('/account');
+    res.redirect('/');
   } else {
-    res.render('login', { session: req.session, params: { goto: '', message: '' }, title: 'Home', hidesearch: '' });
+    res.render('login', { params: { goto: '', message: '' }, title: 'Home', hidesearch: '' });
   }
 
 };

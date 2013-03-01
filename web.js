@@ -1,16 +1,12 @@
 var express    = require('express'),
     connect    = require('connect'),
     fs         = require('fs'),
-    sys        = require('sys'),
-    path       = require('path'),
-    forever    = require('forever'),
-    OAuth      = require('oauth').OAuth,
-    GitHubApi  = require("github"),
-    oa;
-
+    path       = require('path');
+   
 // Setup Global Message Queue.
 GLOBAL.messages = [];
 GLOBAL.root     = __dirname;
+GLOBAL.config   = require('./config.json');
 
 var app = express();
 app.configure(function() {
@@ -29,12 +25,20 @@ app.configure(function() {
     store: new express.session.MemoryStore({}),
   }))
 
-  app.use(app.router);
   app.use(function(req, res, next) {
     app.locals.session = req.session;
     app.locals.page = { title: '' }
     next();
   });
+
+  app.use(function(req, res, next) {
+    var url = require('url');
+    var queryURL = url.parse(req.url, true);
+    req.urlparams = queryURL.query;
+    next();
+  });
+          
+  app.use(app.router);
 
   // Catch all traffic not handled and send to the index.html.
   app.use('/', express.static(path.join(__dirname, '/')));
@@ -60,26 +64,26 @@ var check = function(req, res, next ) {
 }
 
 // Github Oauth Paths.
-app.get('/github_login',            routes.github.login );
-app.get('/github_cb',               routes.github.callback );
-app.get('/account',          check, routes.github.userinfo );
+app.get('/github_login',            routes.github.login);
+app.get('/github_cb',               routes.github.callback);
+app.get('/account',          check, routes.github.userinfo);
 
 // Standard Login
-app.get('/login',                   routes.session.login );
-app.get('/logout',                  routes.session.logout );
+app.get('/login',                   routes.session.login);
+app.get('/logout',                  routes.session.logout);
 
 // Git Commit Paths.
-app.get('/git',              check, routes.github.commits );
-app.get('/git/commit/:sha',  check, routes.ci.buildCommitSlug );
+app.get('/git',              check, routes.github.commits);
+app.get('/git/commit/:sha',  check, routes.ci.buildCommitSlug);
 
 // Process Paths.
 app.get('/sites',            check, routes.ci.sites);
 app.get('/list',             check, routes.ci.listProcesses);
 app.get('/start/:sha',       check, routes.ci.startDialog);
-app.post('/start/process',   check, routes.ci.startProcess );
-app.get('/stop/:uid/:index', check, routes.ci.stopProcess );
-app.get('/restart/:uid',     check, routes.ci.restartProcess );
-app.get('/cleanup',          check, routes.ci.cleanupProcesses );
+app.post('/start/process',   check, routes.ci.startProcess);
+app.get('/stop/:uid/:index', check, routes.ci.stopProcess);
+app.get('/restart/:uid',     check, routes.ci.restartProcess);
+app.get('/cleanup',          check, routes.ci.cleanupProcesses);
 app.get('/tail/:uid',        check, routes.ci.tailProcessLog);
 app.get('/detail/:id',       check, routes.ci.processDetail);
 
