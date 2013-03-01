@@ -6,6 +6,17 @@ block content
 
     h3 Login
 
+    - if (urlparams.message == 'NotOnTeam') 
+      .alert
+        b Sorry
+        | , you are not a designated member of the repo team. Please contact
+        | your github organization manager for access.
+
+    - if (urlparams.message == 'ErrorInOAUTH') 
+      .alert
+        b Sorry
+        | , there was a problem with the git Authentication process.
+
     .row
       .span1.hidden-phone
         a(href="/github_login")

@@ -1,0 +1,31 @@
+extends layout
+
+block header
+
+block content
+ 
+  p
+    | The following is a list of the team members with access to this repo. 
+
+  table.table-striped.table.table-hover
+   tr
+    th(width="5%")
+     | 
+    th(width="15%")
+     | Username
+    th(width="50%")
+     | Type
+
+    - if (!data || data.length == 0) 
+       tr
+        td(colspan="4")
+         | No Team Members available.
+    - else
+      each member, i in data
+       tr
+        td
+          img(src="#{member.avatar_url}", width="50")
+        td
+         | #{member.login}
+        td
+         | #{member.type}

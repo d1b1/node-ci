@@ -1,0 +1,19 @@
+{
+  "name": "Development",
+  "type": "head",
+  "sha": "development",
+  "description": "Persisent HEAD build for composer development branch.",
+  "repository":
+    { "name": "Composer Pro",
+      "repo": "composer",
+      "user": "npr",
+      "path": "git@github.com:npr/composer.git"
+    }
+  ,
+  "env": {
+    "NODE_ENV": "development",
+    "PORT": 3001
+  },
+  "repoPath": "/tmp",
+  "domain": "localhost"
+}

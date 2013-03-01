@@ -1,0 +1,360 @@
+extends layout
+
+block header
+
+  // script(src="/assets/js/plugins/jqplot/jquery.jqplot.js")
+  // script(src="/assets/js/plugins/jqplot/plugins/jqplot.canvasTextRenderer.min.js")
+  // script(src="/assets/js/plugins/jqplot/plugins/jqplot.canvasAxisLabelRenderer.min.js")
+
+  script(src="/assets/js/plugins/jqplot/plugins/jqplot.highlighter.min.js")
+  script(src="/assets/js/plugins/jqplot/plugins/jqplot.cursor.min.js")
+  script(src="/assets/js/plugins/jqplot/plugins/jqplot.dateAxisRenderer.min.js")
+
+  script(src="http://code.highcharts.com/highcharts.js")
+  script(src="http://code.highcharts.com/modules/exporting.js")
+
+  style
+    div#chart3 {
+        height: 250px;
+        // width: 600px;
+        margin: 10px;
+    }
+    div#chart4 {
+        height: 250px;
+        //width: 600px;
+        margin: 10px;
+    }
+
+block content
+
+  .row.well
+    .span4
+      h4 Development Summary
+      p 
+        | The following are the build statictics for the 'Development Branch'
+      
+      table.table-striped.table.table-hover
+        tr 
+          td 
+            b Total Datapoints
+          td 22
+        tr 
+          td 
+            b Starting
+          td 11/1/2012
+        tr 
+          td 
+            b Ending
+          td 12/1/2012
+        tr 
+          td 
+            b Average Cover
+          td 30%
+
+    .span7
+      div#chart3
+
+   .row.well
+    .span4
+      h4 Production Summary
+      p 
+        | The following are the build statictics for the 'Production Branch'
+
+      table.table-striped.table.table-hover
+        tr 
+          td 
+            b Total Datapoints
+          td 10
+        tr 
+          td 
+            b Starting
+          td 11/1/2012
+        tr 
+          td 
+            b Ending
+          td 12/1/2012
+        tr 
+          td 
+            b Average Cover
+          td 30%
+
+    .span7
+      div#chart4
+
+
+  script
+
+    $(function () {
+        var chart;
+        $(document).ready(function() {
+
+            chart = new Highcharts.Chart({
+                chart: {
+                    renderTo: 'chart3',
+                    //zoomType: 'xy'
+                },
+                title: {
+                    text: 'Development Metrics'
+                },
+                xAxis: [{
+                    categories: ['11/1', '11/4', '11/7', '12/1', '12/10', '12/30', '1/1', '1/15', '2/1']
+                }],
+                yAxis: [
+                  { // Secondary yAxis
+                    gridLineWidth: 0,
+                    title: {
+                        text: 'Coverage %',
+                        style: { color: '#000' }
+                    },
+                    labels: {
+                        formatter: function() {
+                            return this.value +'%';
+                        },
+                        style: {
+                            color: '#000'
+                        }
+                    }
+        
+                }, 
+                { // Primary yAxis
+                  labels: {
+                      formatter: function() {
+                          return this.value +'';
+                      },
+                      style: {
+                          color: '#000'
+                      }
+                  },
+                  title: {
+                    text: 'Tests',
+                    style: { color: '#000' }
+                  },
+                  opposite: true
+                }, 
+                { // Tertiary yAxis
+                  gridLineWidth: 0,
+                  title: {
+                    text: 'Bug Delta',
+                    style: { color: '#000' }
+                  },
+                  labels: {
+                      formatter: function() {
+                          return this.value +'';
+                      },
+                      style: {
+                          color: '#000'
+                      }
+                  },
+                  opposite: true
+                }],
+                exporting: { enabled: false },
+                series: [{
+                    name: 'Coverage %',
+                    color: '#4572A7',
+                    type: 'column',
+                    yAxis: 1,
+                    data: [10.1, 21.5, 22.4, 23.2, 19.0, 30.0, 31, 32, 35.4]
+        
+                }, {
+                    name: 'Tests',
+                    type: 'spline',
+                    color: '#AA4643',
+                    yAxis: 2,
+                    data: [10, 13, 30, 34, 40, 44, 45, 50, 99],
+                    marker: {
+                        enabled: false
+                    },
+                    dashStyle: 'shortdot'
+        
+                }, {
+                    name: 'Bugs',
+                    color: '#89A54E',
+                    type: 'spline',
+                    data: [7.0, 6.9, 9.5, 14.5, 18.2, 10, 3, 3, 1]
+                }]
+            });
+
+            chart2 = new Highcharts.Chart({
+                chart: {
+                    renderTo: 'chart4',
+                    //zoomType: 'xy'
+                },
+                title: {
+                    text: 'Production Metrics'
+                },
+                xAxis: [{
+                    categories: ['11/1', '11/4', '11/7', '12/1', '12/10', '12/30', '1/1', '1/15', '2/1']
+                }],
+                yAxis: [
+                  { // Secondary yAxis
+                    gridLineWidth: 0,
+                    title: {
+                        text: 'Coverage %',
+                        style: { color: '#000' }
+                    },
+                    labels: {
+                        formatter: function() {
+                            return this.value +'%';
+                        },
+                        style: {
+                            color: '#000'
+                        }
+                    }
+        
+                }, 
+                { // Primary yAxis
+                  labels: {
+                      formatter: function() {
+                          return this.value +'';
+                      },
+                      style: {
+                          color: '#000'
+                      }
+                  },
+                  title: {
+                    text: 'Tests',
+                    style: { color: '#000' }
+                  },
+                  opposite: true
+                }, 
+                { // Tertiary yAxis
+                  gridLineWidth: 0,
+                  title: {
+                    text: 'Bug Delta',
+                    style: { color: '#000' }
+                  },
+                  labels: {
+                      formatter: function() {
+                          return this.value +'';
+                      },
+                      style: {
+                          color: '#000'
+                      }
+                  },
+                  opposite: true
+                }],
+                exporting: { enabled: false },
+                series: [{
+                    name: 'Coverage %',
+                    color: '#4572A7',
+                    type: 'column',
+                    yAxis: 1,
+                    data: [10.1, 21.5, 22.4, 23.2, 19.0, 30.0, 31, 32, 35.4]
+        
+                }, {
+                    name: 'Tests',
+                    type: 'spline',
+                    color: '#AA4643',
+                    yAxis: 2,
+                    data: [10, 13, 30, 34, 40, 44, 45, 50, 99],
+                    marker: {
+                        enabled: false
+                    },
+                    dashStyle: 'shortdot'
+        
+                }, {
+                    name: 'Bugs',
+                    color: '#89A54E',
+                    type: 'spline',
+                    data: [7.0, 6.9, 9.5, 14.5, 18.2, 10, 3, 3, 1]
+                }]
+            });
+
+        });
+        
+    });
+
+    // $(document).ready(function(){
+    //   // Some simple loops to build up data arrays.
+    //   var cosPoints = [];
+    //   for (var i=0; i<2*Math.PI; i+=0.4){ 
+    //     cosPoints.push([i, Math.cos(i)]); 
+    //   }
+        
+    //   var sinPoints = []; 
+    //   for (var i=0; i<2*Math.PI; i+=0.4){ 
+    //      sinPoints.push([i, 2*Math.sin(i-.8)]); 
+    //   }
+        
+    //   var powPoints1 = []; 
+    //   for (var i=0; i<2*Math.PI; i+=0.4) { 
+    //       powPoints1.push([i, 2.5 + Math.pow(i/4, 2)]); 
+    //   }
+
+     
+    //   var plot3 = $.jqplot('chart3', [cosPoints, sinPoints, powPoints1], 
+    //     { 
+    //       title:'Development Build Spectrum', 
+    //       series:[ 
+    //           {
+    //             lineWidth: 2, 
+    //             markerOptions: { size: 5, style:'filledSquare' },
+    //             label: 'asdfasdf'
+    //           }, 
+    //           {
+    //             showLine: true, 
+    //             markerOptions: { size: 5, style:"filledSquare" }
+    //           },
+    //           {
+    //             lineWidth: 2, 
+    //             markerOptions: { style:"filledSquare", size: 5 }
+    //           }
+    //       ]
+    //     }
+    //   );
+
+    //     var line1 = [
+    //           ['23-May-08', 10], 
+    //           ['20-Jun-08', 11], 
+    //           ['25-Jul-08', 23], 
+    //           ['22-Aug-08', 50],
+    //           ['26-Sep-08', 51], 
+    //           ['24-Oct-08', 59], 
+    //           ['21-Nov-08', 60], 
+    //           ['26-Dec-08', 66],
+    //           ['23-Jan-09', 55], 
+    //           ['20-Feb-09', 60], 
+    //           ['20-Mar-09', 61], 
+    //           ['24-Apr-09', 70]
+    //         ];
+
+    //     var line2 = [
+    //           ['23-May-08', 100], 
+    //           ['20-Jun-08', 120], 
+    //           ['25-Jul-08', 140], 
+    //           ['22-Aug-08', 100],
+    //           ['26-Sep-08', 120], 
+    //           ['24-Oct-08', 123], 
+    //           ['21-Nov-08', 140], 
+    //           ['26-Dec-08', 150],
+    //           ['23-Jan-09', 160], 
+    //           ['20-Feb-09', 159], 
+    //           ['20-Mar-09', 130], 
+    //           ['24-Apr-09', 120]
+    //         ];
+
+    //     var plot1 = $.jqplot('chart4', [line1, line2], {
+    //         title:'Data Point Highlighting',
+    //         axes:{
+    //           xaxis:{
+    //             renderer:$.jqplot.DateAxisRenderer,
+    //             tickOptions:{
+    //               formatString:'%b&nbsp;%#d'
+    //             } 
+    //           },
+    //           yaxis:{
+    //             tickOptions:{
+    //               formatString:'%.2f %'
+    //               }
+    //           }
+    //         },
+    //         highlighter: {
+    //           show: true,
+    //           sizeAdjust: 7.5
+    //         },
+    //         cursor: {
+    //           show: false
+    //         }
+    //     });
+
+    // });

@@ -7,6 +7,7 @@ var express    = require('express'),
 GLOBAL.messages = [];
 GLOBAL.root     = __dirname;
 GLOBAL.config   = require('./config.json');
+GLOBAL.configurations = {};
 
 var app = express();
 app.configure(function() {
@@ -76,6 +77,14 @@ app.get('/logout',                  routes.session.logout);
 app.get('/git',              check, routes.github.commits);
 app.get('/branches',         check, routes.github.branches);
 app.get('/git/commit/:sha',  check, routes.ci.buildCommitSlug);
+
+// Preset Builds
+app.get('/head/list',          check, routes.ci.listConfigurations);
+app.get('/head/setup/:label',  check, routes.ci.setupConfiguration);
+
+app.get('/plots', check, routes.data.showChart);
+
+app.get('/teams', check, routes.github.teamMembers);
 
 // Process Paths.
 app.get('/sites',            check, routes.ci.sites);

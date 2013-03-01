@@ -1,0 +1,43 @@
+extends layout
+
+block header
+
+block content
+ 
+  p
+    | This is a list of git commit build slugs. Each slug is a discrete copy of the 
+    | codebase at a specific commit point. The name of the slug is the first 10 digits
+    | of the sha commit. To start/restart a commit use the option. When you are done
+    | with a slug, you need to stop and delete the build. This will remove the codebase
+    | and stop any process bound.
+
+  table.table-striped.table.table-hover
+   tr
+    th(width="20%")
+     | Label
+    th(width="20%")
+     | Type
+    th(width="20%")
+     | Sha/Branch
+    th(width="20%")
+     | Domain/Site
+    th(width="20%")
+
+    - if (!data || data.length == 0) 
+       tr
+        td(colspan="4")
+         | No Configurations defined.
+    - else
+      each config, i in data
+       tr
+        td
+         | #{config.name}
+        td
+         | #{config.type}
+        td
+         | #{config.sha}
+        td
+         | #{config.domain}
+        td
+          a(href="/head/setup/#{config.name}?process_type=load", class="btn btn-primary") Load Configuration
+

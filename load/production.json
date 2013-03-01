@@ -1,0 +1,19 @@
+{
+  "name": "Production",
+  "type": "head",
+  "sha": "production",
+  "description": "Persisent HEAD build for composer 'Release' branch.",
+  "repository":
+    { "name": "Composer Pro",
+      "repo": "composer",
+      "user": "npr",
+      "path": "git@github.com:npr/composer.git"
+    }
+  ,
+  "env": {
+    "NODE_ENV": "release",
+    "PORT": 3002
+  },
+  "repoPath": "/tmp",
+  "domain": "localhost"
+}

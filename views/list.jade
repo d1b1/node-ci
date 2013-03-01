@@ -61,13 +61,16 @@ block content
          br
          b Source:
          | #{process.sourceDir}
+         br
+         b Site: 
+         | #{process.ui_url}
         td
 
           - if (process.ui_sha)
               div.btn-group
                 - if (process.ui_url) 
                   a(href="#{process.ui_url}", class="btn btn-large btn-primary", target="_blank") Got to Site
-                button(class="btn btn-large dropdown-toggle", data-toggle="dropdown") 
+                button(class="btn btn-large btn-primary  dropdown-toggle", data-toggle="dropdown") 
                   span.caret
                 ul(class="dropdown-menu")
                  li
@@ -82,7 +85,7 @@ block content
               div.btn-group
                 - if (process.ui_url) 
                   a(href="#{process.ui_url}", class="btn btn-large btn-primary", target="_blank") Got to Site
-                button(class="btn btn-large dropdown-toggle", data-toggle="dropdown") 
+                button(class="btn btn-large btn-primary dropdown-toggle", data-toggle="dropdown") 
                   span.caret
                 ul(class="dropdown-menu")
                  li

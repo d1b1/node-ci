@@ -2,6 +2,7 @@ var url        = require('url'),
     githubAPI  = require('github'),
     mongodb    = require('mongodb'),
     _          = require('underscore'),
+    async      = require('async'),
     moment     = require('moment');
 
 exports.login = function(req, res) { 
@@ -61,30 +62,48 @@ exports.callback = function(req, res) {
         token: jsonchunkData.access_token
       });
 
-      github.user.get({}, function(err, data) {
+      async.series({
+        user: function(callback) {
+         github.user.get({}, function(err, data) {
+           callback(null, data);
+         });
+        },
+        team: function(callback) {
+          getTeamMembers(111, jsonchunkData.access_token, function(err, data) {
+            callback(null, data);
+          });
+        }
+      }, function(err, asyncResults) {
 
-        req.session.user = {  
-          status: true, 
-          logged_in: true,
-          name: data.name,
-          email: data.email,
-          access_token: jsonchunkData.access_token,
-          github: data
-        };
+        var isOnTeam = _.filter(asyncResults.team, function(o) { return o.login == asyncResults.user.login });
+        if (isOnTeam.length == 1) {
 
-        
-        req.session.logged_in = true;
+          req.session.user = {  
+            status:       true, 
+            logged_in:    true,
+            name:         asyncResults.user.name,
+            email:        asyncResults.user.email,
+            access_token: jsonchunkData.access_token,
+            github:       asyncResults.user
+          };
 
-        GLOBAL.messages.push({ type: 'info', copy: 'Session setup. Welcome ' + (data.name || '<Someone?>') + '!' });
-        res.redirect('/list');
+          req.session.logged_in = true;
+
+          GLOBAL.messages.push({ type: 'info', copy: 'Session setup. Welcome ' + (asyncResults.user.name || '[Someone?]') + '!' });
+          res.redirect('/list');
+
+        } else {
+          res.redirect('/login?message=NotOnTeam');
+          return;
+        }
+
       });
     });
+  });
 
-    result.on('error', function( err ) {
-      res.send(JSON.stringify({ 'Error': err.message}), 404);
-    });
-
-  })
+  call.on('error', function( err ) {
+    res.redirect('/login?message=ErrorInOAUTH')
+  });
 
   call.write(jsonData);
   call.end()
@@ -192,3 +211,56 @@ exports.branches = function(req, res) {
 
 }
 
+var getTeamMembers = function(teamID, access_token, cb) {
+
+  if (!GLOBAL.config) {
+    return cb(null, null);
+  }
+
+  var github = new githubAPI({ version: '3.0.0' });
+  github.authenticate({ type: 'oauth', token: access_token || req.session.user.access_token });
+
+  var opt = {
+    id: GLOBAL.config.team,
+  };
+
+  github.orgs.getTeamMembers(opt, function(err, data) {
+    if (err) return callback(err, null);
+    
+    cb(null, data);
+  });
+  
+}
+
+exports.teamMembers = function(req, res) {
+
+  if (!GLOBAL.config) {
+    GLOBAL.messages.push({ type: 'error', copy: 'Missing Configuration information.'});
+    res.redirect('/list');
+    return;
+  }
+
+  var github = new githubAPI({ version: '3.0.0' });
+  github.authenticate({ type: 'oauth', token: req.session.user.access_token });
+
+  var async = require('async');
+  async.parallel({
+    members: function(callback) {
+
+      var opt = {
+        id:    GLOBAL.config.team,
+      };
+
+      github.orgs.getTeamMembers(opt, function(err, data) {
+        if (err) return callback(err, null);
+        callback(null, data);
+      });
+      
+    }
+  }, function(err, data) {
+
+    console.log(data)
+    res.render('team_members', { data: data.members });
+  })
+
+}

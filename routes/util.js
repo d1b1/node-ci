@@ -1,6 +1,25 @@
 var forever  = require('forever');
 var _        = require('underscore');
 
+exports.getProcessbyTypeAndID = function(type, id, cb) {
+
+  forever.list(false, function (err, data) {
+    if (err) return cb(err);
+
+    var results = _.filter(data, function(o) {
+      return o.type == type && o.ui_sha == id;
+    });
+  
+    if (results.length == 1) {
+      cb(null, results[0]);
+    } else {
+      cb(null, null);
+    }
+
+  })
+
+}
+
 exports.getProcessIndexbyID = function(uid, cb) {
 
   forever.list(false, function (err, data) {

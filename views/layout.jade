@@ -34,17 +34,20 @@ html(lang="en")
                 ul.dropdown-menu.hidden-phone
                   li
                     a(href='/list') Sites
-                  li.divider
                   li
                     a(href='/sites') Builds
+                  li
+                    a(href='/head/list') Configurations
               li.dropdown
                 a(href='#', class='dropdown-toggle', data-toggle='dropdown') Git <b class='caret'></b>
                 ul.dropdown-menu.hidden-phone
                   li
                     a(href='/git') Commits
-                  li.divider
                   li
                     a(href='/branches') Branches
+                  li
+                    a(href='/teams') Team Members
+
               if (session.user && session.user.github)
                 li.dropdown
                   a(href='#', class='dropdown-toggle', data-toggle='dropdown') #{session.user.github.name || session.user.name}  <b class='caret'></b>

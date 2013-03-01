@@ -8,6 +8,7 @@
       "path": "git@github.com:npr/composer.git"
     }
   ,
+  "team": 150838,
   "repoPath": "/tmp",
   "domain": "ci.publicbroadcasting.net"
 }

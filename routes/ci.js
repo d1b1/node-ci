@@ -4,6 +4,116 @@ var _        = require('underscore');
 var async    = require('async');
 var fs       = require('fs');
 
+exports.listConfigurations = function(req, res) {
+
+  var configuration = {};
+  require("fs").readdirSync( GLOBAL.root + "/load").forEach(function(file) {
+    var data = require( GLOBAL.root + "/load/" + file);
+    configuration[data.name.toLowerCase()] = data;
+  });
+
+  GLOBAL.configurations = configuration;
+
+  console.log(GLOBAL.configurations);
+  res.render('configurations', { data: configuration });
+}
+
+exports.setupConfiguration = function(req, res) {
+
+  var label = req.params.label;
+
+  var config = GLOBAL.configurations[label.toLowerCase()];
+
+  util.getProcessbyTypeAndID(config.type, config.sha, function(err, data) {
+
+    if (data) {
+      res.redirect('/head/list');
+      return;
+
+    } else {
+
+      util.getPort(function(err, availablePort) {
+
+        if (err && !availablePort) { 
+          if (!availablePort) GLOBAL.messages.push({ type: 'warning', copy: 'No Ports Available to start build.' });
+          if (err) GLOBAL.messages.push({ type: 'error', copy: err.message });
+          return res.redirect('/head/list');
+        }
+
+        var sha = config.sha;
+
+        var localAppFolder = GLOBAL.root + '/tmp/' + config.sha;
+        var options = { 
+          max:       10, 
+          logFile:   GLOBAL.root + '/../node-ci.log',
+          errFile:   GLOBAL.root + '/../node-ci.log',
+          outFile:   GLOBAL.root + '/../node-ci.log',
+          append:    true,
+          checkFile: false,
+          fork:      false,
+          sourceDir: localAppFolder, 
+          env:       { NODE_ENV: config.env.NODE_ENV, PORT: parseInt(config.env.PORT) },
+
+          // User defined Values.
+          ui_name:        config.name,
+          ui_sha:         sha,
+          ui_port:        config.env.PORT,
+          ui_description: config.description,
+          ui_owner:       req.session.user.github.name,
+          ui_url:         'http://' + config.domain + ':' + config.env.PORT,
+          ui_type:        'head'
+        };
+
+        var exec = require('child_process').exec;
+        var pdir = GLOBAL.root + '/tmp/' + config.sha;
+
+        console.log('Step 1: Started the git build.');
+        var command = "";
+
+        var path = require('path');
+        if (path.existsSync(pdir)) { 
+          console.log('Already have a valid Build. Skipping Git steps.');
+
+          command = 'cd ' + pdir + ';npm install;';
+        } else {
+          console.log('No slug found, so build it now.');
+
+          command = 'rm -Rf ' + pdir + '; ' +
+                    'git clone ' + GLOBAL.config.repository.path + ' ' + pdir + '; ' + 
+                    'GIT_WORK_TREE=' + pdir + ' git --git-dir=' + pdir + '/.git --work-tree=' + pdir + ' checkout ' + sha + '; ' +
+                    'cd ' + pdir + ';' +
+                    'npm install;';
+        }
+
+        GLOBAL.messages.push({ type: 'info', copy: 'Buidling an install from a commit.' });
+        GLOBAL.messages.push({ type: 'info', copy: command });
+
+        // This process does the actual startup process for the new site.
+        var NowStartProcess = function (error, stdout, stderr) { 
+
+          console.log('Step 2: Reached the Build Process.');
+
+          GLOBAL.messages.push({ type: 'info', copy: 'CD to ' + localAppFolder });
+          GLOBAL.messages.push({ type: 'info', copy: 'Completed NPM Install for ' + sha });
+          GLOBAL.messages.push({ type: 'info', copy: 'Starting site process for ' + sha });
+
+          var childProcess = forever.startDaemon('server.js', options);
+          forever.startServer(childProcess);
+
+          GLOBAL.messages.push({ type: 'info', copy: 'Starting a site on port ' + availablePort + ' for SHA ' + sha })
+
+          res.redirect('/list');
+        }
+
+        // Star the Actual Process Now.
+        exec(command, NowStartProcess);
+      });
+    }
+
+  });
+
+}
+
 exports.restartProcess = function(req, res) {
 
   var uid = req.params.uid;
