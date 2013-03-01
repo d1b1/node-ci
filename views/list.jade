@@ -29,12 +29,12 @@ block content
         td
          - if (process.ui_type == 'snapshot')
            b SnapShot 
-           | @ #{process.ui_sha || 'Na'}
+           | @ #{process.ui_sha.substring(0, 9) || 'Na'}
          - else if (process.ui_type == 'head')
            b HEAD 
            | of #{process.ui_sha || 'Na'}
          - else 
-           | CLI
+           | CLI/Untracked
         td
          | #{process.ui_name || 'Na'}
          br

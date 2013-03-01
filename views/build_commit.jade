@@ -38,7 +38,7 @@ block content
         .span10
           b Reference Name (Required): 
           br
-          input(name="reference_name", class="span4", value="#{id}", placeholder="Enter Name")
+          input(name="reference_name", class="span4", value="#{id.substring(0, 9)}", placeholder="Enter Reference Name")
           p This will default to the SHA commit.
 
       .row

@@ -54,7 +54,7 @@ exports.getPort = function(cb) {
       if (o.ui_port && typeof o.ui_port != undefined) ports.push( parseInt(o.ui_port));
     });
 
-    for (var i=3010; i<3030;i++) { 
+    for (var i=3010; i<3020;i++) { 
       if (_.indexOf(ports, i) == -1) return cb(null, i);
     }
 
