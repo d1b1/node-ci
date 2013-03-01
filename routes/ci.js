@@ -110,9 +110,9 @@ exports.startProcess = function(req, res) {
     var localAppFolder = GLOBAL.root + '/tmp/' + sha;
     var options = { 
       max:       max_attempts, 
-      logFile:   GLOBAL.root + '/node-ci.log',
-      errFile:   GLOBAL.root + '/node-ci.log',
-      outFile:   GLOBAL.root + '/node-ci.log',
+      logFile:   GLOBAL.root + '/../node-ci.log',
+      errFile:   GLOBAL.root + '/../node-ci.log',
+      outFile:   GLOBAL.root + '/../node-ci.log',
       append:    true,
       checkFile: false,
       fork:      false,
@@ -134,11 +134,23 @@ exports.startProcess = function(req, res) {
 
     console.log('Step 1: Started the git build.');
 
-    var command = 'rm -Rf ' + pdir + '; ' +
-                  'git clone ' + GLOBAL.config.repository.path + ' ' + pdir + '; ' + 
-                  'GIT_WORK_TREE=' + pdir + ' git --git-dir=' + pdir + '/.git --work-tree=' + pdir + ' checkout ' + sha + '; ' +
-                  'cd ' + pdir + ';npm install;';
- 
+    var command = "";
+
+    var path = require('path');
+    if (path.existsSync(pdir)) { 
+      console.log('Already have a valid Build. Skipping Git steps.');
+
+      command = 'cd ' + pdir + ';npm install;';
+    } else {
+      console.log('No slug found, so build it now.');
+
+      command = 'rm -Rf ' + pdir + '; ' +
+                'git clone ' + GLOBAL.config.repository.path + ' ' + pdir + '; ' + 
+                'GIT_WORK_TREE=' + pdir + ' git --git-dir=' + pdir + '/.git --work-tree=' + pdir + ' checkout ' + sha + '; ' +
+                'cd ' + pdir + ';' +
+                'npm install;';
+    }
+
     GLOBAL.messages.push({ type: 'info', copy: 'Buidling an install from a commit.' });
     GLOBAL.messages.push({ type: 'info', copy: command });
 
@@ -232,9 +244,9 @@ exports.listProcesses = function(req, res) {
 
   forever.list(false, function (err, data) {
 
-    if (err || !data) {
+    if (err) {
       GLOBAL.messages.push({ type: 'error', copy: 'Unable to fetch the existing processes..'});
-      res.redirect('/list');
+      res.redirect('/');
       return;
     }
     
