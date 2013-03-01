@@ -5,7 +5,7 @@
     { "name": "Composer Pro",
       "repo": "composer",
       "user": "npr",
-      "url": "http://github.com/npr/composer.git"
+      "path": "git@github.com:npr/composer.git"
     }
   ,
   "repoPath": "/tmp",

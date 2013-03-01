@@ -4,7 +4,7 @@ block header
 
 block content
  
-  h3 Start a Build Process
+  h3 Start a Build Process: #{process_type}
   p
     | This process provides the ability to start and build a process. This process
     | will assign the next available port. It will handle the git checkout, build, 
@@ -18,27 +18,50 @@ block content
 
       input(type="hidden", name="sha", value="#{id}")
 
-      b Reference Name (Required): 
-      br
-      input(name="reference_name", class="span4", placeholder="Enter Name")
-      p This will default to the SHA commit.
+      input(type="hidden", name="process_type", value="#{process_type}")
+      
+      - if (process_type == 'head')
+        .row
+          .span12
+            b Select a Branch to Track:
+            br
+            select(name="branch_name") 
+              each branch in branches
+                - if (id == branch.name)
+                  option(value="#{branch.name}", selected) #{branch.name}
+                - else
+                  option(value="#{branch.name}") #{branch.name}
+            br
+            b(style="color:red") * This feature is not working yet.
 
-      b Max Restarts (Required): 
-      br
-      input(name="max_attempts", class="span1", value="4", placeholder="Enter the number of Max restart attempts.")
-      p Use this option to define the maximum number of attempts for a given process.
+      .row
+        .span10
+          b Reference Name (Required): 
+          br
+          input(name="reference_name", class="span4", value="#{id}", placeholder="Enter Name")
+          p This will default to the SHA commit.
 
-      b Environment (Required): 
-      br
-      input(name="environment", class="span4", value="development", placeholder="Enter Name")
-      p Use this to define the NODE_ENV value.
+      .row
+        .span5
 
-      br
+          b Max Restarts (Required): 
+          br
+          input(name="max_attempts", class="span1", value="0", placeholder="Enter the number of Max restart attempts.")
+          p Use this option to define the maximum number of attempts for a given process. Defaults to 0, no max.
 
-      b Runtime Description (Optional): 
-      br
-      textarea(name="reference_description", class="span6",  placeholder="Optional Description.")
-      p This is an optional description for use in delinating a specific process.
+        .span5
+          b Environment (Required): 
+          br
+          input(name="environment", class="span4", value="development", placeholder="Enter Name")
+          p Use this to define the NODE_ENV value.
+
+      .row
+        .span10
+
+          b Runtime Description (Optional): 
+          br
+          textarea(name="reference_description", class="span6",  placeholder="Optional Description.")
+          p This is an optional description for use in delinating a specific process.
 
       br
       br

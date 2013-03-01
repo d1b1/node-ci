@@ -1,0 +1,29 @@
+extends layout
+
+block header
+
+block content
+ 
+  h3 Composer Branches
+
+  table.table-striped.table.table-hover
+   tr
+    th(width="40%")
+     | Branch Name
+    th(width="40%")
+     | Info
+    th(width="20%")
+
+    - if (!data || data.length == 0) 
+       tr
+        td(colspan="4")
+         | No Branches available.
+    - else
+      each branch, i in data
+       tr
+        td
+         | #{branch.name}
+        td
+         | ...
+        td
+         a(href="/start/#{branch.name}?process_type=head", class="btn btn-primary") Build HEAD Branch

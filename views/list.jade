@@ -10,18 +10,15 @@ block content
 
   table.table-striped.table.table-hover
    tr
-    th(width="10%")
+    th(width="15%")
      | Based on
-    th(width="10%")
-     | Name
-    th(width="10%")
-     | Owner
-    th(width="10%")
-     | PID/Port
-    th(width="55%")
-     | Log File / Source
+    th(width="15%")
+     | Name/Owner
+    th(width="20%")
+     | Quality
+    th(width="45%")
+     | Details
     th(width="5%")
-
     - if (!data || data.length == 0) 
        tr
         td(colspan="4")
@@ -30,19 +27,35 @@ block content
       each process, i in data
        tr
         td
-         | #{process.ui_sha || 'Na'}
+         - if (process.ui_type == 'snapshot')
+           b SnapShot 
+           | @ #{process.ui_sha || 'Na'}
+         - else if (process.ui_type == 'head')
+           b HEAD 
+           | of #{process.ui_sha || 'Na'}
+         - else 
+           | CLI
         td
          | #{process.ui_name || 'Na'}
-        td
+         br
          | #{process.ui_owner || 'Na'}
         td
-         b= process.pid
+         b Code Coverage: 
+         | NA%
          br
-         b= process.env
+         b # of Tests: 
+         | ###
          br
-         b Port: 
-         | #{process.ui_port}
+         b Fails: 
+         | ###
         td
+         - if (process.ui_description)
+           | #{process.ui_description}
+           br
+           br
+         b Bind Port: 
+         | #{process.ui_port}
+         br
          b Log:
          | #{process.logFile}
          br
@@ -52,8 +65,9 @@ block content
 
           - if (process.ui_sha)
               div.btn-group
+                - if (process.ui_url) 
+                  a(href="#{process.ui_url}", class="btn btn-large btn-primary", target="_blank") Got to Site
                 button(class="btn btn-large dropdown-toggle", data-toggle="dropdown") 
-                  Options 
                   span.caret
                 ul(class="dropdown-menu")
                  li
@@ -65,10 +79,33 @@ block content
                  li
                    a(href="/stop/#{process.uid}/#{i}") Stop
           - else
-            &nbsp;
+              div.btn-group
+                - if (process.ui_url) 
+                  a(href="#{process.ui_url}", class="btn btn-large btn-primary", target="_blank") Got to Site
+                button(class="btn btn-large dropdown-toggle", data-toggle="dropdown") 
+                  span.caret
+                ul(class="dropdown-menu")
+                 li
+                   a(href="/stop/#{process.uid}/#{i}") Stop
 
   hr
 
-  a(href="/cleanup", class="btn btn-warning") Cleanup Processes
+  .row
+    .span6
+      .well
+        p
+          | Need to start a build, use this option to review the commit history, choose a branch or commit.
+
+        a(href="/git", class="btn btn-warning") Start a Commit Build >>
+        &nbsp;
+        a(href="/start/NA?process_type=head", class="btn btn-warning") Start a Branch Build >>
+    .span6
+      .well
+        p
+          | Are there problem processes? Use this option to clean out any zombie builds.
+          br
+          br
+
+        a(href="/cleanup", class="btn btn-warning") Cleanup Processes
   
 

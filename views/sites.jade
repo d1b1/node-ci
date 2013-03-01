@@ -26,13 +26,40 @@ block content
         td(colspan="4")
          | No processes started.
     - else
-      each commit, i in data
+      each slug, i in data
        tr
         td
-         | #{commit}
+         | #{slug.commit}
         td
-         | Coming Soon...
+         - if (slug.process != undefined) 
+           | we have process
+         - else
+           | no process found.
         td
-         | /tmp/#{commit}
+         | /tmp/#{slug.commit}
         td
-         a(href="/start/#{commit}", class="btn btn-primary") Start/Restart
+          - if (slug.process == undefined)
+              div.btn-group
+                button(class="btn btn-large dropdown-toggle", data-toggle="dropdown") 
+                  span.caret
+                ul(class="dropdown-menu")
+                 li
+                   a(href="/start/#{slug.commit}") Restart
+                 li
+                   a(href="/slug/delete/#{slug.commit}") Delete
+          - else
+              div.btn-group
+                - if (slug.process.ui_url) 
+                  a(href="#{slug.process.ui_url}", class="btn btn-large btn-primary", target="_blank") Got to Site
+                button(class="btn btn-large dropdown-toggle", data-toggle="dropdown") 
+                  span.caret
+                ul(class="dropdown-menu")
+                 li
+                   a(href="/detail/#{slug.process.uid}") View
+                 li
+                   a(href="/tail/#{slug.process.uid}") Logs
+                 li 
+                   a(href="/restart/#{slug.process.uid}") Restart
+                 li
+                   a(href="/stop/#{slug.process.uid}/#{i}") Stop
+

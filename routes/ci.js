@@ -24,35 +24,68 @@ exports.restartProcess = function(req, res) {
 
 }
 
+exports.slugDelete = function(req, res) {
+
+  var id = req.params.id;
+
+  var exec = require('child_process').exec;
+
+  var path = GLOBAL.root + '/tmp/' + id;
+  var cmd = 'rm -Rf ' + path;
+
+  var deleteConfirm = function (error, stdout, stderr) { 
+    GLOBAL.messages.push({ type: 'error', copy: 'Deleted the slug at ' + path + ' with ' + cmd });
+    res.redirect('/sites');
+  }
+
+  exec(cmd, deleteConfirm);
+
+}
+
 exports.sites = function(req, res) {
 
   var dir = GLOBAL.root +  '/tmp';
-  
-  console.log(dir);
-  fs.readdir(dir, function (err, list) {
 
-    var data = [];
+  forever.list(false, function (err, processes) {
 
-    list.forEach(function (file) {
+    fs.readdir(dir, function (err, list) {
 
-      path = dir + "/" + file;
+      var builds = [];
+      _.each(list, function(o){
+        var proc = _.filter(processes, function(i) { if (i.ui_sha) return i.ui_sha == o; });
 
-      fs.stat(path, function (err, stat) {
-        if (stat && stat.isDirectory()) {
-          data.push({ data: stat, path: path, dir: file });
-        }
+        var d = { 
+          commit: o, 
+          process: proc.length == 1 ? proc[0] : undefined
+        };
+
+        builds.push(d);
       });
 
+      res.render('sites', { data: builds})
     });
 
-    res.render('sites', { data: list})
   });
-
 }
 
 exports.startDialog = function(req, res) {
 
-  res.render('build_commit', { id: req.params.sha } );
+  var shaOrBranch = req.params.sha;
+
+  var githubAPI  = require('github');
+  var github = new githubAPI({ version: '3.0.0' });
+  github.authenticate({ type: 'oauth', token: req.session.user.access_token });
+
+  var options = {
+    repo:   GLOBAL.config.repository.repo,
+    user:   GLOBAL.config.repository.user
+  };
+ 
+  var process_type = req.urlparams.process_type || 'snapshot';
+
+  github.repos.getBranches(options, function(err, data) {
+    res.render('build_commit', { process_type: process_type, branches: data, id: shaOrBranch } );
+  });
 
 }
 
@@ -63,6 +96,7 @@ exports.startProcess = function(req, res) {
   var reference_description = req.body.reference_description || '';
   var environment           = req.body.environment || 'development';
   var max_attempts          = req.body.max_attempts || 5;
+  var process_type          = req.body.process_type || 'snapshot';
 
   util.getPort(function(err, availablePort) {
 
@@ -90,13 +124,29 @@ exports.startProcess = function(req, res) {
       ui_sha:         sha,
       ui_port:        availablePort,
       ui_description: reference_description,
-      ui_owner:       req.session.user.github.name
+      ui_owner:       req.session.user.github.name,
+      ui_url:         'http://' + availablePort + '.' + GLOBAL.config.domain,
+      ui_type:        process_type
     };
 
-    console.log('Starting Process with ', options);
-
     var exec = require('child_process').exec;
-    function puts(error, stdout, stderr) { 
+    var pdir = GLOBAL.root + '/tmp/' + sha;
+
+    console.log('Step 1: Started the git build.');
+
+    var command = 'rm -Rf ' + pdir + '; ' +
+                  'git clone ' + GLOBAL.config.repository.path + ' ' + pdir + '; ' + 
+                  'GIT_WORK_TREE=' + pdir + ' git --git-dir=' + pdir + '/.git --work-tree=' + pdir + ' checkout ' + sha + '; ' +
+                  'cd ' + pdir + ';npm install;';
+ 
+    GLOBAL.messages.push({ type: 'info', copy: 'Buidling an install from a commit.' });
+    GLOBAL.messages.push({ type: 'info', copy: command });
+
+    // This process does the actual startup process for the new site.
+    var NowStartProcess = function (error, stdout, stderr) { 
+
+      console.log('Step 2: Reached the Build Process.');
+
       GLOBAL.messages.push({ type: 'info', copy: 'CD to ' + localAppFolder });
       GLOBAL.messages.push({ type: 'info', copy: 'Completed NPM Install for ' + sha });
       GLOBAL.messages.push({ type: 'info', copy: 'Starting site process for ' + sha });
@@ -105,14 +155,12 @@ exports.startProcess = function(req, res) {
       forever.startServer(childProcess);
 
       GLOBAL.messages.push({ type: 'info', copy: 'Starting a site on port ' + availablePort + ' for SHA ' + sha })
+
+      res.redirect('/list');
     }
 
-    exec('cd ' + localAppFolder + ';npm install', puts);
-
-    GLOBAL.messages.push({ type: 'info', copy: 'Starting NPM install and build process. ' + availablePort + ' for SHA ' + sha });
-    GLOBAL.messages.push({ type: 'info', copy: 'Site will not show until complete. Fresh a few times...' })
-
-    res.redirect('/list');
+    // Star the Actual Process Now.
+    exec(command, NowStartProcess);
   });
 
 }
@@ -165,7 +213,7 @@ exports.buildCommitSlug = function(req, res) {
     res.redirect('/list');
   }
 
-  var pdir = GLOBAL.root + '/tmp/' + sha.substring(0,10);
+  var pdir = GLOBAL.root + '/tmp/' + sha;
 
   var command = 'rm -Rf ' + pdir + '; ' +
                 'git clone git@github.com:npr/composer.git ' + pdir + '; ' + 
@@ -197,6 +245,8 @@ exports.listProcesses = function(req, res) {
       o.ui_description = o.ui_description || '';
       o.ui_owner = o.ui_owner || 'NA';
       o.ui_sha   = o.ui_sha || 'NA';
+      o.ui_url   = o.ui_url || '';
+      o.ui_type  = o.ui_type || '';  // Snapshot vs head.
     });
 
     res.render('list', { data: data, messages: GLOBAL.messages } );

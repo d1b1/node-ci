@@ -74,6 +74,7 @@ app.get('/logout',                  routes.session.logout);
 
 // Git Commit Paths.
 app.get('/git',              check, routes.github.commits);
+app.get('/branches',         check, routes.github.branches);
 app.get('/git/commit/:sha',  check, routes.ci.buildCommitSlug);
 
 // Process Paths.
@@ -86,6 +87,9 @@ app.get('/restart/:uid',     check, routes.ci.restartProcess);
 app.get('/cleanup',          check, routes.ci.cleanupProcesses);
 app.get('/tail/:uid',        check, routes.ci.tailProcessLog);
 app.get('/detail/:id',       check, routes.ci.processDetail);
+
+app.get('/slug/delete/:id',       check, routes.ci.slugDelete);
+
 
 // Handles Github Web hooks payloads.
 app.post('/build',                  routes.ci.catchCommitPayload);

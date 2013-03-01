@@ -29,24 +29,31 @@ html(lang="en")
           a(class='brand', href='/') Node CI
           div.nav-collapse.collapse
             ul.nav
-              li
-                a(tabindex="-1", href="/list") List Sites
-              li
-                a(href="/git") Git Commits
-              li
-                a(href="/sites") Site Builds
-
+              li.dropdown
+                a(href='#', class='dropdown-toggle', data-toggle='dropdown') Resources <b class='caret'></b>
+                ul.dropdown-menu.hidden-phone
+                  li
+                    a(href='/list') Sites
+                  li.divider
+                  li
+                    a(href='/sites') Builds
+              li.dropdown
+                a(href='#', class='dropdown-toggle', data-toggle='dropdown') Git <b class='caret'></b>
+                ul.dropdown-menu.hidden-phone
+                  li
+                    a(href='/git') Commits
+                  li.divider
+                  li
+                    a(href='/branches') Branches
               if (session.user && session.user.github)
                 li.dropdown
                   a(href='#', class='dropdown-toggle', data-toggle='dropdown') #{session.user.github.name || session.user.name}  <b class='caret'></b>
                   ul.dropdown-menu.hidden-phone
                     li
                       a(href='/account') Account
-                    li
-                      a(href='/logout') Logout
                     li.divider
                     li
-                      a(href='/account/settings') Settings
+                      a(href='/logout') Logout
 
     div.container
 

@@ -4,7 +4,7 @@ block header
 
 block content
  
-  h3 Composer Commits
+  h3 Git Repo Commits
 
   div(class="pagination pagination-small pagination-right")
     ul
@@ -41,7 +41,7 @@ block content
         td
          | #{commit.commit.message}
         td
-         a(href="/git/commit/#{commit.sha}", class="btn btn-primary") Build
+         a(href="/start/#{commit.sha}", class="btn btn-primary") Start Build
 
   div(class="pagination pagination-small pagination-right")
     ul

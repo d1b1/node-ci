@@ -116,11 +116,7 @@ exports.commits = function(req, res) {
   }
 
   var github = new githubAPI({ version: '3.0.0' });
-
-  github.authenticate({
-    type: 'oauth',
-    token: req.session.user.access_token
-  });
+  github.authenticate({ type: 'oauth', token: req.session.user.access_token });
 
   var options = {
     repo:   GLOBAL.config.repository.repo,
@@ -130,11 +126,69 @@ exports.commits = function(req, res) {
     sha:     req.urlparams.sha || null
   };
 
-  github.repos.getCommits(options, function(err, data) {
-    res.render('commits', { data: data, options: options });
-  });
+  var async = require('async');
+
+  async.parallel({
+    branches: function(callback) {
+
+      var opt = {
+        repo:   GLOBAL.config.repository.repo,
+        user:   GLOBAL.config.repository.user,
+      };
+
+      github.repos.getBranches(opt, function(err, data) {
+        if (err) return callback(err, null);
+        console.log(data)
+        callback(null, data);
+      });
+      
+    },
+    commits: function(callback) {
+      
+      github.repos.getCommits(options, function(err, data) {
+        if (err) return callback(err, null);
+        callback(null, data)
+      });
+
+    }
+  }, function(err, data) {
+
+    res.render('commits', { current_branch: '', data: data.commits, branches: data.branches, options: options });
+  })
 
 }
 
 
+exports.branches = function(req, res) {
+
+  if (!GLOBAL.config) {
+    GLOBAL.messages.push({ type: 'error', copy: 'Missing Configuration information.'});
+    res.redirect('/list');
+    return;
+  }
+
+  var github = new githubAPI({ version: '3.0.0' });
+  github.authenticate({ type: 'oauth', token: req.session.user.access_token });
+
+  var async = require('async');
+  async.parallel({
+    branches: function(callback) {
+
+      var opt = {
+        repo:   GLOBAL.config.repository.repo,
+        user:   GLOBAL.config.repository.user,
+      };
+
+      github.repos.getBranches(opt, function(err, data) {
+        if (err) return callback(err, null);
+        callback(null, data);
+      });
+      
+    }
+  }, function(err, data) {
+
+    res.render('branches', { current_branch: '', data: data.branches });
+  })
+
+}
 
