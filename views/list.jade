@@ -4,8 +4,21 @@ block header
 
 block content
  
+  - if (!session.user) 
+      .well
+        .row
+          .span1.hidden-phone
+            a(href="/github_login")
+              img(width="64", class="hidden-phone", src="/assets/images/octocat.png")
+          .span5
+            p You are not currently logged into this service. To get more access you need 
+              to use your github account to either login in or request access. 
+              br
+              br
+              a(class="btn btn-primary", href="/github_login") Continue >>
+
   p
-    | This is a list of active node process. These processes can be managed from this UI, or from the CLI. Each
+    | This is a list of active CI process, builds, commits etc. These processes can be managed from this UI, or from the CLI. Each
     | process binds to a unique port. 
 
   table.table-striped.table.table-hover
@@ -21,7 +34,7 @@ block content
     th(width="5%")
     - if (!data || data.length == 0) 
        tr
-        td(colspan="4")
+        td(colspan="5")
          | No processes started.
     - else
       each process, i in data
@@ -66,49 +79,56 @@ block content
          | #{process.ui_url}
         td
 
-          - if (process.ui_sha)
-              div.btn-group
-                - if (process.ui_url) 
-                  a(href="#{process.ui_url}", class="btn btn-large btn-primary", target="_blank") Got to Site
-                button(class="btn btn-large btn-primary  dropdown-toggle", data-toggle="dropdown") 
-                  span.caret
-                ul(class="dropdown-menu")
-                 li
-                   a(href="/detail/#{process.uid}") View
-                 li
-                   a(href="/tail/#{process.uid}") Logs
-                 li 
-                   a(href="/restart/#{process.uid}") Restart
-                 li
-                   a(href="/stop/#{process.uid}/#{i}") Stop
+          - if (session.user)
+            - if (process.ui_sha)
+                div.btn-group
+                  - if (process.ui_url) 
+                    a(href="#{process.ui_url}", class="btn btn-large btn-primary", target="_blank") Got to Site
+                  button(class="btn btn-large btn-primary  dropdown-toggle", data-toggle="dropdown") 
+                    span.caret
+                  ul(class="dropdown-menu")
+                   li
+                     a(href="/detail/#{process.uid}") View
+                   li
+                     a(href="/tail/#{process.uid}") Logs
+                   li 
+                     a(href="/restart/#{process.uid}") Restart
+                   li
+                     a(href="/stop/#{process.uid}/#{i}") Stop
+            - else
+                div.btn-group
+                  - if (process.ui_url) 
+                    a(href="#{process.ui_url}", class="btn btn-large btn-primary", target="_blank") Got to Site
+                  button(class="btn btn-large btn-primary dropdown-toggle", data-toggle="dropdown") 
+                    span.caret
+                  ul(class="dropdown-menu")
+                   li
+                     a(href="/stop/#{process.uid}/#{i}") Stop
           - else
-              div.btn-group
-                - if (process.ui_url) 
-                  a(href="#{process.ui_url}", class="btn btn-large btn-primary", target="_blank") Got to Site
-                button(class="btn btn-large btn-primary dropdown-toggle", data-toggle="dropdown") 
-                  span.caret
-                ul(class="dropdown-menu")
-                 li
-                   a(href="/stop/#{process.uid}/#{i}") Stop
+            - if (process.ui_sha)
+                div.btn-group
+                  - if (process.ui_url) 
+                    a(href="#{process.ui_url}", class="btn btn-large btn-primary", target="_blank") Got to Site
 
-  hr
+  - if (session.user) 
+    hr
 
-  .row
-    .span6
-      .well
-        p
-          | Need to start a build, use this option to review the commit history, choose a branch or commit.
+    .row
+      .span6
+        .well
+          p
+            | Need to start a build, use this option to review the commit history, choose a branch or commit.
 
-        a(href="/git", class="btn btn-warning") Start a Commit Build >>
-        &nbsp;
-        a(href="/start/NA?process_type=head", class="btn btn-warning") Start a Branch Build >>
-    .span6
-      .well
-        p
-          | Are there problem processes? Use this option to clean out any zombie builds.
-          br
-          br
+          a(href="/git", class="btn btn-warning") Start a Commit Build >>
+          &nbsp;
+          a(href="/start/NA?process_type=head", class="btn btn-warning") Start a Branch Build >>
+      .span6
+        .well
+          p
+            | Are there problem processes? Use this option to clean out any zombie builds.
+            br
+            br
 
-        a(href="/cleanup", class="btn btn-warning") Cleanup Processes
+          a(href="/cleanup", class="btn btn-warning") Cleanup Processes
   
 

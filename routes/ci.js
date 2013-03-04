@@ -102,7 +102,7 @@ exports.setupConfiguration = function(req, res) {
 
           GLOBAL.messages.push({ type: 'info', copy: 'Starting a site on port ' + availablePort + ' for SHA ' + sha })
 
-          res.redirect('/list');
+          res.redirect('/');
         }
 
         // Star the Actual Process Now.
@@ -122,14 +122,14 @@ exports.restartProcess = function(req, res) {
 
     if (err || !processIndex) {
       GLOBAL.messages.push({ type: 'error', copy: 'Unable to find the process to restart.'});
-      res.redirect('/list');
+      res.redirect('/');
       return;
     }
 
     forever.restart(processIndex);
 
     GLOBAL.messages.push({ type: 'info', copy: 'Restarting and existing process.'});
-    res.redirect('/list');
+    res.redirect('/');
   });
 
 }
@@ -214,7 +214,7 @@ exports.startProcess = function(req, res) {
       if (!availablePort) GLOBAL.messages.push({ type: 'warning', copy: 'No Ports Available to start build.' });
       if (err) GLOBAL.messages.push({ type: 'error', copy: err.message });
       
-      return res.redirect('/list');
+      return res.redirect('/');
     }
 
     var localAppFolder = GLOBAL.root + '/tmp/' + sha;
@@ -278,7 +278,7 @@ exports.startProcess = function(req, res) {
 
       GLOBAL.messages.push({ type: 'info', copy: 'Starting a site on port ' + availablePort + ' for SHA ' + sha })
 
-      res.redirect('/list');
+      res.redirect('/');
     }
 
     // Star the Actual Process Now.
@@ -295,7 +295,7 @@ exports.stopProcess = function(req, res) {
 
     if (err) {
       GLOBAL.messages.push({ type: 'error', copy: 'Unable to find the process to stop.'});
-      res.redirect('/list');
+      res.redirect('/');
       return;
     }
 
@@ -307,7 +307,7 @@ exports.stopProcess = function(req, res) {
     forever.stop(processIndex);
 
     GLOBAL.messages.push({ type: 'info', copy: 'Stopping the build process.'});
-    res.redirect('/list');
+    res.redirect('/');
   });
 
 }
@@ -318,7 +318,7 @@ exports.cleanupProcesses = function(req, res) {
 
   GLOBAL.messages.push({ type: 'info', copy: 'Running the forever cleanup processes.'});
 
-  res.redirect('/list');
+  res.redirect('/');
 
 }
 
@@ -332,7 +332,7 @@ exports.buildCommitSlug = function(req, res) {
     console.log('Completed the commit setup.')
 
     GLOBAL.messages.push({ type: 'info', copy: 'Building... Might take a bit.' });
-    res.redirect('/list');
+    res.redirect('/');
   }
 
   var pdir = GLOBAL.root + '/tmp/' + sha;
@@ -387,7 +387,7 @@ exports.tailProcessLog = function(req, res) {
 
     if (err || !processIndex) {
       GLOBAL.messages.push({ type: 'error', copy: 'Unable to fetch the requested process.'});
-      res.redirect('/list');
+      res.redirect('/');
       return;
     }
 
@@ -395,7 +395,7 @@ exports.tailProcessLog = function(req, res) {
 
       if (err || !data) {
         GLOBAL.messages.push({ type: 'error', copy: 'Unable to fetch tail information the requested process.'});
-        res.redirect('/list');
+        res.redirect('/');
         return;
       }
 
@@ -420,7 +420,7 @@ exports.processDetail = function(req, res) {
 
     if (err || !process) {
       GLOBAL.messages.push({ type: 'error', copy: 'Unable to fetch the requested process.'});
-      res.redirect('/list');
+      res.redirect('/');
       return;
     }
 

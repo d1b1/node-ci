@@ -90,7 +90,7 @@ exports.callback = function(req, res) {
           req.session.logged_in = true;
 
           GLOBAL.messages.push({ type: 'info', copy: 'Session setup. Welcome ' + (asyncResults.user.name || '[Someone?]') + '!' });
-          res.redirect('/list');
+          res.redirect('/');
 
         } else {
           res.redirect('/login?message=NotOnTeam');
@@ -130,7 +130,7 @@ exports.commits = function(req, res) {
 
   if (!GLOBAL.config) {
     GLOBAL.messages.push({ type: 'error', copy: 'Missing Configuration information.'});
-    res.redirect('/list');
+    res.redirect('/');
     return;
   }
 
@@ -182,7 +182,7 @@ exports.branches = function(req, res) {
 
   if (!GLOBAL.config) {
     GLOBAL.messages.push({ type: 'error', copy: 'Missing Configuration information.'});
-    res.redirect('/list');
+    res.redirect('/');
     return;
   }
 
@@ -236,7 +236,7 @@ exports.teamMembers = function(req, res) {
 
   if (!GLOBAL.config) {
     GLOBAL.messages.push({ type: 'error', copy: 'Missing Configuration information.'});
-    res.redirect('/list');
+    res.redirect('/');
     return;
   }
 

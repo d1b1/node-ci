@@ -1,8 +1,9 @@
 var express    = require('express'),
     connect    = require('connect'),
     fs         = require('fs'),
-    path       = require('path');
-   
+    path       = require('path'),
+    routes     = require('./routes/index');
+
 // Setup Global Message Queue.
 GLOBAL.messages = [];
 GLOBAL.root     = __dirname;
@@ -43,18 +44,19 @@ app.configure(function() {
 
   // Catch all traffic not handled and send to the index.html.
   app.use('/', express.static(path.join(__dirname, '/')));
-  app.use(function(req, res){
-    res.render('index', { title: 'Home' });
-  });
+  // app.use(function(req, res){
+  //   res.render('index', { title: 'Home' });
+  // });
+
+  app.use(routes.ci.listProcesses);
 
 });
 app.locals.moment   = require('moment');
 app.locals._        = require('underscore');
 app.locals.messages = [];
+app.locals.urlparams = {};
 
 //-------------------------------------------------------------------
-
-var routes = require('./routes/index')
 
 var check = function(req, res, next ) {
   if (req.session.user && req.session.user.logged_in) {
