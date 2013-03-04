@@ -433,6 +433,8 @@ exports.processDetail = function(req, res) {
 **/
 exports.catchCommitPayload = function(req, res) {
 
+  var sys = require('sys');
+  
   var pl      = JSON.parse(req.body.payload);
   var exec    = require('child_process').exec;
   var execstr = GLOBAL.root + '/getCommitCode.sh <<MARK ' + pl.before + '\ ' + pl.after + '\ ' + pl.ref+  '\ MARK';
