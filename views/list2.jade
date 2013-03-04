@@ -21,9 +21,9 @@ block content
     | This is a list of active CI process, builds, commits etc. These processes can be managed from this UI, or from the CLI. Each
     | process binds to a unique port. 
 
-
+  .container-fluid
     .row
-      .span6
+      .span7
 
         table.table-striped.table.table-hover
          tr
@@ -72,6 +72,15 @@ block content
                  br
                b Bind Port: 
                | #{process.ui_port}
+               br
+               b Log:
+               | #{process.logFile}
+               br
+               b Source:
+               | #{process.sourceDir}
+               br
+               b Site: 
+               | #{process.ui_url}
               td
 
                 - if (session.user)
@@ -108,19 +117,10 @@ block content
       .span4
         .well
           h4 Activity
-          p The following is log of build activity for both snapshots and tracked branches. This shows the last 10 events.
-
-          table.table-striped.table.table-hover
-            - if (!activity || activity.length == 0) 
-               tr
-                td(colspan="5")
-                 | No Activity.
-            - else
+          p adfasd
 
         .well
-          h4 Builds
-          p The following is a list of existing build instances and their status.
-
+          h5 Builds
           table.table-striped.table.table-hover
             - if (!builds || builds.length == 0) 
                tr
@@ -143,61 +143,11 @@ block content
                             span.caret
                           ul(class="dropdown-menu")
                            li
-                             a(href="/start/#{build.commit}") Restart this Build
-
+                             a(href="/start/#{build.commit}") Restart
                     - else
-                        | Active
-          a(href="/sites", class="btn ") Full List of Builds
+                        Unknown
 
-      .span4
 
-        .well
-          h4 Reports
-          p The following is mockup of the rollup reports.
-
-          table.table-striped.table.table-hover
-            tr
-              th Name
-              th %
-              th Tests
-              th Bugs
-            tr
-              td 
-                | Development
-              td 
-                | 34%
-              td
-                | 2 fails, 200 passed, 202
-              td
-                | 12
-            tr
-              td 
-                | Production
-              td 
-                | 34%
-              td
-                | 0 fails, 202 passed, 202
-              td
-                | 3
-
-          a(href="/plots", class="btn ") Detail Report
-
-        .well
-          h4 Branches
-          p The following is list of active git repo branches.
-
-          table.table-striped.table.table-hover
-            - if (!branches || branches.length == 0) 
-               tr
-                td(colspan="5")
-                 | Not Available
-            - else
-              each branch, i in branches
-                tr
-                  td 
-                    a(href="/tmp") #{branch.name} 
-
-          a(href="/branches", class="btn ") All
 
   - if (session.user) 
     hr

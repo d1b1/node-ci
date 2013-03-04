@@ -1,5 +1,77 @@
 var forever  = require('forever');
 var _        = require('underscore');
+var fs       = require('fs');
+var githubAPI  = require('github');
+
+
+exports.getBranches =  function(session, cb) {
+
+  var github = new githubAPI({ version: '3.0.0' });
+  github.authenticate({ type: 'oauth', token: session.user.access_token });
+
+  var opt = {
+    repo:   GLOBAL.config.repository.repo,
+    user:   GLOBAL.config.repository.user,
+  };
+
+  github.repos.getBranches(opt, function(err, data) {
+    if (err) return callback(err, null);
+    cb(null, data);
+  });
+  
+}
+
+exports.getSites = function(cb) {
+
+ forever.list(false, function (err, data) {
+
+    if (err) {
+      GLOBAL.messages.push({ type: 'error', copy: 'Unable to fetch the existing processes..'});
+      return cb(err, null)
+    }
+    
+    // Loop and ensure we have config data for all processes.
+    _.each(data, function(o) {
+      o.ui_port = o.ui_port || 'NA';
+      o.ui_name = o.ui_name || 'NA';
+      o.ui_description = o.ui_description || '';
+      o.ui_owner = o.ui_owner || 'NA';
+      o.ui_sha   = o.ui_sha || 'NA';
+      o.ui_url   = o.ui_url || '';
+      o.ui_type  = o.ui_type || '';  // Snapshot vs head.
+    });
+
+    cb(null, data);
+  });
+
+}
+
+exports.getBuilds = function(cb) {
+
+ var dir = GLOBAL.root +  '/tmp';
+
+ forever.list(false, function (err, processes) {
+
+    fs.readdir(dir, function (err, list) {
+
+      var builds = [];
+      _.each(list, function(o){
+        var proc = _.filter(processes, function(i) { if (i.ui_sha) return i.ui_sha == o; });
+
+        var d = { 
+          commit: o, 
+          process: proc.length == 1 ? proc[0] : undefined
+        };
+
+        builds.push(d);
+      });
+
+      cb(null, builds);
+    });
+
+  });
+
+}
 
 exports.getProcessbyTypeAndID = function(type, id, cb) {
 
