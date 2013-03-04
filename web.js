@@ -101,10 +101,11 @@ app.get('/detail/:id',       check, routes.ci.processDetail);
 
 app.get('/slug/delete/:id',       check, routes.ci.slugDelete);
 
-
 // Handles Github Web hooks payloads.
-app.post('/build',                  routes.ci.catchCommitPayload);
-app.post('/buildv2',                routes.ci.catchCommitPayloadv2)
+// app.post('/build',                  routes.ci.catchCommitPayload);
+app.post('/build',                routes.ci.catchCommitPayloadv2);
+
+app.get('/force',                   routes.ci.forceHook);
 
 // ------------------------------------------------------------------------------------
 

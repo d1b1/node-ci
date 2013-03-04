@@ -440,7 +440,7 @@ exports.catchCommitPayload = function(req, res) {
 
   console.log(req.body.payload)
   console.log(pl);
-  
+
   var exec    = require('child_process').exec;
   var execstr = GLOBAL.root + '/getCommitCode.sh <<MARK ' + pl.before + '\ ' + pl.after + '\ ' + pl.ref+  '\ MARK';
 
@@ -462,18 +462,197 @@ exports.catchCommitPayload = function(req, res) {
 exports.catchCommitPayloadv2 = function(req, res) {
 
   var sys = require('sys');
-  
+  var exec = require('child_process').exec;
+
   var pl      = JSON.parse(req.body.payload);
 
-  console.log(pl);
+  var sha = pl.after;
+  var ref = pl.ref.replace('refs/heads/', '');
+  sha = ref;
 
-  res.send(pl);
-  return;
+  var pdir = GLOBAL.root + '/tmp/' + sha;
+  console.log('Payload Process received a request for ', ref);
 
-  var exec    = require('child_process').exec;
-  var execstr = GLOBAL.root + '/getCommitCode.sh <<MARK ' + pl.before + '\ ' + pl.after + '\ ' + pl.ref+  '\ MARK';
+  util.getProcessbyTypeAndID('head', ref, function(err, currentProcess) {
 
-  function puts(error, stdout, stderr) { sys.puts(stdout) }
-  exec(execstr, puts);
+    console.log('Do we hage this process', 'head', ref, currentProcess);
+
+    if (!currentProcess) {
+      // create the process
+      console.log('Trying to find a process that is not tracked.');
+
+      util.getPort(function(err, availablePort) {
+
+        if (err && !availablePort) { 
+          if (!availablePort) GLOBAL.messages.push({ type: 'warning', copy: 'No Ports Available to start build.' });
+          if (err) GLOBAL.messages.push({ type: 'error', copy: err.message });
+          
+          res.send('No Port Availalbe');
+          return;
+        }
+
+        var localAppFolder = GLOBAL.root + '/tmp/' + sha;
+        var options = { 
+          max:       10, 
+          logFile:   GLOBAL.root + '/../node-ci.log',
+          errFile:   GLOBAL.root + '/../node-ci.log',
+          outFile:   GLOBAL.root + '/../node-ci.log',
+          append:    true,
+          checkFile: false,
+          fork:      false,
+          sourceDir: localAppFolder, 
+          env:       { NODE_ENV: 'development', PORT: parseInt(availablePort) },
+
+          // User defined Values.
+          ui_name:        'Trackin ' + ref,
+          ui_sha:         ref,
+          ui_port:        availablePort,
+          ui_description: 'Branch setup by Github Hook.',
+          ui_owner:       'Node-CI',
+          ui_url:         'http://' + availablePort + '.' + GLOBAL.config.domain,
+          ui_type:        'head'
+        };
+    
+        console.log('Step 1: Started the git build.');
+
+        var command = "";
+
+        var path = require('path');
+        if (path.existsSync(pdir)) { 
+          console.log('Already have a valid Build. Skipping Git steps.');
+
+          command = 'cd ' + pdir + ';' +
+                    'git fetch origin;' +
+                    'git reset --hard HEAD' + 
+                    'npm install;';
+
+        } else {
+          console.log('No slug found, so build it now.');
+
+          command = 'rm -Rf ' + pdir + '; ' +
+                    'git clone ' + GLOBAL.config.repository.path + ' ' + pdir + '; ' + 
+                    'GIT_WORK_TREE=' + pdir + ' git --git-dir=' + pdir + '/.git --work-tree=' + pdir + ' checkout ' + sha + '; ' +
+                    'cd ' + pdir + ';' +
+                    'npm install;';
+        }
+
+        GLOBAL.messages.push({ type: 'info', copy: 'Buidling an install from a commit.' });
+        GLOBAL.messages.push({ type: 'info', copy: command });
+
+        // This process does the actual startup process for the new site.
+        var NowStartProcess = function (error, stdout, stderr) { 
+
+          console.log('Step 2: Reached the Build Process.');
+
+          GLOBAL.messages.push({ type: 'info', copy: 'CD to ' + localAppFolder });
+          GLOBAL.messages.push({ type: 'info', copy: 'Completed NPM Install for ' + sha });
+          GLOBAL.messages.push({ type: 'info', copy: 'Starting site process for ' + sha });
+
+          var childProcess = forever.startDaemon('server.js', options);
+          forever.startServer(childProcess);
+
+          GLOBAL.messages.push({ type: 'info', copy: 'Starting a site on port ' + availablePort + ' for SHA ' + sha })
+
+          return res.send('All Done started a new process on ' + availablePort)
+        }
+
+        // Star the Actual Process Now.
+        exec(command, NowStartProcess);
+      });
+
+    } else {
+
+      var pdir = GLOBAL.root + '/tmp' + sha;
+      var cmd = 'cd ' + pdir + ';' + 
+                'git fetch origin;' +
+                'git reset --hard HEAD;' +
+                'npm install;'
+
+      res.send(pdir)
+
+      function puts(error, stdout, stderr) { 
+        sys.puts(stdout);
+        console.log('Ok we did the reset. No restart the process.');
+        console.log('Current Process', currentProcess);
+ 
+        // Get the current process index.
+        util.getProcessIndexbyID(currentProcess.uid, function(err, currentProcessIdx) {
+          console.log('The current Process Idx' + currentProcessIdx);
+          forever.restart(currentProcessIdx);
+
+          console.log('should be done now')
+        });
+      }
+
+      exec(cmd, puts);
+      console.log('using path 2, when we have an existing proces.')
+    }
+
+  });
+
+}
+
+exports.forceHook = function(req, res) {
+
+  var http = require('http');
+
+  var data = { 
+    'payload': { pusher: { name: 'none' },
+        repository:
+       { master_branch: 'development',
+         name: 'composer',
+         created_at: '2012-02-28T08:41:59-08:00',
+         has_wiki: true,
+         size: 14308,
+         private: true,
+         watchers: 2,
+         language: 'JavaScript',
+         fork: false,
+         url: 'https://github.com/npr/composer',
+         pushed_at: '2013-03-04T10:56:19-08:00',
+         id: 3573044,
+         has_downloads: true,
+         open_issues: 2,
+         has_issues: true,
+         homepage: '',
+         organization: 'npr',
+         forks: 0,
+         stargazers: 2,
+         description: '',
+         owner: { name: 'npr', email: null } },
+      forced: false,
+      after: '3b13ee30e91a6ceaa74e8ca934f4fdecafeaa531',
+      deleted: false,
+      commits: [],
+      ref: 'refs/heads/testforCI1',
+      compare: 'https://github.com/npr/composer/compare/bb518dd7d732...3b13ee30e91a',
+      before: 'bb518dd7d73241ce2610df939e107856f4a83791',
+      created: false }
+    };
+
+  var jsonData = JSON.stringify(data);
+
+  var options = {};
+  options.path     = '/buildv2';
+  options.hostname = 'local.node.ci';
+  options.port     = 3005;
+  options.method   = 'POST';
+  options.headers  = {
+      'Content-Type': 'application/json',
+      'Content-Length': jsonData.length
+  }
+
+  var call = http.request(options, function(result) {
+    result.setEncoding('utf8');
+    result.on('data', function (chunk) {
+      
+      console.log('we are here');
+      res.send(chunk);
+    });
+  });
+
+  call.on('error', function(err) { res.send(err) });
+  call.write(jsonData);
+  call.end();
 
 }
