@@ -72,6 +72,12 @@ block content
                  br
                b Bind Port: 
                | #{process.ui_port}
+               br
+               b Log:
+               | #{process.logFile}
+               br
+               b Source:
+               | #{process.sourceDir}
               td
 
                 - if (session.user)
