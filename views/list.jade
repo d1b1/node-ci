@@ -31,9 +31,7 @@ block content
            | Based on
           th(width="15%")
            | Name/Owner
-          th(width="20%")
-           | Quality
-          th(width="45%")
+          th(width="65%")
            | Details
           th(width="5%")
           - if (!sites || sites.length == 0) 
@@ -59,13 +57,13 @@ block content
               td
                b Code Coverage: 
                | NA%
-               br
+               ,
                b # of Tests: 
                | ###
-               br
+               ,
                b Fails: 
                | ###
-              td
+               br
                - if (process.ui_description)
                  | #{process.ui_description}
                  br
@@ -84,7 +82,7 @@ block content
                   - if (process.ui_sha)
                       div.btn-group
                         - if (process.ui_url) 
-                          a(href="#{process.ui_url}", class="btn btn-large btn-primary", target="_blank") Got to Site
+                          a(href="#{process.ui_url}", class="btn btn-large btn-primary", target="_blank") Preview
                         button(class="btn btn-large btn-primary  dropdown-toggle", data-toggle="dropdown") 
                           span.caret
                         ul(class="dropdown-menu")
