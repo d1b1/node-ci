@@ -148,6 +148,18 @@ exports.commits = function(req, res) {
   var async = require('async');
 
   async.parallel({
+    team: function(callback) {
+
+      var opt = {
+        id:    GLOBAL.config.team,
+      };
+
+      github.orgs.getTeamMembers(opt, function(err, data) {
+        if (err) return callback(err, null);
+        callback(null, data);
+      });
+      
+    },
     branches: function(callback) {
 
       var opt = {
@@ -172,7 +184,7 @@ exports.commits = function(req, res) {
     }
   }, function(err, data) {
 
-    res.render('commits', { current_branch: '', data: data.commits, branches: data.branches, options: options });
+    res.render('commits', { current_branch: '', team: data.team, data: data.commits, branches: data.branches, options: options });
   })
 
 }

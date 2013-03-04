@@ -22,7 +22,7 @@ block content
     | process binds to a unique port. 
 
 
-    .row
+    .row-fluid
       .span6
 
         table.table-striped.table.table-hover
@@ -105,7 +105,28 @@ block content
                         - if (process.ui_url) 
                           a(href="#{process.ui_url}", class="btn btn-large btn-primary", target="_blank") Got to Site
 
-      .span4
+        - if (session.user) 
+          hr
+
+          .row
+            .span6
+              .well
+                p
+                  | Need to start a build, use this option to review the commit history, choose a branch or commit.
+
+                a(href="/git", class="btn btn-warning") Commit >>
+                &nbsp;
+                a(href="/start/NA?process_type=head", class="btn btn-warning") Branch >>
+            .span6
+              .well
+                p
+                  | Are there problem processes? Use this option to clean out any zombie builds.
+                  br
+                  br
+
+                a(href="/cleanup", class="btn btn-warning") Cleanup Processes
+
+      .span3
         .well
           h4 Activity
           p The following is log of build activity for both snapshots and tracked branches. This shows the last 10 events.
@@ -149,7 +170,7 @@ block content
                         | Active
           a(href="/sites", class="btn ") Full List of Builds
 
-      .span4
+      .span3
 
         .well
           h4 Reports
@@ -199,25 +220,5 @@ block content
 
           a(href="/branches", class="btn ") All
 
-  - if (session.user) 
-    hr
-
-    .row
-      .span6
-        .well
-          p
-            | Need to start a build, use this option to review the commit history, choose a branch or commit.
-
-          a(href="/git", class="btn btn-warning") Start a Commit Build >>
-          &nbsp;
-          a(href="/start/NA?process_type=head", class="btn btn-warning") Start a Branch Build >>
-      .span6
-        .well
-          p
-            | Are there problem processes? Use this option to clean out any zombie builds.
-            br
-            br
-
-          a(href="/cleanup", class="btn btn-warning") Cleanup Processes
   
 

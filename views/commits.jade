@@ -6,46 +6,94 @@ block content
  
   h3 Git Repo Commits
 
-  div(class="pagination pagination-small pagination-right")
-    ul
-      li 
-        a(href="/git?sha=#{_.first(data).sha}", class="btn") << Newer
-      li
-        a(href="/git?sha=#{_.last(data).sha}", class="btn") Older >>
+  .row
+    .span4
+ 
+      .well
+        h4 Branches
+        p The following is list of active git repo branches.
 
-  table.table-striped.table.table-hover
-   tr
-    th(width="10%")
-     | SHA
-    th(width="20%")
-     | Author
-    th(width="40%")
-     | Message
-    th(width="10%")
+        table.table-striped.table.table-hover
+          - if (!branches || branches.length == 0) 
+             tr
+              td(colspan="5")
+               | Not Available
+          - else
+            each branch, i in branches
+              tr
+                td 
+                  a(href="/tmp") #{branch.name} 
 
-    - if (!data || data.length == 0) 
+        a(href="/branches", class="btn ") All
+
+      .well
+        h4 Team
+
+        table.table-striped.table.table-hover
+         tr
+          th(width="20%")
+           | 
+          th(width="15%")
+           | Username
+          th(width="80%")
+           | Type
+
+          - if (!team || team.length == 0) 
+             tr
+              td(colspan="4")
+               | No Team Members available.
+          - else
+            each member, i in team
+             tr
+              td
+                img(src="#{member.avatar_url}", class="img-polaroid")
+              td
+               | #{member.login}
+              td
+               | #{member.type}
+
+    .span8
+
+      div(class="pagination pagination-small pagination-right")
+        ul
+          li 
+            a(href="/git?sha=#{_.first(data).sha}", class="btn") << Newer
+          li
+            a(href="/git?sha=#{_.last(data).sha}", class="btn") Older >>
+
+      table.table-striped.table.table-hover
        tr
-        td(colspan="4")
-         | No processes started.
-    - else
-      each commit, i in data
-       tr
-        td
-         b(href="#", alt="#{commit.sha}") #{commit.sha.substring(0, 10)}
-        td
-         | #{commit.commit.author.name}
-         br
-         | #{moment(commit.commit.author.date).format('MM/DD/YY hh:mm A')},
-         br
-         b #{moment(commit.commit.author.date).fromNow()}
-        td
-         | #{commit.commit.message}
-        td
-         a(href="/start/#{commit.sha}", class="btn btn-primary") Start Build
+        th(width="10%")
+         | SHA
+        th(width="20%")
+         | Author
+        th(width="40%")
+         | Message
+        th(width="10%")
 
-  div(class="pagination pagination-small pagination-right")
-    ul
-      li 
-        a(href="/git?sha=#{_.first(data).sha}", class="btn") << Newer
-      li
-        a(href="/git?sha=#{_.last(data).sha}", class="btn") Older >>
+        - if (!data || data.length == 0) 
+           tr
+            td(colspan="4")
+             | No processes started.
+        - else
+          each commit, i in data
+           tr
+            td
+             b(href="#", alt="#{commit.sha}") #{commit.sha.substring(0, 10)}
+            td
+             | #{commit.commit.author.name}
+             br
+             | #{moment(commit.commit.author.date).format('MM/DD/YY hh:mm A')},
+             br
+             b #{moment(commit.commit.author.date).fromNow()}
+            td
+             | #{commit.commit.message}
+            td
+             a(href="/start/#{commit.sha}", class="btn btn-small btn-warning") Build >>
+
+      div(class="pagination pagination-small pagination-right")
+        ul
+          li 
+            a(href="/git?sha=#{_.first(data).sha}", class="btn") << Newer
+          li
+            a(href="/git?sha=#{_.last(data).sha}", class="btn") Older >>

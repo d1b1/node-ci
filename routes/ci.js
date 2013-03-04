@@ -159,28 +159,6 @@ exports.sites = function(req, res) {
     res.render('sites', { data: data})
   });
 
-  // var dir = GLOBAL.root +  '/tmp';
-
-  // forever.list(false, function (err, processes) {
-
-  //   fs.readdir(dir, function (err, list) {
-
-  //     var builds = [];
-  //     _.each(list, function(o){
-  //       var proc = _.filter(processes, function(i) { if (i.ui_sha) return i.ui_sha == o; });
-
-  //       var d = { 
-  //         commit: o, 
-  //         process: proc.length == 1 ? proc[0] : undefined
-  //       };
-
-  //       builds.push(d);
-  //     });
-
-  //     res.render('sites', { data: builds})
-  //   });
-
-  // });
 }
 
 exports.startDialog = function(req, res) {
