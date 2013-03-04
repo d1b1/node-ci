@@ -493,7 +493,7 @@ exports.catchCommitPayloadv2 = function(req, res) {
 
         var localAppFolder = GLOBAL.root + '/tmp/' + sha;
         var options = { 
-          max:       10, 
+          //max:       10, 
           logFile:   GLOBAL.root + '/../node-ci.log',
           errFile:   GLOBAL.root + '/../node-ci.log',
           outFile:   GLOBAL.root + '/../node-ci.log',
