@@ -562,7 +562,6 @@ exports.catchCommitPayloadv2 = function(req, res) {
 
     } else {
 
-      var pdir = GLOBAL.root + '/tmp' + sha;
       var cmd = 'cd ' + pdir + ';' + 
                 'git fetch origin;' +
                 'git reset --hard HEAD;' +
