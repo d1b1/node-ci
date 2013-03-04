@@ -467,6 +467,7 @@ exports.catchCommitPayloadv2 = function(req, res) {
   var pl      = JSON.parse(req.body.payload);
 
   var sha = pl.after;
+  var reference_name = sha;
   var ref = pl.ref.replace('refs/heads/', '');
   sha = ref;
 
@@ -504,7 +505,7 @@ exports.catchCommitPayloadv2 = function(req, res) {
           env:       { NODE_ENV: 'development', PORT: parseInt(availablePort) },
 
           // User defined Values.
-          ui_name:        'Trackin ' + ref,
+          ui_name:        'Head @ ' + reference_name.substring(0,10) + ' of ',
           ui_sha:         ref,
           ui_port:        availablePort,
           ui_description: 'Branch setup by Github Hook.',
