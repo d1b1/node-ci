@@ -531,7 +531,7 @@ exports.catchCommitPayloadv2 = function(req, res) {
 
           command = 'rm -Rf ' + pdir + '; ' +
                     'git clone ' + GLOBAL.config.repository.path + ' ' + pdir + '; ' + 
-                    'GIT_WORK_TREE=' + pdir + ' git --git-dir=' + pdir + '/.git --work-tree=' + pdir + ' checkout ' + sha + '; ' +
+                    'GIT_WORK_TREE=' + pdir + ' git --git-dir=' + pdir + '/.git --work-tree=' + pdir + ' checkout --track origin/' + sha + '; ' +
                     'cd ' + pdir + ';' +
                     'npm install;';
         }
@@ -565,9 +565,11 @@ exports.catchCommitPayloadv2 = function(req, res) {
       var pdir = GLOBAL.root + '/tmp/' + sha;
       var cmd = 'cd ' + pdir + ';' + 
                 'git fetch origin;' +
-                'git reset --hard HEAD;' +
+                'git rebase origin/' + sha + ';' +
                 'npm install;'
 
+      // 'git reset --hard HEAD;' +
+      
       res.send(pdir)
 
       function puts(error, stdout, stderr) { 
