@@ -79,7 +79,8 @@ exports.getProcessbyTypeAndID = function(type, id, cb) {
     if (err) return cb(err);
 
     var results = _.filter(data, function(o) {
-      return o.type == type && o.ui_sha == id;
+      console.log(o.ui_type, o.ui_sha, '=?', type, id)
+      return o.ui_type == type && o.ui_sha == id;
     });
   
     if (results.length == 1) {

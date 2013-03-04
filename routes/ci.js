@@ -467,7 +467,7 @@ exports.catchCommitPayloadv2 = function(req, res) {
   var pl      = JSON.parse(req.body.payload);
 
   var sha = pl.after;
-  var ref = pl.ref.replace('refs/heads/', '');
+  var ref = pl.ref.replace('refs/heads/', '').trim();
   sha = ref;
 
   var pdir = GLOBAL.root + '/tmp/' + sha;
@@ -562,6 +562,7 @@ exports.catchCommitPayloadv2 = function(req, res) {
 
     } else {
 
+      var pdir = GLOBAL.root + '/tmp/' + sha;
       var cmd = 'cd ' + pdir + ';' + 
                 'git fetch origin;' +
                 'git reset --hard HEAD;' +
