@@ -1,3 +1,29 @@
+// var DbManager  = require('./db').DbManager;
+// var AppManager = require('./app').AppManager;
+
+// // Setup Global Message Queue.
+// GLOBAL.messages = [];
+// GLOBAL.root     = __dirname;
+// GLOBAL.config   = require('./config.json');
+// GLOBAL.configurations = {};
+
+// var db = DbManager.getDb();
+
+// // Test 
+// db.open(function(err, client) {
+
+//   if (client) {
+//     DbManager.authenticate(db, function() {
+//       AppManager.start(db);
+//     });  
+//   } else {
+//     console.log('Sorry, No DB Connection. So no love.', err); 
+//   }
+
+// });
+
+// return;
+
 var express    = require('express'),
     connect    = require('connect'),
     fs         = require('fs'),

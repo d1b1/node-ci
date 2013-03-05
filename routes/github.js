@@ -75,6 +75,8 @@ exports.callback = function(req, res) {
         }
       }, function(err, asyncResults) {
 
+        console.log(asyncResults.user.login, asyncResults.team);
+
         var isOnTeam = _.filter(asyncResults.team, function(o) { return o.login == asyncResults.user.login });
         if (isOnTeam.length == 1) {
 
@@ -91,7 +93,6 @@ exports.callback = function(req, res) {
 
           GLOBAL.messages.push({ type: 'info', copy: 'Session setup. Welcome ' + (asyncResults.user.name || '[Someone?]') + '!' });
           res.redirect('/');
-
         } else {
           res.redirect('/login?message=NotOnTeam');
           return;
@@ -237,6 +238,7 @@ var getTeamMembers = function(teamID, access_token, cb) {
   };
 
   github.orgs.getTeamMembers(opt, function(err, data) {
+    console.log('adsfasdfasdf', data)
     if (err) return callback(err, null);
     
     cb(null, data);

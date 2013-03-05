@@ -23,7 +23,7 @@ block content
 
 
     .row-fluid
-      .span6
+      .span8
 
         table.table-striped.table.table-hover
          tr
@@ -130,17 +130,17 @@ block content
 
                 a(href="/cleanup", class="btn btn-warning") Cleanup Processes
 
-      .span3
-        .well
-          h4 Activity
-          p The following is log of build activity for both snapshots and tracked branches. This shows the last 10 events.
+      .span4
+        // .well
+        //   h4 Activity
+        //   p The following is log of build activity for both snapshots and tracked branches. This shows the last 10 events.
 
-          table.table-striped.table.table-hover
-            - if (!activity || activity.length == 0) 
-               tr
-                td(colspan="5")
-                 | No Activity.
-            - else
+        //   table.table-striped.table.table-hover
+        //     - if (!activity || activity.length == 0) 
+        //        tr
+        //         td(colspan="5")
+        //          | No Activity.
+        //     - else
 
         .well
           h4 Builds
@@ -174,38 +174,38 @@ block content
                         | Active
           a(href="/sites", class="btn ") Full List of Builds
 
-      .span3
+        //.span3
 
-        .well
-          h4 Reports
-          p The following is mockup of the rollup reports.
+        // .well
+        //   h4 Reports
+        //   p The following is mockup of the rollup reports.
 
-          table.table-striped.table.table-hover
-            tr
-              th Name
-              th %
-              th Tests
-              th Bugs
-            tr
-              td 
-                | Development
-              td 
-                | 34%
-              td
-                | 2 fails, 200 passed, 202
-              td
-                | 12
-            tr
-              td 
-                | Production
-              td 
-                | 34%
-              td
-                | 0 fails, 202 passed, 202
-              td
-                | 3
+        //   table.table-striped.table.table-hover
+        //     tr
+        //       th Name
+        //       th %
+        //       th Tests
+        //       th Bugs
+        //     tr
+        //       td 
+        //         | Development
+        //       td 
+        //         | 34%
+        //       td
+        //         | 2 fails, 200 passed, 202
+        //       td
+        //         | 12
+        //     tr
+        //       td 
+        //         | Production
+        //       td 
+        //         | 34%
+        //       td
+        //         | 0 fails, 202 passed, 202
+        //       td
+        //         | 3
 
-          a(href="/plots", class="btn ") Detail Report
+        //   a(href="/plots", class="btn ") Detail Report
 
         .well
           h4 Branches
