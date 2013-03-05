@@ -6,6 +6,10 @@
   "maintainers": [
     "d1b1 <stephan.smith.bc93@gmail.com>"
   ],
+  "engines": {
+    "node": "0.8.8",
+    "npm": "1.1.9"
+  },
   "repository": {
     "type": "git",
     "url": "http://github.com/d1b1/node-ci.git"
