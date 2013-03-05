@@ -363,12 +363,8 @@ exports.listProcesses = function(req, res) {
     },
     activity: function(callback) {
 
-      var dbClient = DbManager.getDb();
       var query = {};
-
-      var options = {
-        "sort": [['timestamp','desc']]
-      };
+      var options = { "sort": [['timestamp','desc']] };
 
       var collection = new mongodb.Collection(DbManager.getDb(), 'logs');
       collection.find(query, options).limit(5).toArray(function(err, data) {
@@ -500,7 +496,7 @@ exports.catchCommitPayloadv2 = function(req, res) {
   var pdir = GLOBAL.root + '/tmp/' + sha;
   console.log('Payload Process received a request for ', ref);
 
-  util.logNow({ type: 'Hook', name: 'Commit: ' + ref + '@' + pl.after.substring(0,5), message: 'Received a github web hook.' + pl.ref, data: pl });
+  util.logNow({ type: 'Hook', name: 'New ' + ref + '@' + pl.after.substring(0,5), message: 'Received a github web hook.' + pl.ref, data: pl });
 
   util.getProcessbyTypeAndID('head', ref, function(err, currentProcess) {
 

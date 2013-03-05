@@ -6,6 +6,42 @@ var db         = require('../db');
 var mongodb    = require('mongodb');
 var moment     = require('moment');
 
+exports.getHeadCommit = getHeadCommit = function(src, cb) {
+
+  var exec = require('child_process').exec;
+  var cmd = 'cd ' + src.sourceDir + ';' + 
+            'git log -1;';
+
+  var put = function (error, stdout, stderr) {
+
+    if (error) return cb(null, src);
+
+    // Parse the current head commit.
+    var c = stdout.split('\n');
+    var a = c[1].split(':')[1];
+    var d = c[2];
+    var name = a.split(' <')[0];
+
+    var commit = {
+      commit: c[0].split(' ')[1].trim(),
+      author: {
+        name: a.split(' <')[0],
+        full: c[1].split(':')[1].trim()
+      },
+      message: c[4].trim(),
+      date: d.split('Date:')[1].trim(),
+      raw: stdout
+    };
+
+    src.info = commit;
+
+    cb(null, src)
+  }
+
+  // Star the Actual Process Now.
+  exec(cmd, put);
+}
+
 exports.logNow = function(data, cb) {
 
   if (typeof data == 'string') data = { name: data }
@@ -41,13 +77,15 @@ exports.getBranches =  function(session, cb) {
 
 exports.getSites = function(cb) {
 
- forever.list(false, function (err, data) {
+  forever.list(false, function (err, data) {
 
     if (err) {
       GLOBAL.messages.push({ type: 'error', copy: 'Unable to fetch the existing processes..'});
       return cb(err, null)
     }
     
+    var async = require('async');
+
     // Loop and ensure we have config data for all processes.
     _.each(data, function(o) {
       o.ui_port = o.ui_port || 'NA';
@@ -56,10 +94,13 @@ exports.getSites = function(cb) {
       o.ui_owner = o.ui_owner || 'NA';
       o.ui_sha   = o.ui_sha || 'NA';
       o.ui_url   = o.ui_url || '';
-      o.ui_type  = o.ui_type || '';  // Snapshot vs head.
+      o.ui_type  = o.ui_type || '';
     });
 
-    cb(null, data);
+    async.map(data, getHeadCommit, function(err, results) {
+      cb(null, results);
+    });
+
   });
 
 }

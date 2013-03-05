@@ -23,15 +23,13 @@ block content
 
 
     .row-fluid
-      .span8
+      .span6
 
         table.table-striped.table.table-hover
          tr
-          th(width="15%")
+          th(width="25%")
            | Based on
-          th(width="15%")
-           | Name/Owner
-          th(width="65%")
+          th(width="70%")
            | Details
           th(width="5%")
           - if (!sites || sites.length == 0) 
@@ -44,46 +42,43 @@ block content
               td
                - if (process.ui_type == 'snapshot')
                  b SnapShot 
-                 | @ #{process.ui_sha.substring(0, 9) || 'Na'}
+                 | @#{process.ui_sha.substring(0, 9) || 'Na'}
                - else if (process.ui_type == 'head')
                  b HEAD 
                  | of #{process.ui_sha || 'Na'}
                - else 
                  | CLI/Untracked
               td
-               | #{process.ui_name || 'Na'}
+               b Name: 
+               | #{process.ui_name || 'Na'} 
                br
-               | #{process.ui_owner || 'Na'}
-              td
-               b Code Coverage: 
-               | NA%
-               ,
-               b # of Tests: 
-               | ###
-               ,
-               b Fails: 
-               | ###
+               b Owner: 
+               | #{process.ui_owner || 'Na'} 
                br
                - if (process.ui_description)
                  | #{process.ui_description}
                  br
                  br
-               b Bind Port: 
-               | #{process.ui_port}
+               if (process.ui_port)
+                span.label.label-info Port: #{process.ui_port}
                br
-               b Log:
-               | #{process.logFile}
-               br
-               b Source:
-               | #{process.sourceDir}
+               // b Log:
+               // | #{process.logFile}
+               // br
+               // b Source:
+               // | #{process.sourceDir}
+               if (process.info)
+                 span.label.label-success #{process.info.author.name}
+                 | 
+                 span.label.label-success(title="#{process.info.commit}") ##{process.info.commit.substring(0, 6)} - #{moment(process.info.date, 'ddd MMM d HH:mm:ss YYYY Z').fromNow()}
               td
 
                 - if (session.user)
                   - if (process.ui_sha)
                       div.btn-group
                         - if (process.ui_url) 
-                          a(href="#{process.ui_url}", class="btn btn-large btn-primary", target="_blank") Preview
-                        button(class="btn btn-large btn-primary  dropdown-toggle", data-toggle="dropdown") 
+                          a(href="#{process.ui_url}", class="btn btn-primary", target="_blank") Preview
+                        button(class="btn btn-primary  dropdown-toggle", data-toggle="dropdown") 
                           span.caret
                         ul(class="dropdown-menu")
                          li
@@ -97,8 +92,8 @@ block content
                   - else
                       div.btn-group
                         - if (process.ui_url) 
-                          a(href="#{process.ui_url}", class="btn btn-large btn-primary", target="_blank") Got to Site
-                        button(class="btn btn-large btn-primary dropdown-toggle", data-toggle="dropdown") 
+                          a(href="#{process.ui_url}", class="btn btn-primary", target="_blank") Got to Site
+                        button(class="btn btn-primary dropdown-toggle", data-toggle="dropdown") 
                           span.caret
                         ul(class="dropdown-menu")
                          li
@@ -109,9 +104,10 @@ block content
                         - if (process.ui_url) 
                           a(href="#{process.ui_url}", class="btn btn-large btn-primary", target="_blank") Got to Site
 
-        - if (session.user) 
-          hr
+      .span3
 
+
+        - if (session.user) 
           .well
             p
               | Need to start a build, use this option to review the commit history, choose a branch or commit.
@@ -120,24 +116,13 @@ block content
             &nbsp;
             a(href="/start/NA?process_type=head", class="btn btn-warning") Branch >>
 
-          .well
-            p
-              | Are there problem processes? Use this option to clean out any zombie builds.
-              br
-              br
-
-            a(href="/cleanup", class="btn btn-warning") Cleanup Processes
-
-      .span4
         .well
           h4 Activity
           p The following is log of build activity for both snapshots and tracked branches. This shows the last 10 events.
 
           table.table-striped.table.table-hover
            tr
-            th(width="5%")
-             | Type
-            th(width="15%")
+            th(width="20%")
              | Who
             th(width="80%")
              | Activity
@@ -150,8 +135,6 @@ block content
               each log, i in activity
                tr
                 td
-                 a(href="/activity/#{log._id}", class="btn") x
-                td
                  | #{log.owner}
                 td
                  b #{moment(log.timestamp,'MM/DD/YYYY HH:mm:ss').fromNow()}
@@ -161,6 +144,8 @@ block content
 
 
           a(href="/activity", class="btn ") Full Log
+
+      .span3
 
         .well
           h4 Builds
@@ -193,8 +178,6 @@ block content
                     - else
                         | Active
           a(href="/sites", class="btn ") Full List of Builds
-
-        //.span3
 
         // .well
         //   h4 Reports
