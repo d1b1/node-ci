@@ -3,6 +3,8 @@ var forever  = require('forever');
 var _        = require('underscore');
 var async    = require('async');
 var fs       = require('fs');
+var db       = require('../db');
+var mongodb  = require('mongodb');
 
 exports.listConfigurations = function(req, res) {
 
@@ -128,6 +130,8 @@ exports.restartProcess = function(req, res) {
 
     forever.restart(processIndex);
 
+    util.logNow({ type: 'notce', owner: req.session.user.github.name, name: 'Manual restart of process ' + uid, message: "User used the UI to force a restart." });
+
     GLOBAL.messages.push({ type: 'info', copy: 'Restarting and existing process.'});
     res.redirect('/');
   });
@@ -244,6 +248,8 @@ exports.startProcess = function(req, res) {
                 'npm install;';
     }
 
+    util.logNow({ owner: req.session.user.github.name, name: 'Starting a Build Process', message: 'User requested a build process. ' + JSON.stringify(options) });
+
     GLOBAL.messages.push({ type: 'info', copy: 'Buidling an install from a commit.' });
     GLOBAL.messages.push({ type: 'info', copy: command });
 
@@ -258,6 +264,8 @@ exports.startProcess = function(req, res) {
 
       var childProcess = forever.startDaemon('server.js', options);
       forever.startServer(childProcess);
+
+      util.logNow({ owner: req.session.user.github.name, name: 'Restarted new build process', message: "Completed the build process for '" + options.ui_name + "'" });
 
       GLOBAL.messages.push({ type: 'info', copy: 'Starting a site on port ' + availablePort + ' for SHA ' + sha })
 
@@ -287,6 +295,8 @@ exports.stopProcess = function(req, res) {
       processIndex = parseInt(req.params.index);
     }
 
+    util.logNow({ owner: req.session.user.github.name, name: 'Stopping Process', message: 'Manual Action to stop a process, idx: ' + processIndex });
+
     forever.stop(processIndex);
 
     GLOBAL.messages.push({ type: 'info', copy: 'Stopping the build process.'});
@@ -301,8 +311,9 @@ exports.cleanupProcesses = function(req, res) {
 
   GLOBAL.messages.push({ type: 'info', copy: 'Running the forever cleanup processes.'});
 
-  res.redirect('/');
+  util.logNow({ name: 'Process Cleanup', message: 'User requested the Process Cleanup for forever tasks' });
 
+  res.redirect('/');
 }
 
 exports.buildCommitSlug = function(req, res) {
@@ -352,8 +363,24 @@ exports.listProcesses = function(req, res) {
     },
     activity: function(callback) {
 
-      callback(null, []);
+      var dbClient = DbManager.getDb();
+      var query = {};
 
+      var options = {
+        "sort": [['timestamp','desc']]
+      };
+
+      var collection = new mongodb.Collection(DbManager.getDb(), 'logs');
+      collection.find(query, options).limit(5).toArray(function(err, data) {
+        if (err || !data) {
+          cb(null, 'No Episiodes found.');
+          return
+        }
+
+        callback(null, data);
+      });
+
+    
     },
     branches: function(callback) {
 
@@ -473,6 +500,8 @@ exports.catchCommitPayloadv2 = function(req, res) {
   var pdir = GLOBAL.root + '/tmp/' + sha;
   console.log('Payload Process received a request for ', ref);
 
+  util.logNow({ type: 'Hook', name: 'Commit: ' + ref + '@' + pl.after.substring(0,5), message: 'Received a github web hook.' + pl.ref, data: pl });
+
   util.getProcessbyTypeAndID('head', ref, function(err, currentProcess) {
 
     console.log('Do we hage this process', 'head', ref, currentProcess);
@@ -526,6 +555,8 @@ exports.catchCommitPayloadv2 = function(req, res) {
                     'git reset --hard HEAD' + 
                     'npm install;';
 
+          util.logNow({ name: 'Github Hook Checking', message: 'Found an existing slug. Path: ' + pdir });
+
         } else {
           console.log('No slug found, so build it now.');
 
@@ -534,6 +565,8 @@ exports.catchCommitPayloadv2 = function(req, res) {
                     'GIT_WORK_TREE=' + pdir + ' git --git-dir=' + pdir + '/.git --work-tree=' + pdir + ' checkout --track origin/' + sha + '; ' +
                     'cd ' + pdir + ';' +
                     'npm install;';
+
+          util.logNow({ type: 'Hook', name: 'Github Hook Checking', message: 'No Slug found. Full Branch build required. Path: ' + pdir });
         }
 
         GLOBAL.messages.push({ type: 'info', copy: 'Buidling an install from a commit.' });
@@ -547,6 +580,8 @@ exports.catchCommitPayloadv2 = function(req, res) {
           GLOBAL.messages.push({ type: 'info', copy: 'CD to ' + localAppFolder });
           GLOBAL.messages.push({ type: 'info', copy: 'Completed NPM Install for ' + sha });
           GLOBAL.messages.push({ type: 'info', copy: 'Starting site process for ' + sha });
+
+          util.logNow({ type: 'Hook', name: 'Github Hook Restart', message: 'The commit messages for the ref ' + pl.ref + ' has completed and restarted' });
 
           var childProcess = forever.startDaemon('server.js', options);
           forever.startServer(childProcess);
@@ -569,8 +604,7 @@ exports.catchCommitPayloadv2 = function(req, res) {
                 'npm install;'
 
       // 'git reset --hard HEAD;' +
-      
-      res.send(pdir)
+      // res.send(pdir)
 
       function puts(error, stdout, stderr) { 
         sys.puts(stdout);
@@ -581,6 +615,8 @@ exports.catchCommitPayloadv2 = function(req, res) {
         util.getProcessIndexbyID(currentProcess.uid, function(err, currentProcessIdx) {
           console.log('The current Process Idx' + currentProcessIdx);
           forever.restart(currentProcessIdx);
+
+          util.logNow({ type: 'Hook', name: 'Github Hook Fetch', message: 'Found an active process tracking, Fetched, npm installed and restarted. Path: ' + pdir });
 
           console.log('should be done now')
         });

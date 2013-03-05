@@ -1,0 +1,51 @@
+extends layout
+
+block header
+
+block content
+ 
+  h3 Git Repo Commits
+
+  .row
+    .span3
+ 
+      .well
+        h4 Days
+        p The following is activity for the CI server.
+
+        a(href="/activity", class="btn ") All
+
+    .span11
+
+      table.table-striped.table.table-hover
+       tr
+        th(width="10%")
+         | Type
+        th(width="15%")
+         | Author
+        th(width="70%", style="overflow: hidden")
+         | Message
+
+        - if (!data || data.length == 0) 
+           tr
+            td(colspan="4")
+             | No log messages available.
+        - else
+          each log, i in data
+           tr
+            td
+             b #{log.type}
+             br
+             a(href="/activity/#{log._id}", class="btn") x
+            td
+             | #{log.owner}
+            td
+             b When: 
+             | #{moment(log.timestamp,'MM/DD/YYYY HH:mm:ss').format('MM/DD/YY hh:mm A')}
+             br
+             b Hint: #{moment(log.timestamp,'MM/DD/YYYY HH:mm:ss').fromNow()}
+             br
+             | #{log.name}
+             br
+             b Message: 
+             | #{log.message}

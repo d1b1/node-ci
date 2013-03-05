@@ -4,6 +4,7 @@ var url        = require('url'),
     _          = require('underscore'),
     async      = require('async'),
     moment     = require('moment');
+    util       = require('./util');
 
 exports.login = function(req, res) { 
   var url = 'https://github.com/login/oauth/authorize?state=222&client_id=' + process.env.GITHUB_CLIENTID + '&scope=user,repo';
@@ -88,6 +89,7 @@ exports.callback = function(req, res) {
           };
 
           req.session.logged_in = true;
+          util.logNow({ name: 'Login by ' + asyncResults.user.name, data: asyncResults.user });
 
           GLOBAL.messages.push({ type: 'info', copy: 'Session setup. Welcome ' + (asyncResults.user.name || '[Someone?]') + '!' });
           res.redirect('/');

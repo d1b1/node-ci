@@ -131,6 +131,9 @@ AppManager = (function() {
     app.get('/tail/:uid',        check, routes.ci.tailProcessLog);
     app.get('/detail/:id',       check, routes.ci.processDetail);
 
+    app.get('/activity',       check, routes.activity.list);
+    app.get('/activity/:id',   check, routes.activity.delete);
+
     app.get('/slug/delete/:id',       check, routes.ci.slugDelete);
 
     // Handles Github Web hooks payloads.

@@ -112,35 +112,55 @@ block content
         - if (session.user) 
           hr
 
-          .row
-            .span6
-              .well
-                p
-                  | Need to start a build, use this option to review the commit history, choose a branch or commit.
+          .well
+            p
+              | Need to start a build, use this option to review the commit history, choose a branch or commit.
 
-                a(href="/git", class="btn btn-warning") Commit >>
-                &nbsp;
-                a(href="/start/NA?process_type=head", class="btn btn-warning") Branch >>
-            .span6
-              .well
-                p
-                  | Are there problem processes? Use this option to clean out any zombie builds.
-                  br
-                  br
+            a(href="/git", class="btn btn-warning") Commit >>
+            &nbsp;
+            a(href="/start/NA?process_type=head", class="btn btn-warning") Branch >>
 
-                a(href="/cleanup", class="btn btn-warning") Cleanup Processes
+          .well
+            p
+              | Are there problem processes? Use this option to clean out any zombie builds.
+              br
+              br
+
+            a(href="/cleanup", class="btn btn-warning") Cleanup Processes
 
       .span4
-        // .well
-        //   h4 Activity
-        //   p The following is log of build activity for both snapshots and tracked branches. This shows the last 10 events.
+        .well
+          h4 Activity
+          p The following is log of build activity for both snapshots and tracked branches. This shows the last 10 events.
 
-        //   table.table-striped.table.table-hover
-        //     - if (!activity || activity.length == 0) 
-        //        tr
-        //         td(colspan="5")
-        //          | No Activity.
-        //     - else
+          table.table-striped.table.table-hover
+           tr
+            th(width="5%")
+             | Type
+            th(width="15%")
+             | Who
+            th(width="80%")
+             | Activity
+
+            - if (!activity || activity.length == 0) 
+               tr
+                td(colspan="4")
+                 | No log messages available.
+            - else
+              each log, i in activity
+               tr
+                td
+                 a(href="/activity/#{log._id}", class="btn") x
+                td
+                 | #{log.owner}
+                td
+                 b #{moment(log.timestamp,'MM/DD/YYYY HH:mm:ss').fromNow()}
+                 br
+                 | #{log.name}
+
+
+
+          a(href="/activity", class="btn ") Full Log
 
         .well
           h4 Builds

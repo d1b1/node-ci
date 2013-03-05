@@ -2,8 +2,26 @@ var forever  = require('forever');
 var _        = require('underscore');
 var fs       = require('fs');
 var githubAPI  = require('github');
+var db         = require('../db');
+var mongodb    = require('mongodb');
+var moment     = require('moment');
 
+exports.logNow = function(data, cb) {
 
+  if (typeof data == 'string') data = { name: data }
+  if (!data.owner)     data.owner = 'CI';
+  if (!data.timestamp) data.timestamp = moment().format('MM/DD/YYYY HH:mm:ss');
+  if (!data.type)      data.type = 'notice';
+  if (!data.message)   data.message = '';
+
+  var collection = new mongodb.Collection(DbManager.getDb(), 'logs');
+  collection.insert(data, { safe: true }, function(err, result) {
+    if (err) return;
+
+    if (cb) cb(null, results);
+  });
+
+}
 exports.getBranches =  function(session, cb) {
 
   var github = new githubAPI({ version: '3.0.0' });
