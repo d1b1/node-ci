@@ -75,8 +75,6 @@ exports.callback = function(req, res) {
         }
       }, function(err, asyncResults) {
 
-        console.log(asyncResults.user.login, asyncResults.team);
-
         var isOnTeam = _.filter(asyncResults.team, function(o) { return o.login == asyncResults.user.login });
         if (isOnTeam.length == 1) {
 
@@ -170,7 +168,6 @@ exports.commits = function(req, res) {
 
       github.repos.getBranches(opt, function(err, data) {
         if (err) return callback(err, null);
-        console.log(data)
         callback(null, data);
       });
       
@@ -238,7 +235,6 @@ var getTeamMembers = function(teamID, access_token, cb) {
   };
 
   github.orgs.getTeamMembers(opt, function(err, data) {
-    console.log('adsfasdfasdf', data)
     if (err) return callback(err, null);
     
     cb(null, data);
