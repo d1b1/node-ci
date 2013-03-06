@@ -5,6 +5,7 @@ var url        = require('url'),
     async      = require('async'),
     moment     = require('moment');
     util       = require('./util');
+    forever    = require('forever');
 
 exports.login = function(req, res) { 
   var url = 'https://github.com/login/oauth/authorize?state=222&client_id=' + process.env.GITHUB_CLIENTID + '&scope=user,repo';
@@ -149,6 +150,21 @@ exports.commits = function(req, res) {
   var async = require('async');
 
   async.parallel({
+    builds: function(callback) {
+
+      forever.list(false, function (err, data) {
+
+        if (!data) return cb(null, {});
+
+        var builds = {};
+        _.each(data, function(o) { 
+          if (o.ui_sha) builds[o.ui_sha] = o;  
+        });
+
+        callback(null, builds);
+      });
+
+    },
     team: function(callback) {
 
       var opt = {
@@ -184,7 +200,7 @@ exports.commits = function(req, res) {
     }
   }, function(err, data) {
 
-    res.render('commits', { current_branch: '', team: data.team, data: data.commits, branches: data.branches, options: options });
+    res.render('commits', { activeBuilds: data.builds, current_branch: '', team: data.team, data: data.commits, branches: data.branches, options: options });
   })
 
 }

@@ -23,6 +23,11 @@ block content
               tr
                 td 
                   a(href="/tmp") #{branch.name} 
+                  br
+                  if (activeBuilds[branch.name]) 
+                   - proc = activeBuilds[branch.name]
+                   span.label.label-warning #{proc.ui_owner} has a #{proc.ui_type.toUpperCase()} on #{proc.ui_port}
+
 
         a(href="/branches", class="btn ") All
 
@@ -88,6 +93,9 @@ block content
              b #{moment(commit.commit.author.date).fromNow()}
             td
              | #{commit.commit.message}
+             br
+             if (activeBuilds[commit.sha]) 
+               span.label.label-info #{activeBuilds[commit.sha].ui_owner} has a #{activeBuilds[commit.sha].ui_type.toUpperCase()} on #{activeBuilds[commit.sha].ui_port}
             td
              a(href="/start/#{commit.sha}", class="btn btn-small btn-warning") Build >>
 

@@ -77,7 +77,7 @@ block content
                   - if (process.ui_sha)
                       div.btn-group
                         - if (process.ui_url) 
-                          a(href="#{process.ui_url}", class="btn btn-primary", target="_blank") Preview
+                          a(href="#{process.ui_url}", class="btn btn-primary", target="_blank") Open
                         button(class="btn btn-primary  dropdown-toggle", data-toggle="dropdown") 
                           span.caret
                         ul(class="dropdown-menu")
@@ -118,15 +118,8 @@ block content
 
         .well
           h4 Activity
-          p The following is log of build activity for both snapshots and tracked branches. This shows the last 10 events.
 
           table.table-striped.table.table-hover
-           tr
-            th(width="20%")
-             | Who
-            th(width="80%")
-             | Activity
-
             - if (!activity || activity.length == 0) 
                tr
                 td(colspan="4")
@@ -142,8 +135,7 @@ block content
                  | #{log.name}
 
 
-
-          a(href="/activity", class="btn ") Full Log
+          a(href="/activity", class="btn btn-mini ") View Full Log
 
       .span3
 
@@ -159,13 +151,13 @@ block content
             - else
               tr
                 th
-                  b Commit
+                  b Slugs
                 th
-                  b Status
+
               each build, i in builds
                 tr
                   td 
-                    a(href="/tmp/#{build.commit}") #{build.commit.substring(0, 10)} 
+                    | #{build.commit.substring(0, 12)} 
                   td
                     - if (build.process == undefined)
                         div.btn-group
@@ -176,8 +168,8 @@ block content
                              a(href="/start/#{build.commit}") Restart this Build
 
                     - else
-                        | Active
-          a(href="/sites", class="btn ") Full List of Builds
+                      span.label.label-success Active
+          a(href="/sites", class="btn btn-mini") View all Builds
 
         // .well
         //   h4 Reports
