@@ -200,13 +200,11 @@ exports.startProcess = function(req, res) {
   var process_type          = req.body.process_type || 'snapshot';
 
   // Check if we have the process running.
-
   util.getProcessIndexbySHA(sha, function(err, currentProcessIdx) {
 
-    console.log('here', currentProcessIdx, sha, !currentProcessIdx);
-
     if (currentProcessIdx == -1) {
-       // No Love so build it.
+
+       // No Love. Since we did not find what we needed. we need to build it.
 
        var options = {
          type:        process_type,
@@ -220,8 +218,13 @@ exports.startProcess = function(req, res) {
          // Domain:   domain
        };
 
+       util.logNow({ 
+         type:    'manual', 
+         name:    'New ' + process_type.toUpperCase() + ' build', 
+         message: req.session.user.github.name + ' has manually created a ' + process_type + ' build.' 
+       });
+
        util.setupBuild(options, function(err, data) {
-         console.log('Done with the util.setupBuild() returning to user.');
          res.redirect('/');
        });
 
@@ -229,95 +232,19 @@ exports.startProcess = function(req, res) {
 
        // We have it, so restart it.
        // Use the following to rebuild the git status and 
+
+       util.logNow({ 
+         type:    'manual', 
+         name:    'Refreshing a ' + process_type.toUpperCase() + ' build', 
+         message: req.session.user.github.name + ' has manually requested to add/refresh a ' + process_type + ' build.' 
+       });
+
        util.restartBuild(sha, function(err, data) {
-         console.log('Done with the util.restartBuild() returning to user.');
          res.redirect('/');
        });
+
     }
-
   });
-
-  // // Then check if we have an existing build.
-  // util.getPort(function(err, availablePort) {
-
-  //   if (err && !availablePort) { 
-  //     if (!availablePort) GLOBAL.messages.push({ type: 'warning', copy: 'No Ports Available to start build.' });
-  //     if (err) GLOBAL.messages.push({ type: 'error', copy: err.message });
-      
-  //     return res.redirect('/');
-  //   }
-
-  //   var localAppFolder = GLOBAL.root + '/tmp/' + sha;
-  //   var options = { 
-  //     max:       max_attempts, 
-  //     logFile:   GLOBAL.root + '/../node-ci.log',
-  //     errFile:   GLOBAL.root + '/../node-ci.log',
-  //     outFile:   GLOBAL.root + '/../node-ci.log',
-  //     append:    true,
-  //     checkFile: false,
-  //     fork:      false,
-  //     sourceDir: localAppFolder, 
-  //     env:       { NODE_ENV: environment, PORT: parseInt(availablePort) },
-
-  //     // User defined Values.
-  //     ui_name:        reference_name,
-  //     ui_sha:         sha,
-  //     ui_port:        availablePort,
-  //     ui_description: reference_description,
-  //     ui_owner:       req.session.user.github.name,
-  //     ui_url:         'http://' + availablePort + '.' + GLOBAL.config.domain,
-  //     ui_type:        process_type
-  //   };
-
-  //   var exec = require('child_process').exec;
-  //   var pdir = GLOBAL.root + '/tmp/' + sha;
-
-  //   console.log('Step 1: Started the git build.');
-
-  //   var command = "";
-
-  //   var path = require('path');
-  //   if (path.existsSync(pdir)) { 
-  //     console.log('Already have a valid Build. Skipping Git steps.');
-
-  //     command = 'cd ' + pdir + ';npm install;';
-  //   } else {
-  //     console.log('No slug found, so build it now.');
-
-  //     command = 'rm -Rf ' + pdir + '; ' +
-  //               'git clone ' + GLOBAL.config.repository.path + ' ' + pdir + '; ' + 
-  //               'GIT_WORK_TREE=' + pdir + ' git --git-dir=' + pdir + '/.git --work-tree=' + pdir + ' checkout ' + sha + '; ' +
-  //               'cd ' + pdir + ';' +
-  //               'npm install;';
-  //   }
-
-  //   util.logNow({ owner: req.session.user.github.name, name: 'Starting a Build Process', message: 'User requested a build process. ' + JSON.stringify(options) });
-
-  //   GLOBAL.messages.push({ type: 'info', copy: 'Buidling an install from a commit.' });
-  //   GLOBAL.messages.push({ type: 'info', copy: command });
-
-  //   // This process does the actual startup process for the new site.
-  //   var NowStartProcess = function (error, stdout, stderr) { 
-
-  //     console.log('Step 2: Reached the Build Process.');
-
-  //     GLOBAL.messages.push({ type: 'info', copy: 'CD to ' + localAppFolder });
-  //     GLOBAL.messages.push({ type: 'info', copy: 'Completed NPM Install for ' + sha });
-  //     GLOBAL.messages.push({ type: 'info', copy: 'Starting site process for ' + sha });
-
-  //     var childProcess = forever.startDaemon('server.js', options);
-  //     forever.startServer(childProcess);
-
-  //     util.logNow({ owner: req.session.user.github.name, name: 'Restarted new build process', message: "Completed the build process for '" + options.ui_name + "'" });
-
-  //     GLOBAL.messages.push({ type: 'info', copy: 'Starting a site on port ' + availablePort + ' for SHA ' + sha })
-
-  //     res.redirect('/');
-  //   }
-
-  //   // Star the Actual Process Now.
-  //   exec(command, NowStartProcess);
-  // });
 
 }
 

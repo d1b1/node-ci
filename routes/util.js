@@ -123,17 +123,14 @@ exports.restartBuild = restartBuild = function(sha, cb) {
   function puts(error, stdout, stderr) { 
 
     sys.puts(stdout);
-    console.log('Ok we did the reset. No restart the process.');
-    //console.log('Current Process', currentProcess);
 
     // Get the current process index.
     getProcessIndexbySHA(sha, function(err, currentProcessIdx) {
 
       console.log('currentProcessIdx', currentProcessIdx)
-      // TODO Handle the err state. If it exists or no process is FOnd.
-      forever.restart( currentProcessIdx );
+      // TODO Handle the err state. If it exists or no process is found.
 
-      logNow({ type: 'Hook', name: 'Github Hook Fetch', message: 'Found an active process tracking, Fetched, npm installed and restarted. Path: ' + pdir });
+      forever.restart( currentProcessIdx );
 
       cb(null, currentProcessIdx);
     });

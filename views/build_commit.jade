@@ -4,7 +4,9 @@ block header
 
 block content
  
-  h3 Start a Build Process: #{process_type}
+  h3 Start a Build Process: #{process_type.toUpperCase()} 
+    - if (process_type != 'head')
+      | @ #{id.substring(0, 10)}
   p
     | This process provides the ability to start and build a process. This process
     | will assign the next available port. It will handle the git checkout, build, 
@@ -14,61 +16,48 @@ block content
     br
     br
 
-    form(action="/start/process", method="post")
+    .well 
+      form(action="/start/process", method="post", class="form-horizontal")
 
-      input(type="hidden", name="process_type", value="#{process_type}")
-      
-      - if (process_type == 'head')
-        .row
-          .span12
-            b Select a Branch to Track:
-            br
-            select(name="sha") 
-              each branch in branches
-                - if (id == branch.name)
-                  option(value="#{branch.name}", selected) #{branch.name}
-                - else
-                  option(value="#{branch.name}") #{branch.name}
-            br
-            b(style="color:red") * This feature is not working yet.
+        input(type="hidden", name="process_type", value="#{process_type}")
+        
+        - if (process_type == 'head')
 
-      - else 
-        input(type="hidden", name="sha", value="#{id}")
+          .control-group
+            label(class="control-label", for="reference_name") Select a Branch
+            .controls
+              select(name="sha") 
+                each branch in branches
+                  - if (id == branch.name)
+                    option(value="#{branch.name}", selected) #{branch.name}
+                  - else
+                    option(value="#{branch.name}") #{branch.name}
+    
+        - else 
+          input(type="hidden", name="sha", value="#{id}")
 
-      .row
-        .span10
-          b Reference Name (Required): 
-          br
-          input(name="reference_name", class="span4", value="#{id.substring(0, 9)}", placeholder="Enter Reference Name")
-          p This will default to the SHA commit.
+        .control-group
+          label(class="control-label", for="reference_name") Reference Name
+          .controls
+            input(type="text", name="reference_name",  value="#{id.substring(0, 9)}", placeholder="Enter Reference Name")
 
-      .row
-        .span5
+        .control-group
+          label(class="control-label", for="environment") Environment
+          .controls
+            input(type="text", name="environment",  value="development", placeholder="Optional Environment")  
+            span(class="help-block") Use this to define the NODE_ENV value.  (Development, Production, Testing etc.)
 
-          b Max Restarts (Required): 
-          br
-          input(name="max_attempts", class="span1", value="0", placeholder="Enter the number of Max restart attempts.")
-          p Use this option to define the maximum number of attempts for a given process. Defaults to 0, no max.
+        .control-group
+          label(class="control-label", for="reference_description") Description
+          .controls
+            textarea(name="reference_description",  value="development", placeholder="Optional Description")  
+            span(class="help-block") This is an optional description for use in delinating a specific process.
 
-        .span5
-          b Environment (Required): 
-          br
-          input(name="environment", class="span4", value="development", placeholder="Enter Name")
-          p Use this to define the NODE_ENV value.
-
-      .row
-        .span10
-
-          b Runtime Description (Optional): 
-          br
-          textarea(name="reference_description", class="span6",  placeholder="Optional Description.")
-          p This is an optional description for use in delinating a specific process.
-
-      br
-      br
-      a(type="button", class="btn", href="/sites") Cancel
-      &nbsp;
-      button(type="submit", class="btn btn-warning", name="SubmitButton") Start Build Process >>
+        .control-group
+          .controls
+            a(type="button", class="btn", href="/") Cancel
+            &nbsp;
+            button(type="submit", class="btn btn-warning", name="SubmitButton") Start Build Process >>
 
   p.well
     | Note: A build can take a few minutes to complete. If the required node.js modules are not
