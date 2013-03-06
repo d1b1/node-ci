@@ -5,6 +5,143 @@ var githubAPI  = require('github');
 var db         = require('../db');
 var mongodb    = require('mongodb');
 var moment     = require('moment');
+var async      = require('async');
+var path       = require('path');
+
+exports.setupBuild = setupBuild = function(opts, cb) {
+
+  // Then check if we have an existing build.
+  getPort(function(err, availablePort) {
+
+    if (err && !availablePort) { 
+      if (!availablePort) GLOBAL.messages.push({ type: 'warning', copy: 'No Ports Available to start build.' });
+      if (err) GLOBAL.messages.push({ type: 'error', copy: err.message });
+      
+      return cb(err, null);
+    }
+
+    if (!opts.sourceDir) opts.sourceDir = GLOBAL.root + '/tmp/' + opts.sha;
+
+    var path = require('path');
+
+    var d = path.resolve( GLOBAL.root, 'logs');
+
+    var logfile = path.resolve( GLOBAL.root, 'logs' ) + '/proc_' + opts.sha + '.log';
+    var errfile = path.resolve( GLOBAL.root, 'logs' ) + '/proc_' + opts.sha + '_err.log';
+    var outfile = path.resolve( GLOBAL.root, 'logs' ) + '/proc_' + opts.sha + '_out.log';
+
+    // Setup the Forever Process Options.
+    var options = { 
+      max:       opts.max || 100, 
+      logFile:   logfile,
+      errFile:   errfile,
+      outFile:   outfile,
+      append:    true,
+      checkFile: false,
+      fork:      false,
+      sourceDir: opts.sourceDir, 
+      env:       { NODE_ENV: opts.environment || 'development', PORT: parseInt(availablePort) },
+
+      // User defined Values.
+      ui_name:        opts.name,
+      ui_sha:         opts.sha,
+      ui_port:        availablePort,
+      ui_description: opts.description,
+      ui_owner:       opts.owner,
+      ui_url:         'http://' + availablePort + '.' + GLOBAL.config.domain,
+      ui_type:        opts.type
+    };
+
+    var exec = require('child_process').exec;
+    var pdir = opts.sourceDir;
+    var command = '';
+
+    var path = require('path');
+    if (path.existsSync(pdir)) { 
+      console.log('Already have a valid Build. Skipping Git steps.');
+
+      command = 'cd ' + pdir + ';npm install;';
+    } else {
+      console.log('No slug found, so build it now.');
+
+      command = 'rm -Rf ' + pdir + '; ' +
+                'git clone ' + GLOBAL.config.repository.path + ' ' + pdir + '; ' + 
+                'GIT_WORK_TREE=' + pdir + ' git --git-dir=' + pdir + '/.git --work-tree=' + pdir + ' checkout ' + opts.sha + '; ' +
+                'cd ' + pdir + ';' +
+                'npm install;';
+    }
+
+    util.logNow({ owner: opts.owner, name: 'Starting a Build Process', message: 'User requested a build process. ' + JSON.stringify(options) });
+
+    GLOBAL.messages.push({ type: 'info', copy: 'Buidling an install from a commit.' });
+    GLOBAL.messages.push({ type: 'info', copy: command });
+
+    // This process does the actual startup process for the new site.
+    var NowStartProcess = function (error, stdout, stderr) { 
+
+      console.log('Step 2: Reached the Build Process.');
+
+      GLOBAL.messages.push({ type: 'info', copy: 'CD to ' + opts.sourceDir });
+      GLOBAL.messages.push({ type: 'info', copy: 'Completed NPM Install for ' + opts.sha });
+      GLOBAL.messages.push({ type: 'info', copy: 'Starting site process for ' + opts.sha });
+
+      var childProcess = forever.startDaemon('server.js', options);
+      forever.startServer(childProcess);
+
+      util.logNow({ owner: opts.owner, name: 'Restarted new build process', message: "Completed the build process for '" + opts.name + "'" });
+
+      GLOBAL.messages.push({ type: 'info', copy: 'Starting a site on port ' + availablePort + ' for SHA ' + opts.sha })
+
+      cb(err, childProcess)
+    }
+
+    // Star the Actual Process Now.
+    exec(command, NowStartProcess);
+  });
+
+}
+
+// This function will attempt to find restart, with a update a current process.
+//
+// sha - Branch or Commit Number
+// processUID - UID of an existing process.
+// cb (callback) - function().
+
+exports.restartBuild = restartBuild = function(sha, cb) {
+
+  console.log('in the restartBuild() function');
+
+  var sys = require('sys');
+  var exec = require('child_process').exec;
+
+  var pdir = GLOBAL.root + '/tmp/' + sha;
+  var cmd = 'cd ' + pdir + ';' + 
+            'git fetch origin;' +
+            'git rebase origin/' + sha + ';' +
+            'npm install;'
+
+  function puts(error, stdout, stderr) { 
+
+    sys.puts(stdout);
+    console.log('Ok we did the reset. No restart the process.');
+    //console.log('Current Process', currentProcess);
+
+    // Get the current process index.
+    getProcessIndexbySHA(sha, function(err, currentProcessIdx) {
+
+      console.log('currentProcessIdx', currentProcessIdx)
+      // TODO Handle the err state. If it exists or no process is FOnd.
+      forever.restart( currentProcessIdx );
+
+      logNow({ type: 'Hook', name: 'Github Hook Fetch', message: 'Found an active process tracking, Fetched, npm installed and restarted. Path: ' + pdir });
+
+      cb(null, currentProcessIdx);
+    });
+  }
+
+  exec(cmd, puts);
+
+}
 
 exports.getHeadCommit = getHeadCommit = function(src, cb) {
 
@@ -42,7 +179,7 @@ exports.getHeadCommit = getHeadCommit = function(src, cb) {
   exec(cmd, put);
 }
 
-exports.logNow = function(data, cb) {
+exports.logNow = logNow = function(data, cb) {
 
   if (typeof data == 'string') data = { name: data }
   if (!data.owner)     data.owner = 'CI';
@@ -83,8 +220,8 @@ exports.getSites = function(cb) {
       GLOBAL.messages.push({ type: 'error', copy: 'Unable to fetch the existing processes..'});
       return cb(err, null)
     }
-    
-    var async = require('async');
+
+    if (!data) return cb(null, null);
 
     // Loop and ensure we have config data for all processes.
     _.each(data, function(o) {
@@ -132,7 +269,7 @@ exports.getBuilds = function(cb) {
 
 }
 
-exports.getProcessbyTypeAndID = function(type, id, cb) {
+exports.getProcessbyTypeAndID = getProcessbyTypeAndID = function(type, id, cb) {
 
   forever.list(false, function (err, data) {
     if (err) return cb(err);
@@ -152,17 +289,30 @@ exports.getProcessbyTypeAndID = function(type, id, cb) {
 
 }
 
-exports.getProcessIndexbyID = function(uid, cb) {
+exports.getProcessIndexbyID = getProcessIndexbyID = function(uid, cb) {
 
   forever.list(false, function (err, data) {
     if (err) return cb(err);
 
     var UIDs = [];
     _.each(data, function(o) { UIDs.push(o.uid); });
-
     var indexNum = _.indexOf(UIDs, uid);
-
     if (indexNum == -1) indexNum = null;
+
+    cb(null, indexNum);
+  })
+
+}
+
+exports.getProcessIndexbySHA = getProcessIndexbySHA = function(sha, cb) {
+
+  forever.list(false, function (err, data) {
+    if (err) return cb(err);
+
+    var UIDs = [];
+    _.each(data, function(o) { UIDs.push(o.ui_sha || 222); });
+    var indexNum = _.indexOf(UIDs, sha);
+    //if (indexNum == -1) indexNum = null;
 
     cb(null, indexNum);
   })
@@ -195,7 +345,7 @@ exports.getUsedPorts = function(cb) {
 
 }
 
-exports.getPort = function(cb) {
+exports.getPort = getPort = function(cb) {
  
   forever.list(false, function (err, data) {
     if (err) return cb(err, null);

@@ -16,8 +16,6 @@ block content
 
     form(action="/start/process", method="post")
 
-      input(type="hidden", name="sha", value="#{id}")
-
       input(type="hidden", name="process_type", value="#{process_type}")
       
       - if (process_type == 'head')
@@ -25,7 +23,7 @@ block content
           .span12
             b Select a Branch to Track:
             br
-            select(name="branch_name") 
+            select(name="sha") 
               each branch in branches
                 - if (id == branch.name)
                   option(value="#{branch.name}", selected) #{branch.name}
@@ -33,6 +31,9 @@ block content
                   option(value="#{branch.name}") #{branch.name}
             br
             b(style="color:red") * This feature is not working yet.
+
+      - else 
+        input(type="hidden", name="sha", value="#{id}")
 
       .row
         .span10

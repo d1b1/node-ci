@@ -18,3 +18,4 @@ repos/
 tmp/
 npm-debug.log
 .settings
+logs/
