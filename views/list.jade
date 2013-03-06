@@ -70,7 +70,7 @@ block content
                if (process.info)
                  span.label.label-success #{process.info.author.name}
                  | 
-                 span.label.label-success(title="#{process.info.commit}") ##{process.info.commit.substring(0, 6)} - #{moment(process.info.date, 'ddd MMM d HH:mm:ss YYYY Z').fromNow()}
+                 span.label.label-success(title="#{process.info.date} - #{process.info.commit}") ##{process.info.commit.substring(0, 6)} - #{moment(process.info.date, 'ddd MMM DD HH:mm:ss YYYY Z').fromNow()}
               td
 
                 - if (session.user)
