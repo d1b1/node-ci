@@ -28,7 +28,6 @@ block content
                    - proc = activeBuilds[branch.name]
                    span.label.label-warning #{proc.ui_owner} has a #{proc.ui_type.toUpperCase()} on #{proc.ui_port}
 
-
         a(href="/branches", class="btn ") All
 
       .well
@@ -97,7 +96,16 @@ block content
              if (activeBuilds[commit.sha]) 
                span.label.label-info #{activeBuilds[commit.sha].ui_owner} has a #{activeBuilds[commit.sha].ui_type.toUpperCase()} on #{activeBuilds[commit.sha].ui_port}
             td
-             a(href="/start/#{commit.sha}", class="btn btn-small btn-warning") Build >>
+
+              div.btn-group
+                button(class="btn btn-primary  dropdown-toggle", data-toggle="dropdown") 
+                  span.caret
+                ul(class="dropdown-menu")
+                 li
+                   a(href="/git/create/ref/#{commit.sha}") Branch
+                 li 
+                   a(href="/start/#{commit.sha}") Build
+
 
       div(class="pagination pagination-small pagination-right")
         ul

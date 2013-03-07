@@ -26,4 +26,7 @@ block content
         td
          | ...
         td
-         a(href="/start/#{branch.name}?process_type=head", class="btn btn-primary") Build HEAD Branch
+         - if (session.user)
+           a(href="/git/ref/delete/#{branch.name}", class="btn btn-primary") Delete
+           &nbsp;
+           a(href="/start/#{branch.name}?process_type=head", class="btn btn-primary") Build

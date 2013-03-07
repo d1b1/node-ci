@@ -203,7 +203,7 @@ exports.getBranches =  function(session, cb) {
   };
 
   github.repos.getBranches(opt, function(err, data) {
-    if (err) return callback(err, null);
+    if (err) return cb(err, null);
     cb(null, data);
   });
   

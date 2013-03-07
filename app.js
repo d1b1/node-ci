@@ -113,6 +113,10 @@ AppManager = (function() {
     app.get('/git/commit/:sha',  check, routes.ci.buildCommitSlug);
     app.get('/teams',            check, routes.github.teamMembers);
 
+    app.get('/git/create/ref/:sha',   check, routes.github.makeReferenceDialog);
+    app.post('/git/create/ref',       check, routes.github.makeReferenceAction);
+    app.get('/git/ref/delete/:ref',        check, routes.github.deleteReferenceAction);
+
     // Preset Builds
     app.get('/head/list',          check, routes.ci.listConfigurations);
     app.get('/head/setup/:label',  check, routes.ci.setupConfiguration);

@@ -1,0 +1,39 @@
+extends layout
+
+block header
+
+block content
+ 
+  h3 Branch Commit: #{sha} 
+
+  p
+    | This process provides the ability to start and build a process. This process
+    | will assign the next available port. It will handle the git checkout, build, 
+    | npm install and deployment. You can start more then one process for a given
+    | commit.
+
+    br
+    br
+
+    .well 
+      form(action="/git/create/ref", method="post", class="form-horizontal")
+
+        input(type="hidden", name="sha", value="#{sha}")
+
+        .control-group
+          label(class="control-label", for="reference_name") Reference Name
+          .controls
+            input(type="text", name="reference_name",  value="Branch - #{sha.substring(0, 9)}", placeholder="Enter Branch Name")
+
+        .control-group
+          .controls
+            a(type="button", class="btn", href="/git") Cancel
+            &nbsp;
+            button(type="submit", class="btn btn-warning", name="SubmitButton") Create Branch >>
+
+  p.well
+    | Note: This process will create a branch on the github repo. After the branch is created you will
+    | have the option to create a branch build.
+      
+    
+

@@ -239,6 +239,53 @@ exports.branches = function(req, res) {
 
 }
 
+exports.makeReferenceDialog = function(req, res) {
+  res.render('makeReferenceDialog', { sha: req.params.sha });
+}
+
+exports.deleteReferenceAction = function(req, res) {
+
+  var ref = req.params.ref;
+
+  var github = new githubAPI({ version: '3.0.0' });
+  github.authenticate({ type: 'oauth', token: req.session.user.access_token });
+
+  var opt = {
+    user:  GLOBAL.config.repository.user,
+    repo:  GLOBAL.config.repository.repo,
+    ref:   'heads/' + ref,
+  };
+
+  github.gitdata.deleteReference(opt, function(err, data) {
+    if (err) return res.send(err);
+    res.redirect('/git');
+  });
+}
+
+exports.makeReferenceAction = function(req, res) {
+
+  var sha = req.body.sha;
+
+  var ref = req.body.reference_name.replace(/[^-a-zA-Z0-9]/g, ' ');
+  var ref_name = _.reject(ref.split(' '), function(o) { return o.trim() == ''; }).join('_').trim();
+
+  var github = new githubAPI({ version: '3.0.0' });
+  github.authenticate({ type: 'oauth', token: req.session.user.access_token });
+
+  var opt = {
+    user:  GLOBAL.config.repository.user,
+    repo:  GLOBAL.config.repository.repo,
+    ref:   'refs/heads/' + ref_name,
+    sha:   sha
+  };
+
+  github.gitdata.createReference(opt, function(err, data) {
+    if (err) return res.send(err);
+    
+    res.redirect('/');
+  });
+}
+
 var getTeamMembers = function(teamID, access_token, cb) {
 
   if (!GLOBAL.config) {
