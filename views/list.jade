@@ -46,7 +46,7 @@ block content
                - else if (process.ui_type == 'head')
                  b HEAD 
                  | of #{process.ui_sha || 'Na'}
-               - else if (process_type = 'ci')
+               - else if (process_type == 'ci')
                  span.label.label-success NODE-CI
                - else
                  | CLI/Untracked
