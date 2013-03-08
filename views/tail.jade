@@ -3,10 +3,29 @@ extends layout
 block header
 
 block content
- 
+  
+  h3 
+    - if (data.ui_sha) 
+      | Logs for '#{data.ui_sha}'
+    - else 
+      | Logs for #{data.uid}
+
+  b LogFile: 
+  | #{data.logFile}
+  br
+  b Source: 
+  | #{data.sourceDir}
+
+  br
+  br
+  a(href="/", class="btn btn-small") << Back
+
+  br
+  br
   table.table-striped.table.table-hover
     tr
       th
+        Log Message
     each log in data.logs
       tr
         td

@@ -258,13 +258,13 @@ exports.tailProcessLog = function(req, res) {
 
   util.getProcessIndexbyID(uid, function(err, processIndex) {
 
-    if (err || !processIndex) {
+    if (err || processIndex == -1) {
       GLOBAL.messages.push({ type: 'error', copy: 'Unable to fetch the requested process.'});
       res.redirect('/');
       return;
     }
 
-    forever.tail(processIndex, function (err, data) {
+    forever.tail(processIndex, 20, function (err, data) {
 
       if (err || !data) {
         GLOBAL.messages.push({ type: 'error', copy: 'Unable to fetch tail information the requested process.'});
@@ -272,6 +272,7 @@ exports.tailProcessLog = function(req, res) {
         return;
       }
 
+      var data = data[0];
       res.render('tail', { data: data } );
     })
 

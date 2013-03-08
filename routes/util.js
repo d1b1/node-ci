@@ -38,7 +38,7 @@ exports.setupBuild = setupBuild = function(opts, cb) {
       outFile:   outfile,
       append:    true,
       checkFile: false,
-      fork:      false,
+      fork:      true,
       sourceDir: opts.sourceDir, 
       env:       { NODE_ENV: opts.environment || 'development', PORT: parseInt(availablePort) },
 

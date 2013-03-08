@@ -46,7 +46,9 @@ block content
                - else if (process.ui_type == 'head')
                  b HEAD 
                  | of #{process.ui_sha || 'Na'}
-               - else 
+               - else if (process_type = 'ci')
+                 span.label.label-success NODE-CI
+               - else
                  | CLI/Untracked
               td
                b Name: 
@@ -103,6 +105,12 @@ block content
                       div.btn-group
                         - if (process.ui_url) 
                           a(href="#{process.ui_url}", class="btn btn-large btn-primary", target="_blank") Got to Site
+
+        .well
+          h4 Missing a build?
+          p The current CI process management sometimes kills any active builds when it restarts. For a branch
+            tracked build a github commit will active a build. Or you can use the 'Branch' option to start it
+            again. 
 
       .span3
 
