@@ -117,10 +117,6 @@ AppManager = (function() {
     app.post('/git/create/ref',       check, routes.github.makeReferenceAction);
     app.get('/git/ref/delete/:ref',        check, routes.github.deleteReferenceAction);
 
-    // Preset Builds
-    app.get('/head/list',          check, routes.ci.listConfigurations);
-    app.get('/head/setup/:label',  check, routes.ci.setupConfiguration);
-
     // Mockups.
     app.get('/plots',              check, routes.data.showChart);
 
@@ -141,9 +137,7 @@ AppManager = (function() {
     app.get('/slug/delete/:id',       check, routes.ci.slugDelete);
 
     // Handles Github Web hooks payloads.
-    // app.post('/build',             routes.ci.catchCommitPayload);
     app.post('/build',                routes.ci.catchCommitPayloadv2);
-    app.get('/force',                 routes.ci.forceHook);
   };
 
   return {

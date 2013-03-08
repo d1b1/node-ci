@@ -60,6 +60,16 @@ exports.setupBuild = setupBuild = function(opts, cb) {
     if (path.existsSync(pdir)) { 
       console.log('Already have a valid Build. Skipping Git steps.');
 
+      // command = 'cd ' + pdir + ';' +
+      //           'git fetch origin;' +
+      //           'git reset --hard HEAD' + 
+      //           'npm install;';
+
+      // var cmd = 'cd ' + pdir + ';' + 
+      //           'git fetch origin;' +
+      //           'git rebase origin/' + sha + ';' +
+      //           'npm install;'
+
       command = 'cd ' + pdir + ';npm install;';
     } else {
       console.log('No slug found, so build it now.');
@@ -109,6 +119,16 @@ exports.setupBuild = setupBuild = function(opts, cb) {
 
 exports.restartBuild = restartBuild = function(sha, cb) {
 
+  // command = 'cd ' + pdir + ';' +
+  //           'git fetch origin;' +
+  //           'git reset --hard HEAD' + 
+  //           'npm install;';
+
+  // var cmd = 'cd ' + pdir + ';' + 
+  //           'git fetch origin;' +
+  //           'git rebase origin/' + sha + ';' +
+  //           'npm install;'
+
   console.log('in the restartBuild() function');
 
   var sys = require('sys');
@@ -137,7 +157,6 @@ exports.restartBuild = restartBuild = function(sha, cb) {
   }
 
   exec(cmd, puts);
-
 }
 
 exports.getHeadCommit = getHeadCommit = function(src, cb) {
