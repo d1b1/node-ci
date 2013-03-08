@@ -334,13 +334,13 @@ exports.catchCommitPayloadv2 = function(req, res) {
        util.setupBuild(options, function(err, data) {
          if (err) return util.logNow({type: 'hook', name: 'Github Hook Start Failed', message: 'A github webhook requested failed ' + err.message });
          
-         util.logNow({ type: 'hook', name: 'Github Hook Build Complete', message: 'A github webhook requested setup the branch ' + ref });
+         util.logNow({ type: 'hook', name: 'Github Hook Build Complete', message: 'A github webhook requested setup the branch ' + sha + ' ' + load.ref });
        });
     } else {
        util.restartBuild(sha, function(err, data) {
          if (err) return util.logNow({type: 'hook', name: 'Github Hook Restart Failed', message: 'A github webhook requested failed ' + err.message });
          
-         util.logNow({ type: 'hook', name: 'Github Hook Rebuild Complete', message: 'A github webhook requested rebuild the branch ' + ref });
+         util.logNow({ type: 'hook', name: 'Github Hook Rebuild Complete', message: 'A github webhook requested rebuild the branch ' + sha + ' ' + load.ref });
        });
     }
   });
