@@ -345,34 +345,44 @@ exports.processDetail = function(req, res) {
 exports.catchCommitPayloadv2 = function(req, res) {
 
   var load = JSON.parse(req.body.payload);
-
   var sha = load.ref.replace('refs/heads/', '').trim();
 
-  util.getProcessIndexbySHA(sha, function(err, currentProcessIdx) {
+  util.getConfiguration(sha, function(err, configuration) {
 
-    if (currentProcessIdx == -1) {
-
-       var options = {
-         type:        'hook',
-         sha:         sha,
-         name:        'Hook Tracking',
-         description: 'Github Web hook delivered ' + sha,
-         environment: 'development',
-         owner:       'CI'
-       };
-
-       util.setupBuild(options, function(err, data) {
-         if (err) return util.logNow({type: 'hook', name: 'Github Hook Start Failed', message: 'A github webhook requested failed ' + err.message });
-         
-         util.logNow({ type: 'hook', name: 'Github Hook Build Complete', message: 'A github webhook requested setup the branch ' + sha + ' ' + load.ref });
-       });
-    } else {
-       util.restartBuild(sha, function(err, data) {
-         if (err) return util.logNow({type: 'hook', name: 'Github Hook Restart Failed', message: 'A github webhook requested failed ' + err.message });
-         
-         util.logNow({ type: 'hook', name: 'Github Hook Rebuild Complete', message: 'A github webhook requested rebuild the branch ' + sha + ' ' + load.ref });
-       });
+    // Check that we have an available configuration for environment variables.
+    if (err || !configuration) {
+      util.logNow({ type: 'hook', name: 'Github Hook Build Failed', message: 'Could not find a configuration (or a default) for ' + sha + '.' });
+      return;
     }
+
+    util.getProcessIndexbySHA(sha, function(err, currentProcessIdx) {
+
+      if (currentProcessIdx == -1) {
+         var options = {
+           type:        'hook',
+           sha:         sha,
+           name:        'Hook Tracking',
+           description: 'Github Web hook delivered ' + sha,
+           environment: 'development',
+           owner:       'CI',
+           configuration: configuration.configurations || {}
+         };
+
+         util.setupBuild(options, function(err, data) {
+           if (err) return util.logNow({type: 'hook', name: 'Github Hook Start Failed', message: 'A github webhook requested failed ' + err.message });
+           
+           util.logNow({ type: 'hook', name: 'Github Hook Build Complete', message: 'A github webhook requested setup the branch ' + sha + ' ' + load.ref });
+         });
+      } else {
+         util.restartBuild(sha, function(err, data) {
+           if (err) return util.logNow({type: 'hook', name: 'Github Hook Restart Failed', message: 'A github webhook requested failed ' + err.message });
+           
+           util.logNow({ type: 'hook', name: 'Github Hook Rebuild Complete', message: 'A github webhook requested rebuild the branch ' + sha + ' ' + load.ref });
+         });
+      }
+    });
+
   });
+
 
 }

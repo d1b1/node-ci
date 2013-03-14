@@ -1,8 +1,9 @@
 var db         = require('../db');
 var mongodb    = require('mongodb');
+var util       = require('./util');
 
 exports.list = function(req, res) {
-  
+
   var query = {};
   var collection = new mongodb.Collection(DbManager.getDb(), 'configurations');
   collection.find(query).toArray(function(err, results) {
@@ -32,7 +33,6 @@ exports.edit = function(req, res) {
   collection.findOne(query, function(err, result) {
     if (err) return;
 
-    console.log(result);
     if (!result.configurations) result.configurations = [];
 
     res.render('configuration_edit', { data: result, config_id: id });
@@ -54,7 +54,8 @@ exports.editUpdate = function(req, res) {
   var data = {
     name: req.body.configuration_name || 'No Name',
     configurations: config,
-    notes: req.body.configuration_notes || 'No Notes'
+    notes: req.body.configuration_notes || 'No Notes',
+    default: req.body.is_default=='true'
   };
 
   if (!config_id) {

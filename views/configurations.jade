@@ -33,6 +33,10 @@ block content
         td
          | #{config.name}
         td
+         - if (config.default) 
+           span.label.label-info Default
+           br
+
          | #{config.notes}
         td
           a(href="/configurations/edit/#{config._id}?process_type=load", class="btn btn-primary") Edit

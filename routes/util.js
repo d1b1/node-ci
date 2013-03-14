@@ -65,8 +65,6 @@ exports.setupBuild = setupBuild = function(opts, cb) {
       ui_type:        opts.type
     };
 
-    console.log(options);
-    
     var exec = require('child_process').exec;
     var pdir = opts.sourceDir;
     var command = '';
@@ -397,15 +395,70 @@ exports.getPort = getPort = function(cb) {
 
 exports.getConfiguration = getConfiguration = function(id, cb) {
 
-  var query = { _id: new mongodb.ObjectID(id) };
-
   var collection = new mongodb.Collection(DbManager.getDb(), 'configurations');
-  collection.findOne(query, function(err, result) {
-    if (err) return;
+  async.series({
+    getbyID: function(callback) {
 
-    if (!result.configurations) result.configurations = [];
+      try {
+        var query = { _id: new mongodb.ObjectID(id) };
+        collection.findOne(query, function(err, result) {
+          if (err) return callback(null, null);
+          if (!result.configurations) result.configurations = [];
+          callback(null, result);
+        });
+      } catch(err) {
+        callback(null, null);
+      }
 
-    cb(null, result);
+    },
+    getbyName: function(callback) {
+
+      try {
+        var query = { name: id };
+        collection.findOne(query, function(err, result) {
+          if (err) return callback(null, null);
+          if (!result) return callback(null, null);
+          if (!result.configurations) result.configurations = [];
+          callback(null, result);
+        });
+      } catch(err) {
+        callback(null, null);
+      }
+
+    },
+    getDefault: function(callback) {
+
+      try {
+        var query = { default: true };
+        collection.findOne(query, function(err, result) {
+          if (err) return callback(null, null);
+          if (!result) return callback(null, null);
+          if (!result.configurations) result.configurations = [];
+          callback(null, result);
+        });
+      } catch(err) {
+        callback(null, null);
+      }
+
+    }
+  }, function(err, results) {
+
+    if (results.getbyID) { 
+      console.log('Found configuration by ID');
+      return cb(null, results.getbyID);
+    }
+
+    if (results.getbyName) {
+      console.log('Found configuration by Name');
+      return cb(null, results.getbyName); 
+    }
+
+    if (results.getDefault) {
+      console.log('Found configuration by Default');
+      return cb(null, results.getDefault);
+    }
+
+    cb(null, null);
   });
 
 }

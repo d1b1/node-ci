@@ -19,7 +19,15 @@ block content
 
     - if (config_id)
       input(type="hidden", name="config_id", value="#{config_id}")
-    
+   
+    .row
+      .control-group
+        label(class="control-label", for="configuration_name") Is Default?
+        .controls
+
+          input(type='checkbox', name="is_default", value="true", checked=(data.default || false)) 
+          span(class="help-block") Use this specify if this configuration should be used when no configuration defined. 
+
     .row
       .control-group
         label(class="control-label", for="configuration_name") Reference Name
