@@ -48,6 +48,15 @@ block content
             span(class="help-block") Use this to define the NODE_ENV value.  (Development, Production, Testing etc.)
 
         .control-group
+          label(class="control-label", for="configuration") Select a Configuration
+          .controls
+            select(name="configuration_id") 
+              each config in configurations
+                  option(value="#{config._id}") #{config.name}
+
+            span(class="help-block") Select the configuration you want to provide this build. 
+
+        .control-group
           label(class="control-label", for="reference_description") Description
           .controls
             textarea(name="reference_description",  value="development", placeholder="Optional Description")  

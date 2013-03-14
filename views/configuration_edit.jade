@@ -1,0 +1,62 @@
+extends layout
+
+block header
+
+block content
+ 
+  h3 Add/Edit Configuration
+ 
+  .row
+    p.span8 A configuration is a group of environment variables that are used by a given process. Each environment
+      key value pair will be loaded into a process on setup. These values will overwrite any existing 
+      environment values defined at the CLI or in the local users .bashrc or .bash_profile.
+
+    p.span8 The Reference name is used to link a given configuration to tracking branch. The auto build process
+      will look it required configurations by reference name. Save is not important. When setting up a manual
+      build you will have the option to select from a list of configurations.
+
+  form(action="/configurations/update", method="post", class="form-horizontal")
+
+    - if (config_id)
+      input(type="hidden", name="config_id", value="#{config_id}")
+    
+    .row
+      .control-group
+        label(class="control-label", for="configuration_name") Reference Name
+        .controls
+          input(type="text", name="configuration_name", value="#{data.name}", placeholder="Enter Name")
+
+    .row
+      .control-group
+        label(class="control-label", for="configuration_notes") Notes
+        .controls
+          textarea(type="text", class="span5", name="configuration_notes", placeholder="Optional - Notes") #{data.notes}
+
+    each config, i in data.configurations
+      .row
+        .span12
+          input(type="text", class="span4", name="name_#{i}", value="#{config.name}", placeholder="Enter Name")
+          | = 
+          textarea(type="text", class="span6", name="value_#{i}", placeholder="Enter Value") #{config.value}
+
+      .row
+        .span10
+          hr
+
+    - for (var i=data.configurations.length; i<3 + data.configurations.length; i++)
+      .row
+        .span12
+            input(type="text", class="span4", name="name_#{i}", value="", placeholder="Enter Name")
+            | = 
+            textarea(type="text", class="span6", name="value_#{i}", placeholder="Enter Value")
+
+      .row
+        .span10
+          hr
+    .row
+      .span10
+          a(type="button", class="btn", href="/configurations") Cancel
+          &nbsp;
+          button(type="submit", class="btn btn-warning", name="SubmitButton") Save Configuration
+ 
+

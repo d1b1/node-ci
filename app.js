@@ -138,6 +138,12 @@ AppManager = (function() {
 
     // Handles Github Web hooks payloads.
     app.post('/build',                routes.ci.catchCommitPayloadv2);
+
+    app.get('/configurations',          check, routes.configs.list);
+    app.get('/configurations/add',      check, routes.configs.add);
+    app.get('/configurations/edit/:id', check, routes.configs.edit);
+    app.post('/configurations/update',  check, routes.configs.editUpdate);
+    
   };
 
   return {

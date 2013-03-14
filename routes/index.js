@@ -4,3 +4,4 @@ exports.util     = require('./util');
 exports.ci       = require('./ci');
 exports.data     = require('./data');
 exports.activity = require('./activity');
+exports.configs  = require('./configurations');

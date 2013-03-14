@@ -69,8 +69,28 @@ exports.startDialog = function(req, res) {
  
   var process_type = req.urlparams.process_type || 'snapshot';
 
-  github.repos.getBranches(options, function(err, data) {
-    res.render('build_commit', { process_type: process_type, branches: data, id: shaOrBranch } );
+  async.parallel({
+     configurations: function(callback) {
+
+      var query = {};
+      var collection = new mongodb.Collection(DbManager.getDb(), 'configurations');
+      collection.find(query).toArray(function(err, results) {
+        if (err) return callback(err, null);
+        callback(null, results);
+      });
+
+     },
+     branches: function(callback) {
+
+      github.repos.getBranches(options, function(err, data) {
+        callback(null, data);
+      });
+
+     }
+  }, function(err, results) {
+
+    res.render('build_commit', { process_type: process_type, configurations: results.configurations, branches: results.branches, id: shaOrBranch } );
+
   });
 
 }
@@ -83,52 +103,61 @@ exports.startProcess = function(req, res) {
   var environment           = req.body.environment || 'development';
   var max_attempts          = req.body.max_attempts || 5;
   var process_type          = req.body.process_type || 'snapshot';
+  var configuration_id      = req.body.configuration_id || null;
 
-  // Check if we have the process running.
-  util.getProcessIndexbySHA(sha, function(err, currentProcessIdx) {
+  async.parallel({
+    configuration: function(callback) {
 
-    if (currentProcessIdx == -1) {
+      util.getConfiguration(configuration_id, function(err, result) {
+        callback(null, result);
+      });
 
-       // No Love. Since we did not find what we needed. we need to build it.
+    },
+    currentProcessIdx: function(callback) {
 
-       var options = {
-         type:        process_type,
-         sha:         sha,
-         name:        reference_name,
-         description: reference_description,
-         max:         max_attempts,
-         environment: environment,
-         owner:       req.session.user.github.name || 'CI',
-         // PORT:     port,
-         // Domain:   domain
-       };
-
-       util.logNow({ 
-         type:    'manual', 
-         name:    'New ' + process_type.toUpperCase() + ' build', 
-         message: req.session.user.github.name + ' has manually created a ' + process_type + ' build.' 
-       });
-
-       util.setupBuild(options, function(err, data) {
-         res.redirect('/');
-       });
-
-    } else {
-
-       // We have it, so restart it.
-       // Use the following to rebuild the git status and 
-
-       util.logNow({ 
-         type:    'manual', 
-         name:    'Refreshing a ' + process_type.toUpperCase() + ' build', 
-         message: req.session.user.github.name + ' has manually requested to add/refresh a ' + process_type + ' build.' 
-       });
-
-       util.restartBuild(sha, function(err, data) {
-         res.redirect('/');
-       });
+      // Check if we have the process running.
+      util.getProcessIndexbySHA(sha, function(err, currentProcessIdx) {
+        callback(null, currentProcessIdx);
+      });
 
     }
+  }, function(err, result) {
+
+      if (result.currentProcessIdx == -1) {
+         // No Love. Since we did not find what we needed. we need to build it.
+
+         var options = {
+           type:        process_type,
+           sha:         sha,
+           name:        reference_name,
+           description: reference_description,
+           max:         max_attempts,
+           environment: environment,
+           owner:       req.session.user.github.name || 'CI',
+           configuration: result.configuration.configurations || {}
+         };
+
+         util.logNow({ 
+           type:    'manual', name:    'New ' + process_type.toUpperCase() + ' build', 
+           message: req.session.user.github.name + ' has manually created a ' + process_type + ' build.' 
+         });
+
+         util.setupBuild(options, function(err, data) {
+           res.redirect('/');
+         });
+      } else {
+         // We have it, so restart it. Use the following to rebuild the git status and 
+
+         util.logNow({ 
+           type:    'manual', name:    'Refreshing a ' + process_type.toUpperCase() + ' build', 
+           message: req.session.user.github.name + ' has manually requested to add/refresh a ' + process_type + ' build.' 
+         });
+
+         util.restartBuild(sha, function(err, data) {
+           res.redirect('/');
+         });
+      }
+
   });
 
 }

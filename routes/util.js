@@ -30,6 +30,19 @@ exports.setupBuild = setupBuild = function(opts, cb) {
     var errfile = path.resolve( GLOBAL.root, 'logs' ) + '/proc_' + opts.sha + '_err.log';
     var outfile = path.resolve( GLOBAL.root, 'logs' ) + '/proc_' + opts.sha + '_out.log';
 
+    var env = { NODE_ENV: opts.environment || 'development', PORT: parseInt(availablePort) }
+
+    if (opts.configuration) {
+
+      _.each(opts.configuration, function(o,i) {
+        if (o.name && o.value) {
+          env[o.name] = o.value;
+        } else {
+          console.log('Configuration has missing name/value fields.')
+        }
+      })
+    }
+
     // Setup the Forever Process Options.
     var options = { 
       max:       opts.max || 100, 
@@ -40,7 +53,7 @@ exports.setupBuild = setupBuild = function(opts, cb) {
       checkFile: false,
       fork:      true,
       sourceDir: opts.sourceDir, 
-      env:       { NODE_ENV: opts.environment || 'development', PORT: parseInt(availablePort) },
+      env:       env,
 
       // User defined Values.
       ui_name:        opts.name,
@@ -52,6 +65,8 @@ exports.setupBuild = setupBuild = function(opts, cb) {
       ui_type:        opts.type
     };
 
+    console.log(options);
+    
     var exec = require('child_process').exec;
     var pdir = opts.sourceDir;
     var command = '';
@@ -376,6 +391,21 @@ exports.getPort = getPort = function(cb) {
     }
 
     cb(null, null);
+  });
+
+}
+
+exports.getConfiguration = getConfiguration = function(id, cb) {
+
+  var query = { _id: new mongodb.ObjectID(id) };
+
+  var collection = new mongodb.Collection(DbManager.getDb(), 'configurations');
+  collection.findOne(query, function(err, result) {
+    if (err) return;
+
+    if (!result.configurations) result.configurations = [];
+
+    cb(null, result);
   });
 
 }
