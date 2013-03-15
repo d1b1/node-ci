@@ -80,6 +80,16 @@ exports.startDialog = function(req, res) {
       });
 
      },
+     domains: function(callback) {
+
+      var query = {};
+      var collection = new mongodb.Collection(DbManager.getDb(), 'domains');
+      collection.find(query).toArray(function(err, results) {
+        if (err) return callback(err, null);
+        callback(null, results);
+      });
+
+     },
      branches: function(callback) {
 
       github.repos.getBranches(options, function(err, data) {
@@ -89,7 +99,7 @@ exports.startDialog = function(req, res) {
      }
   }, function(err, results) {
 
-    res.render('build_commit', { process_type: process_type, configurations: results.configurations, branches: results.branches, id: shaOrBranch } );
+    res.render('build_commit', { process_type: process_type, domains: results.domains, configurations: results.configurations, branches: results.branches, id: shaOrBranch } );
 
   });
 
@@ -104,6 +114,7 @@ exports.startProcess = function(req, res) {
   var max_attempts          = req.body.max_attempts || 5;
   var process_type          = req.body.process_type || 'snapshot';
   var configuration_id      = req.body.configuration_id || null;
+  var domain_id             = req.body.domain_id || null;
 
   async.parallel({
     configuration: function(callback) {
@@ -134,7 +145,8 @@ exports.startProcess = function(req, res) {
            max:         max_attempts,
            environment: environment,
            owner:       req.session.user.github.name || 'CI',
-           configuration: result.configuration.configurations || {}
+           configuration: result.configuration.configurations || {},
+           domain:      domain_id
          };
 
          util.logNow({ 
@@ -253,7 +265,7 @@ exports.listProcesses = function(req, res) {
       var collection = new mongodb.Collection(DbManager.getDb(), 'logs');
       collection.find(query, options).limit(5).toArray(function(err, data) {
         if (err || !data) {
-          cb(null, 'No Episiodes found.');
+          callback(null, 'No Episiodes found.');
           return
         }
 

@@ -10,8 +10,39 @@ var path       = require('path');
 
 exports.setupBuild = setupBuild = function(opts, cb) {
 
-  // Then check if we have an existing build.
-  getPort(function(err, availablePort) {
+  async.parallel({
+    domain: function(callback) {
+
+      // See if we can find a domain by either a defined Domain_Id or by the Sha/Branch.
+      getDomain(opts.domain_id || opts.sha, function(err, result) {
+        if (err) return callback(err, null);
+        callback(null, result);
+      });
+
+    },
+    availablePort: function(callback) {
+
+      // Get the next available port.
+      getPort(function(err, availablePort) {
+        callback(null, availablePort);
+      });
+
+    }
+  }, function(err, results) {
+
+    var availablePort, availableURL;
+
+    if (results.domain) {
+      // Build the Port and URL form the domain.
+      availablePort = results.domain.port;
+      availableURL  = 'http://' + results.domain.url;
+      
+      if (domain.use_port) availableURL += ':' + results.domain.port;
+    } else {
+      // Use the next available port number.
+      availablePort = results.availablePort;
+      availableURL  = 'http://' + availablePort + '.' + GLOBAL.config.domain;
+    }
 
     if (err && !availablePort) { 
       if (!availablePort) GLOBAL.messages.push({ type: 'warning', copy: 'No Ports Available to start build.' });
@@ -61,7 +92,7 @@ exports.setupBuild = setupBuild = function(opts, cb) {
       ui_port:        availablePort,
       ui_description: opts.description,
       ui_owner:       opts.owner,
-      ui_url:         'http://' + availablePort + '.' + GLOBAL.config.domain,
+      ui_url:         availableURL,
       ui_type:        opts.type
     };
 
@@ -120,6 +151,7 @@ exports.setupBuild = setupBuild = function(opts, cb) {
 
     // Star the Actual Process Now.
     exec(command, NowStartProcess);
+
   });
 
 }
@@ -386,6 +418,59 @@ exports.getPort = getPort = function(cb) {
 
     for (var i=3010; i<3020;i++) { 
       if (_.indexOf(ports, i) == -1) return cb(null, i);
+    }
+
+    cb(null, null);
+  });
+
+}
+
+exports.getDomain = getDomain = function(id, cb) {
+ 
+  var collection = new mongodb.Collection(DbManager.getDb(), 'domains');
+
+  // TODO: Validate that we have a read domain. 
+  // 1. Must be an object.
+  // 2. Must have a valid set of key values.
+  
+  async.series({
+    getbyID: function(callback) {
+
+      try {
+        var query = { _id: new mongodb.ObjectID(id) };
+        collection.findOne(query, function(err, result) {
+          if (err) return callback(null, null);
+          callback(null, result);
+        });
+      } catch(err) {
+        callback(null, null);
+      }
+
+    },
+    getbyName: function(callback) {
+
+      try {
+        var query = { name: id };
+        collection.findOne(query, function(err, result) {
+          if (err) return callback(null, null);
+          if (!result) return callback(null, null);
+          callback(null, result);
+        });
+      } catch(err) {
+        callback(null, null);
+      }
+
+    }
+  }, function(err, results) {
+
+    if (results.getbyID) { 
+      console.log('Found domain by ID');
+      return cb(null, results.getbyID);
+    }
+
+    if (results.getbyName) {
+      console.log('Found domain by Name');
+      return cb(null, results.getbyName); 
     }
 
     cb(null, null);

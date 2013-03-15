@@ -1,0 +1,19 @@
+{
+    "name" : "ipinfodb",
+    "version" : "0.0.1",
+    "description" : "Node.js implimentation of the IPInfoDB.com Geo IP API.",
+    "author": "Stephan Smith <Stephan.Smith.BC93@gmail.com>",
+    "homepage": "http://github.com/d1v1/node-ipinfodb",
+    "repository" : {
+        "type" : "git",
+        "url" : "http://github.com/d1b1/node-ipinfodb.git"
+    },
+    "engine" : {
+        "node": ">=0.4.0"
+    },
+    "main" : ".",
+    "licenses": [{
+        "type": "The MIT License",
+        "url": "http://www.opensource.org/licenses/mit-license.php"}
+    ]
+}

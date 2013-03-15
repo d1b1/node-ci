@@ -1,0 +1,78 @@
+extends layout
+
+block header
+
+block content
+ 
+  - if (!config_id)
+   h3 Add a Reserved Domain
+  - else
+   h3 Edit a Reserved Domain
+
+  .row
+    p.span8 A reserved domain is setup option that provides the ability to bind a given process and port
+      to a domain. This option is used to provide a shared and persistent URL for development and testing.
+      To properly utilize this option you will need to define a Vhost on your web server that proxies
+      all traffic to the localhost bind port.
+
+  form(action="/configurations/domain/update", method="post", class="form-horizontal")
+
+    - if (config_id)
+      input(type="hidden", name="config_id", value="#{config_id}")
+   
+    .row
+      .control-group
+        label(class="control-label", for="name") Reference Name
+        .controls
+          input(type="text", name="name", value="#{data.name}", placeholder="Enter Name")
+
+          span(class="help-block") 
+            p(style="width: 500px;") Enter the branch or commit name you want to use use if this
+              domain needs to bind to a tracked branch.
+
+    .row
+      .control-group
+        label(class="control-label", for="url") URL
+        .controls
+          input(type="text", class="span4", name="url", value="#{data.url}", placeholder="Enter a URL")
+
+          span(class="help-block") 
+            p(style="width: 500px;") Enter the URL you want to use. Only the URL. No HTTP:// or port. 
+              You will need setup an Apache or Nginx vhost defined if you want to share without the
+              bind port.
+
+          label.checkbox
+            input(type='checkbox', name="use_port", value="true", checked=(data.use_port || false)) 
+            | Use the port in the public URL?
+
+    .row
+      .control-group
+        label(class="control-label", for="port") Port
+        .controls
+          input(type="text", class="span", name="port", value="#{data.port}", placeholder="Enter a Port")
+
+          span(class="help-block") 
+            p(style="width: 500px;") Enter a bind port. Please choose a bind port outside your available
+              port range to prevent the auto tracking process from binding by default to the next available
+              port.
+
+    - if (config_id)
+      .row 
+        .span7.offset1
+          pre
+            | # Apache Vhost
+            | <VirtualHost *:80>
+            |    ServerName #{data.url}
+            |    ServerAlias #{data.url} 
+            | 
+            |    ProxyPass / http://localhost:#{data.port}/
+            |    ProxyPassReverse / http://localhost:#{data.port}/
+            | </VirtualHost>
+
+    .row
+      .span10
+          a(type="button", class="btn", href="/configurations") Cancel
+          &nbsp;
+          button(type="submit", class="btn btn-warning", name="SubmitButton") Save
+ 
+

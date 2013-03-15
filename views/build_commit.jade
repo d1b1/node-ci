@@ -48,9 +48,21 @@ block content
             span(class="help-block") Use this to define the NODE_ENV value.  (Development, Production, Testing etc.)
 
         .control-group
-          label(class="control-label", for="configuration") Select a Configuration
+          label(class="control-label", for="configuration") Select a Reserved Port/Domains
+          .controls
+            select(name="domain_id") 
+              option(value="0") Auto Assign (No Domain)
+              each config in domains
+                  option(value="#{config._id}") #{config.name}
+
+            span(class="help-block", style="width: 500px;") Select the domain you want to bind this process with. Please 
+              note if you select a specific reserved domain it will be stopped and restarted.
+
+        .control-group
+          label(class="control-label", for="configuration") Select a Environment Configuaton
           .controls
             select(name="configuration_id") 
+              option(value="0") Use Default
               each config in configurations
                   option(value="#{config._id}") #{config.name}
 

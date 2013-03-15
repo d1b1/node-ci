@@ -143,7 +143,10 @@ AppManager = (function() {
     app.get('/configurations/add',      check, routes.configs.add);
     app.get('/configurations/edit/:id', check, routes.configs.edit);
     app.post('/configurations/update',  check, routes.configs.editUpdate);
-    
+
+    app.get('/configurations/domain/add',      check, routes.configs.domainAdd);
+    app.get('/configurations/domain/edit/:id', check, routes.configs.domainEdit);
+    app.post('/configurations/domain/update',  check, routes.configs.domainUpdate);
   };
 
   return {

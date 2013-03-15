@@ -4,40 +4,76 @@ block header
 
 block content
  
-  p
-    | This is a list of git commit build slugs. Each slug is a discrete copy of the 
-    | codebase at a specific commit point. The name of the slug is the first 10 digits
-    | of the sha commit. To start/restart a commit use the option. When you are done
-    | with a slug, you need to stop and delete the build. This will remove the codebase
-    | and stop any process bound.
+  p The following are configurations settings for managing domains, environment variables
+    and other builds and process settings.
 
-  a(class="btn btn-primary", href="/configurations/add") Add New Configuration
-  br
-  br
+  .row
+    .span6
+      
+      h4 Reverved Domains
 
-  table.table-striped.table.table-hover
-   tr
-    th(width="20%")
-     | Label
-    th(width="60%")
-     | Notes
-    th(width="10%")
+      p Reverved domains provide that ability to bind a specific port and domain
+        to a given branch or commit. This provides the ability to keep a given
+        build on a port and out of the available port pool. Additionally it provides the
+        ability to share a persistent domain for a given build.
 
-    - if (!configurations || configurations.length == 0) 
+      table.table-striped.table.table-hover
        tr
-        td(colspan="4")
-         | No Configurations defined.
-    - else
-      each config, i in configurations
+        th(width="20%")
+         | Label
+        th(width="50%")
+         | URL/Port
+        th(width="10%")
+
+        - if (!domains || domains.length == 0) 
+           tr
+            td(colspan="4")
+             | No Domains defined.
+        - else
+          each config, i in domains
+           tr
+            td
+             | #{config.name}
+            td
+             | URL: #{config.url}
+             br
+             | Port: #{config.port}
+            td
+              a(href="/configurations/domain/edit/#{config._id}", class="btn btn-primary") Edit
+
+      a(class="btn btn-primary btn-small", href="/configurations/domain/add") Add New Domain/Port
+
+    .span6
+
+      h4 Environment Configurations
+
+      p Environment configurations are named groups of environment variables that bind to a
+        given branch or commit and provide the process with the process.env values needed 
+        to support the process.
+
+      table.table-striped.table.table-hover
        tr
-        td
-         | #{config.name}
-        td
-         - if (config.default) 
-           span.label.label-info Default
-           br
+        th(width="20%")
+         | Label
+        th(width="60%")
+         | Notes
+        th(width="10%")
 
-         | #{config.notes}
-        td
-          a(href="/configurations/edit/#{config._id}?process_type=load", class="btn btn-primary") Edit
+        - if (!configurations || configurations.length == 0) 
+           tr
+            td(colspan="4")
+             | No Configurations defined.
+        - else
+          each config, i in configurations
+           tr
+            td
+             | #{config.name}
+            td
+             - if (config.default) 
+               span.label.label-info Default
+               br
+             | #{config.notes}
+            td
+              a(href="/configurations/edit/#{config._id}?process_type=load", class="btn btn-primary") Edit
 
+      a(class="btn btn-primary btn-small", href="/configurations/add") Add New Configuration
