@@ -36,8 +36,8 @@ exports.setupBuild = setupBuild = function(opts, cb) {
       // Build the Port and URL form the domain.
       availablePort = results.domain.port;
       availableURL  = 'http://' + results.domain.url;
-      
-      if (domain.use_port) availableURL += ':' + results.domain.port;
+
+      if (results.domain.use_port) availableURL += ':' + results.domain.port;
     } else {
       // Use the next available port number.
       availablePort = results.availablePort;

@@ -33,11 +33,11 @@ block content
           each config, i in domains
            tr
             td
-             | #{config.name}
+             | #{config.name} 
             td
-             | URL: #{config.url}
+             | #{config.url}
              br
-             | Port: #{config.port}
+             b on #{config.port}
             td
               a(href="/configurations/domain/edit/#{config._id}", class="btn btn-primary") Edit
 
