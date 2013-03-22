@@ -14,7 +14,7 @@ exports.setupBuild = setupBuild = function(opts, cb) {
     domain: function(callback) {
 
       // See if we can find a domain by either a defined Domain_Id or by the Sha/Branch.
-      getDomain(opts.domain_id || opts.sha, function(err, result) {
+      getDomain(opts.domain || opts.sha, function(err, result) {
         if (err) return callback(err, null);
         callback(null, result);
       });
@@ -96,8 +96,6 @@ exports.setupBuild = setupBuild = function(opts, cb) {
       ui_type:        opts.type
     };
 
-    console.log(options);
-
     var exec = require('child_process').exec;
     var pdir = opts.sourceDir;
     var command = '';
@@ -141,18 +139,13 @@ exports.setupBuild = setupBuild = function(opts, cb) {
       GLOBAL.messages.push({ type: 'info', copy: 'Completed NPM Install for ' + opts.sha });
       GLOBAL.messages.push({ type: 'info', copy: 'Starting site process for ' + opts.sha });
 
-      var child = new (forever.Monitor)('server.js', options);
+      var child = forever.startDaemon('server.js', options);
 
-      child.on('exit', function () {
-       GLOBAL.messages.push({ type: 'info', copy: 'Process Exited. Possible start error' });
-       util.logNow({ owner: opts.owner, name: 'Process Exited!', message: "Process stopped. NO idea why. Might be a build error." });
-       console.log('your-filename.js has exited after 3 restarts');
-      });
-
+      // var child = new (forever.Monitor)('server.js', options);
       // var childProcess = forever.startDaemon('server.js', options);
+      // child.start();
 
-      child.start();
-      // forever.startServer(childProcess);
+      forever.startServer(child);
 
       // childProcess
 
@@ -233,22 +226,18 @@ exports.getHeadCommit = getHeadCommit = function(src, cb) {
     var a = c[1].split(':')[1];
     var d = c[2];
     var name = a.split(' <')[0];
-
-    console.log(d);
     
     try {
-
-
-    var commit = {
-      commit: c[0].split(' ')[1].trim(),
-      author: {
-        name: a.split(' <')[0],
-        full: c[1].split(':')[1].trim()
-      },
-      message: c[4].trim(),
-      date: d.split('Date:')[1].trim(),
-      raw: stdout
-    };
+      var commit = {
+        commit: c[0].split(' ')[1].trim(),
+        author: {
+          name: a.split(' <')[0],
+          full: c[1].split(':')[1].trim()
+        },
+        message: c[4].trim(),
+        date: d.split('Date:')[1].trim(),
+        raw: stdout
+      };
 
     } catch(err) {
       var commit = {
@@ -311,8 +300,6 @@ exports.getSites = function(cb) {
     }
 
     if (!data) return cb(null, null);
-
-     console.log(data);
 
     // Loop and ensure we have config data for all processes.
     _.each(data, function(o) {
@@ -467,7 +454,7 @@ exports.getDomain = getDomain = function(id, cb) {
     getbyID: function(callback) {
 
       try {
-        var query = { _id: new mongodb.ObjectID(id) };
+        var query = { _id: new mongodb.ObjectID( id.toString() ) };
         collection.findOne(query, function(err, result) {
           if (err) return callback(null, null);
           callback(null, result);

@@ -116,6 +116,8 @@ exports.startProcess = function(req, res) {
   var configuration_id      = req.body.configuration_id || null;
   var domain_id             = req.body.domain_id || null;
 
+  console.log('Domain_id', domain_id);
+
   async.parallel({
     configuration: function(callback) {
 
