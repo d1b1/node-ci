@@ -96,6 +96,8 @@ exports.setupBuild = setupBuild = function(opts, cb) {
       ui_type:        opts.type
     };
 
+    console.log(options);
+
     var exec = require('child_process').exec;
     var pdir = opts.sourceDir;
     var command = '';
@@ -139,14 +141,24 @@ exports.setupBuild = setupBuild = function(opts, cb) {
       GLOBAL.messages.push({ type: 'info', copy: 'Completed NPM Install for ' + opts.sha });
       GLOBAL.messages.push({ type: 'info', copy: 'Starting site process for ' + opts.sha });
 
-      var childProcess = forever.startDaemon('server.js', options);
-      forever.startServer(childProcess);
+      var child = new (forever.Monitor)('server.js', options);
+
+      child.on('exit', function () {
+       GLOBAL.messages.push({ type: 'info', copy: 'Process Exited. Possible start error' });
+       util.logNow({ owner: opts.owner, name: 'Process Exited!', message: "Process stopped. NO idea why. Might be a build error." });
+       console.log('your-filename.js has exited after 3 restarts');
+      });
+
+      // var childProcess = forever.startDaemon('server.js', options);
+
+      child.start();
+      // forever.startServer(childProcess);
 
       util.logNow({ owner: opts.owner, name: 'Restarted new build process', message: "Completed the build process for '" + opts.name + "'" });
 
       GLOBAL.messages.push({ type: 'info', copy: 'Starting a site on port ' + availablePort + ' for SHA ' + opts.sha })
 
-      cb(err, childProcess)
+      cb(err, child)
     }
 
     // Star the Actual Process Now.
@@ -220,6 +232,11 @@ exports.getHeadCommit = getHeadCommit = function(src, cb) {
     var d = c[2];
     var name = a.split(' <')[0];
 
+    console.log(d);
+    
+    try {
+
+
     var commit = {
       commit: c[0].split(' ')[1].trim(),
       author: {
@@ -231,6 +248,15 @@ exports.getHeadCommit = getHeadCommit = function(src, cb) {
       raw: stdout
     };
 
+    } catch(err) {
+      var commit = {
+        commit: 'NA',
+        author: { name: 'NA', full:'NA' },
+        message: 'NA',
+        date: 'NA',
+        raw: stdout
+      }
+    }
     src.info = commit;
 
     cb(null, src)
@@ -283,6 +309,8 @@ exports.getSites = function(cb) {
     }
 
     if (!data) return cb(null, null);
+
+     console.log(data);
 
     // Loop and ensure we have config data for all processes.
     _.each(data, function(o) {
