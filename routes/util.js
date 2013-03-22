@@ -154,6 +154,8 @@ exports.setupBuild = setupBuild = function(opts, cb) {
       child.start();
       // forever.startServer(childProcess);
 
+      // childProcess
+
       util.logNow({ owner: opts.owner, name: 'Restarted new build process', message: "Completed the build process for '" + opts.name + "'" });
 
       GLOBAL.messages.push({ type: 'info', copy: 'Starting a site on port ' + availablePort + ' for SHA ' + opts.sha })
