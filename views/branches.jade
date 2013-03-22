@@ -10,9 +10,9 @@ block content
    tr
     th(width="40%")
      | Branch Name
-    th(width="40%")
-     | Info
     th(width="20%")
+     | Info
+    th(width="40%")
 
     - if (!data || data.length == 0) 
        tr
@@ -30,3 +30,5 @@ block content
            a(href="/git/ref/delete/#{branch.name}", class="btn btn-primary") Delete
            &nbsp;
            a(href="/start/#{branch.name}?process_type=head", class="btn btn-primary") Build
+           &nbsp;
+           a(href="/webhook/trigger/#{branch.name}", class="btn") Trigger Web hook

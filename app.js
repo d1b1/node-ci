@@ -147,6 +147,8 @@ AppManager = (function() {
     app.get('/configurations/domain/add',      check, routes.configs.domainAdd);
     app.get('/configurations/domain/edit/:id', check, routes.configs.domainEdit);
     app.post('/configurations/domain/update',  check, routes.configs.domainUpdate);
+
+    app.get('/webhook/trigger/:branch',        check, routes.webhook.trigger);
   };
 
   return {

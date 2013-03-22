@@ -21,7 +21,6 @@ block content
     | This is a list of active CI process, builds, commits etc. These processes can be managed from this UI, or from the CLI. Each
     | process binds to a unique port. 
 
-
     .row-fluid
       .span6
 
@@ -69,10 +68,13 @@ block content
                // br
                // b Source:
                // | #{process.sourceDir}
+
                if (process.info)
                  span.label.label-success #{process.info.author.name}
                  | 
                  span.label.label-success(title="#{process.info.date} - #{process.info.commit}") ##{process.info.commit.substring(0, 6)} - #{moment(process.info.date, 'ddd MMM DD HH:mm:ss YYYY Z').fromNow()}
+                 | 
+                 span.label Up: #{moment(process.ctime).fromNow()}
               td
 
                 - if (session.user)
@@ -179,37 +181,6 @@ block content
                       span.label.label-success Active
           a(href="/sites", class="btn btn-mini") View all Builds
 
-        // .well
-        //   h4 Reports
-        //   p The following is mockup of the rollup reports.
-
-        //   table.table-striped.table.table-hover
-        //     tr
-        //       th Name
-        //       th %
-        //       th Tests
-        //       th Bugs
-        //     tr
-        //       td 
-        //         | Development
-        //       td 
-        //         | 34%
-        //       td
-        //         | 2 fails, 200 passed, 202
-        //       td
-        //         | 12
-        //     tr
-        //       td 
-        //         | Production
-        //       td 
-        //         | 34%
-        //       td
-        //         | 0 fails, 202 passed, 202
-        //       td
-        //         | 3
-
-        //   a(href="/plots", class="btn ") Detail Report
-
         .well
           h4 Branches
           p The following is list of active git repo branches.
@@ -226,6 +197,3 @@ block content
                     a(href="/tmp") #{branch.name} 
 
           a(href="/branches", class="btn ") All
-
-  
-

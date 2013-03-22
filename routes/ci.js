@@ -357,7 +357,7 @@ exports.processDetail = function(req, res) {
 exports.catchCommitPayloadv2 = function(req, res) {
 
   var load = JSON.parse(req.body.payload);
-  var sha = load.ref.replace('refs/heads/', '').trim();
+  var sha  = load.ref.replace('refs/heads/', '').trim();
 
   util.getConfiguration(sha, function(err, configuration) {
 
@@ -367,11 +367,15 @@ exports.catchCommitPayloadv2 = function(req, res) {
       return;
     }
 
+    console.log('Got a conffig', configuration);
+
     util.getProcessIndexbySHA(sha, function(err, currentProcessIdx) {
+
+      console.log('Got a Process IDx' , currentProcessIdx);
 
       if (currentProcessIdx == -1) {
          var options = {
-           type:        'hook',
+           type:        'head',
            sha:         sha,
            name:        'Hook Tracking',
            description: 'Github Web hook delivered ' + sha,
@@ -379,6 +383,8 @@ exports.catchCommitPayloadv2 = function(req, res) {
            owner:       'CI',
            configuration: configuration.configurations || {}
          };
+
+         console.log('Build Options', options);
 
          util.setupBuild(options, function(err, data) {
            if (err) return util.logNow({type: 'hook', name: 'Github Hook Start Failed', message: 'A github webhook requested failed ' + err.message });
@@ -392,6 +398,8 @@ exports.catchCommitPayloadv2 = function(req, res) {
            util.logNow({ type: 'hook', name: 'Github Hook Rebuild Complete', message: 'A github webhook requested rebuild the branch ' + sha + ' ' + load.ref });
          });
       }
+
+      res.send('Done');
     });
 
   });

@@ -96,6 +96,8 @@ exports.setupBuild = setupBuild = function(opts, cb) {
       ui_type:        opts.type
     };
 
+    console.log('her', opts, options);
+
     var exec = require('child_process').exec;
     var pdir = opts.sourceDir;
     var command = '';
