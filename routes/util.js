@@ -71,7 +71,8 @@ exports.setupBuild = setupBuild = function(opts, cb) {
         } else {
           console.log('Configuration has missing name/value fields.')
         }
-      })
+      });
+      
     }
 
     // Setup the Forever Process Options.

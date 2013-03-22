@@ -371,8 +371,6 @@ exports.catchCommitPayloadv2 = function(req, res) {
 
     util.getProcessIndexbySHA(sha, function(err, currentProcessIdx) {
 
-      console.log('Got a Process IDx' , currentProcessIdx);
-
       if (currentProcessIdx == -1) {
          var options = {
            type:        'head',
