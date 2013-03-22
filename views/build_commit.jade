@@ -32,7 +32,6 @@ block content
                     option(value="#{branch.name}", selected) #{branch.name}
                   - else
                     option(value="#{branch.name}") #{branch.name}
-            
     
         - else 
           input(type="hidden", name="sha", value="#{id}")
@@ -54,7 +53,7 @@ block content
             select(name="domain_id") 
               option(value="0") Auto Assign (No Domain)
               each config in domains
-                  option(value="#{config._id}") #{config.name}
+                  option(value="#{config._id}") #{config.url}
 
             span(class="help-block", style="width: 500px;") Select the domain you want to bind this process with. Please 
               note if you select a specific reserved domain it will be stopped and restarted.

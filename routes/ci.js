@@ -367,8 +367,6 @@ exports.catchCommitPayloadv2 = function(req, res) {
       return;
     }
 
-    console.log('Got a conffig', configuration);
-
     util.getProcessIndexbySHA(sha, function(err, currentProcessIdx) {
 
       console.log('Got a Process IDx' , currentProcessIdx);
@@ -383,8 +381,6 @@ exports.catchCommitPayloadv2 = function(req, res) {
            owner:       'CI',
            configuration: configuration.configurations || {}
          };
-
-         console.log('Build Options', options);
 
          util.setupBuild(options, function(err, data) {
            if (err) return util.logNow({type: 'hook', name: 'Github Hook Start Failed', message: 'A github webhook requested failed ' + err.message });

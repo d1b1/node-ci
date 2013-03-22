@@ -96,8 +96,6 @@ exports.setupBuild = setupBuild = function(opts, cb) {
       ui_type:        opts.type
     };
 
-    console.log('her', opts, options);
-
     var exec = require('child_process').exec;
     var pdir = opts.sourceDir;
     var command = '';
@@ -501,7 +499,7 @@ exports.getConfiguration = getConfiguration = function(id, cb) {
     getbyName: function(callback) {
 
       try {
-        var query = { name: id };
+        var query = { name: id.toLowerCase() };
         collection.findOne(query, function(err, result) {
           if (err) return callback(null, null);
           if (!result) return callback(null, null);
