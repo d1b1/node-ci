@@ -2,13 +2,23 @@ var db         = require('../db');
 var mongodb    = require('mongodb');
 var util       = require('./util');
 var async      = require('async');
+var moment     = require('moment');
 
 exports.list = function(req, res) {
+
+  var term = req.urlparams.term;
 
   async.parallel({
     tests: function(callback) {
 
       var query = {};
+
+      if (term) {
+        query = { 
+          name : { $regex :  term, $options: '-i'}
+        };
+      }
+
       var collection = new mongodb.Collection(DbManager.getDb(), 'tests');
       collection.find(query).toArray(function(err, results) {
         if (err) return;
@@ -19,7 +29,7 @@ exports.list = function(req, res) {
     }
   }, function(err, results) {
 
-    res.render('tests', { tests: results.tests });
+    res.render('tests', { tests: results.tests, term: term });
 
   });
 
@@ -68,22 +78,25 @@ exports.update = function(req, res) {
   };
 
   if (!test_id) {
+    data.createdby = req.session.user.github.login;
+    data.created = moment().unix() * 1000;
+  } else {
+    data.modifiedby = req.session.user.github.login;
+    data.modified = moment().unix() * 1000;
+  }
 
-    var collection = new mongodb.Collection(DbManager.getDb(), 'tests');
+  var collection = new mongodb.Collection(DbManager.getDb(), 'tests');
+
+  if (!test_id) {
+
     collection.insert(data, { safe: true}, function(err, result) {
-      if (err) {
-        console.log(err);
-      };
-      console.log('Insert', result)
+      console.log('Insert', result);
+      res.redirect('/tests');
     });
 
-    res.redirect('/tests');
   } else {
 
-    var query = { _id: new mongodb.ObjectID( test_id ) };
-
-    var collection = new mongodb.Collection(DbManager.getDb(), 'tests');
-    collection.findAndModify(query, 
+    collection.findAndModify({ _id: new mongodb.ObjectID( test_id ) }, 
       [ ['_id','asc'] ], 
       { $set : data }, 
       { safe: true, new: true }, 
@@ -99,7 +112,7 @@ exports.delete = function(req, res) {
   var id = req.params.id;
 
   console.log(id);
-  
+
   var collection = new mongodb.Collection(DbManager.getDb(), 'tests');
 
   var query = { _id: new mongodb.ObjectID(id) };

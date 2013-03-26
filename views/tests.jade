@@ -9,16 +9,17 @@ block content
       
       h3 Tests
 
-      a(class="btn btn-primary btn-small", href="/tests/add") Add Test
-
-      br
-      br
+  form(action="/tests", method="get")
+    .input-append
+      input(class="span3", name="term", value="#{term}", type="text")
+      button(class="btn", type="submit") Search
+      a(class="btn btn-primary", href="/tests/add") Create a New Test
 
   .row
     .span12
       table.table-striped.table.table-hover
        tr
-        th(width="20%")
+        th(width="30%")
          | Short Name
         th(width="10%")
          | Status
@@ -28,7 +29,6 @@ block content
          | Priority
         th(width="40%")
          | Notes
-        th(width="10%")
 
         - if (!tests || tests.length == 0) 
            tr
@@ -38,7 +38,7 @@ block content
           each config, i in tests
            tr
             td
-             | #{config.name} 
+             a(href="/tests/edit/#{config._id}") #{config.name} 
             td
              | #{config.status}
             td
@@ -47,7 +47,4 @@ block content
              | #{config.priority}
             td
              | #{config.notes}
-            td
-              a(href="/tests/edit/#{config._id}", class="btn btn-primary") Edit
-
 

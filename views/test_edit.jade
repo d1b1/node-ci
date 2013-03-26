@@ -4,84 +4,89 @@ block header
 
 block content
  
+ form(action="/tests/update", method="post", class="form-horizontal")
+
+  .row
   - if (!test_id)
    h3 Add a New Test
   - else
    h3 Edit an Existing Test
 
+  
+
   .row
     p.span8 The following provides the ability to add or edit an existing test.
 
-  form(action="/tests/update", method="post", class="form-horizontal")
 
-    - if (test_id)
-      input(type="hidden", name="test_id", value="#{test_id}")
-   
-    .row
+  - if (test_id)
+    input(type="hidden", name="test_id", value="#{test_id}")
+ 
+  .row
+    .control-group
+      label(class="control-label", for="name") Test Name
+      .controls
+        input(type="text", name="name", class="span7", value="#{data.name}", placeholder="Enter Name")
+
+  .row
+    .control-group
+      label(class="control-label", for="notes") Notes
+      .controls
+        textarea(type="text", class="span7", name="notes", style="height: 50px;", placeholder="Required - Summary of the issue") #{data.notes}
+
+  .row
+    .span5
       .control-group
-        label(class="control-label", for="name") Test Name
+        label(class="control-label", for="notes") Priority
         .controls
-          input(type="text", name="name", class="span4", value="#{data.name}", placeholder="Enter Name")
 
-    .row
-      .control-group
-        label(class="control-label", for="notes") Notes
-        .controls
-          textarea(type="text", class="span5", name="notes", style="height: 50px;", placeholder="Required - Summary of the issue") #{data.notes}
+          each option in ['Passed', 'Failed', 'Pending']
+            label.radio
+              - if (data.priority == option) 
+                input(type="radio", name="status", value="#{option}") 
+              - else
+                input(type="radio", checked name="status", value="#{option}")  
+              | #{option}
 
-    .row
-      .span3
+    .span5
+      .row
         .control-group
           label(class="control-label", for="notes") Priority
           .controls
 
-            each option in ['Passed', 'Failed', 'Pending']
+            each option in ['High', 'Medium', 'Low', 'Unknown']
               label.radio
                 - if (data.priority == option) 
-                  input(type="radio", name="status", value="#{option}") 
+                  input(type="radio", name="priority", value="#{option}") 
                 - else
-                  input(type="radio", checked name="status", value="#{option}")  
+                  input(type="radio", checked name="priority", value="#{option}")  
                 | #{option}
 
-      .span3
-        .row
-          .control-group
-            label(class="control-label", for="notes") Priority
-            .controls
+  .row
+    .control-group
+      label(class="control-label", for="steps") Steps
+      .controls
+        textarea(type="text", class="span7", style="height: 300px;", name="steps", placeholder="Required - Enter the steps to this feature.") #{data.steps}
 
-              each option in ['High', 'Medium', 'Low', 'Unknown']
-                label.radio
-                  - if (data.priority == option) 
-                    input(type="radio", name="priority", value="#{option}") 
-                  - else
-                    input(type="radio", checked name="priority", value="#{option}")  
-                  | #{option}
+  .row
+    .control-group
+      label(class="control-label", for="claimedby") Claimed by
+      .controls
+        input(type="text", name="claimedby", class="span5", value="#{data.claimedby}", placeholder="Enter Tester Name")
 
-    .row
-      .control-group
-        label(class="control-label", for="steps") Steps
-        .controls
-          textarea(type="text", class="span5", style="height: 300px;", name="steps", placeholder="Required - Enter the steps to this feature.") #{data.steps}
+        span(class="help-block") 
+          p(style="width: 500px;") Enter the name of the person who last tests or owns this test.
 
-    .row
-      .control-group
-        label(class="control-label", for="claimedby") Claimed by
-        .controls
-          input(type="text", name="claimedby", class="span4", value="#{data.claimedby}", placeholder="Enter Tester Name")
+  .row
+    .span5
+        a(type="button", class="btn", href="/tests") Cancel
+        &nbsp;
 
-          span(class="help-block") 
-            p(style="width: 500px;") Enter the name of the person who last tests or owns this test.
+        - if (test_id)
+          a(onclick="confirmDelete();", class="btn btn-danger") Delete this test?
 
-    .row
-      .span10
-          a(type="button", class="btn", href="/tests") Cancel
-          &nbsp;
-
-          - if (test_id)
-            a(onclick="confirmDelete();", class="btn btn-danger") Delete this test?
- 
-          &nbsp;
-          button(type="submit", class="btn btn-warning", name="SubmitButton") Save Changes
+    .span5.pull-right
+        &nbsp;
+        button(type="submit", class="btn btn-warning", name="SubmitButton") Save Changes
 
     script
       function confirmDelete() {
