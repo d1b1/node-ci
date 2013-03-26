@@ -4,11 +4,11 @@
   "repository":
     { "name": "Composer Pro",
       "repo": "composer",
-      "user": "npr",
-      "path": "git@github.com:npr/composer.git"
+      "user": "nprds",
+      "path": "git@github.com:nprds/composer.git"
     }
   ,
-  "team": 150838,
+  "team": 314116,
   "repoPath": "/tmp",
   "domain": "ci.publicbroadcasting.net"
 }

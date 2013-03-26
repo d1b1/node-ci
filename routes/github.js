@@ -147,6 +147,8 @@ exports.commits = function(req, res) {
     sha:     req.urlparams.sha || null
   };
 
+  console.log(options);
+
   var async = require('async');
 
   async.parallel({
