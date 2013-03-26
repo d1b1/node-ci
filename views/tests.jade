@@ -9,12 +9,24 @@ block content
       
       h3 Tests
 
-  form(action="/tests", method="get")
-    .input-append
-      input(class="span3", name="term", value="#{term}", type="text")
-      button(class="btn", type="submit") Search
-      a(class="btn btn-primary", href="/tests/add") Create a New Test
+  .row
+    .span5
+      form(action="/tests", method="get")
+        .input-append
+          input(class="span3", name="term", value="#{term}", type="text")
+          button(class="btn", type="submit") Search
+          a(class="btn btn-primary", href="/tests/add") Create a New Test
 
+    .span7
+        table.table.table-striped.span5.pull-right 
+          tr
+            th(width:30%) Total
+            th(width:30%) Pending
+            th(width:30%) Completed
+          tr
+            td #{stats.total}
+            td #{stats.pending}
+            td %#{stats.complete || '0'}
   .row
     .span12
       table.table-striped.table.table-hover
@@ -40,7 +52,19 @@ block content
             td
              a(href="/tests/edit/#{config._id}") #{config.name} 
             td
-             | #{config.status}
+
+             - if (config.status == 'Passed')
+               span.label.label-success Passed
+ 
+             - else if (config.status == 'Failed')
+               span.label.label-important Failed
+
+             - else if (config.status == 'Pending')
+               span.label Pending
+
+             - else
+               span.label #{config.status}
+
             td
              | #{config.claimedby}
             td

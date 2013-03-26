@@ -21,15 +21,38 @@ exports.list = function(req, res) {
 
       var collection = new mongodb.Collection(DbManager.getDb(), 'tests');
       collection.find(query).toArray(function(err, results) {
-        if (err) return;
+        if (err) return callback(err, 0);
+        callback(null, results);
+      });
 
+    },
+    total: function(callback) {
+
+      var collection = new mongodb.Collection(DbManager.getDb(), 'tests');
+      collection.find({}).count(function(err, results) {
+        if (err) return callback(err, 0);
+        callback(null, results);
+      });
+
+    },
+    completed: function(callback) {
+
+      var collection = new mongodb.Collection(DbManager.getDb(), 'tests');
+      collection.find({ status: { $ne: 'Pending' }}).count(function(err, results) {
+        if (err) return callback(err, 0);
         callback(null, results);
       });
 
     }
   }, function(err, results) {
 
-    res.render('tests', { tests: results.tests, term: term });
+    var data = {
+      total:   results.total,
+      pending: results.completed,
+      complete: Math.round(100 * (results.completed / results.total))
+    };
+
+    res.render('tests', { tests: results.tests, term: term, stats: data });
 
   });
 
