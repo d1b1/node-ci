@@ -61,7 +61,7 @@ exports.setupBuild = setupBuild = function(opts, cb) {
     var errfile = path.resolve( GLOBAL.root, 'logs' ) + '/proc_' + opts.sha + '_err.log';
     var outfile = path.resolve( GLOBAL.root, 'logs' ) + '/proc_' + opts.sha + '_out.log';
 
-    var env = { NODE_ENV: opts.environment || 'development', PORT: parseInt(availablePort) }
+    var env = { PORT: parseInt(availablePort) }
 
     if (opts.configuration) {
 
