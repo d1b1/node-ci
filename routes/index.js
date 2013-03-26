@@ -6,3 +6,4 @@ exports.data     = require('./data');
 exports.activity = require('./activity');
 exports.configs  = require('./configurations');
 exports.webhook  = require('./webhook');
+exports.tests    = require('./tests');

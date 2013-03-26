@@ -56,6 +56,10 @@ html(lang="en")
                   li
                     a(href='/teams') Team Members
 
+              li.dropdown
+                a(href='/tests') Tests
+
+
               if (session.user && session.user.github)
                 li.dropdown
                   a(href='#', class='dropdown-toggle', data-toggle='dropdown') #{session.user.github.name || session.user.name}  <b class='caret'></b>

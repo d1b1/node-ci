@@ -1,0 +1,53 @@
+extends layout
+
+block header
+
+block content
+ 
+  .row
+    .span12
+      
+      h3 Tests
+
+      a(class="btn btn-primary btn-small", href="/tests/add") Add Test
+
+      br
+      br
+
+  .row
+    .span12
+      table.table-striped.table.table-hover
+       tr
+        th(width="20%")
+         | Short Name
+        th(width="10%")
+         | Status
+        th(width="10%")
+         | Claimed by
+        th(width="10%")
+         | Priority
+        th(width="40%")
+         | Notes
+        th(width="10%")
+
+        - if (!tests || tests.length == 0) 
+           tr
+            td(colspan="4")
+             | No Tests defined.
+        - else
+          each config, i in tests
+           tr
+            td
+             | #{config.name} 
+            td
+             | #{config.status}
+            td
+             | #{config.claimedby}
+            td
+             | #{config.priority}
+            td
+             | #{config.notes}
+            td
+              a(href="/tests/edit/#{config._id}", class="btn btn-primary") Edit
+
+

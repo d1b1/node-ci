@@ -207,6 +207,12 @@ exports.commits = function(req, res) {
 
 }
 
+/*
+ * This function handles the branches route. It will return all the 
+ * branches for a given repo. 
+ *
+ *
+ */
 
 exports.branches = function(req, res) {
 

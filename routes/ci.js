@@ -230,7 +230,7 @@ exports.buildCommitSlug = function(req, res) {
   var pdir = GLOBAL.root + '/tmp/' + sha;
 
   var command = 'rm -Rf ' + pdir + '; ' +
-                'git clone git@github.com:nprds/composer.git ' + pdir + '; ' + 
+                'git clone ' + GLOBAL.config.repository.repo + ' ' + pdir + '; ' + 
                 'GIT_WORK_TREE=' + pdir + ' git --git-dir=' + pdir + '/.git --work-tree=' + pdir + ' checkout ' + sha
 
   GLOBAL.messages.push({ type: 'info', copy: 'Buidling an install from a commit.' });

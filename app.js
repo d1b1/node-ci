@@ -149,6 +149,12 @@ AppManager = (function() {
     app.post('/configurations/domain/update',  check, routes.configs.domainUpdate);
 
     app.get('/webhook/trigger/:branch',        check, routes.webhook.trigger);
+
+    app.get('/tests/delete/:id',   check, routes.tests.delete);
+    app.get('/tests',              check, routes.tests.list);
+    app.get('/tests/add',          check, routes.tests.add);
+    app.get('/tests/edit/:id',     check, routes.tests.edit);
+    app.post('/tests/update',      check, routes.tests.update);
   };
 
   return {

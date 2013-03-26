@@ -1,0 +1,92 @@
+extends layout
+
+block header
+
+block content
+ 
+  - if (!test_id)
+   h3 Add a New Test
+  - else
+   h3 Edit an Existing Test
+
+  .row
+    p.span8 The following provides the ability to add or edit an existing test.
+
+  form(action="/tests/update", method="post", class="form-horizontal")
+
+    - if (test_id)
+      input(type="hidden", name="test_id", value="#{test_id}")
+   
+    .row
+      .control-group
+        label(class="control-label", for="name") Test Name
+        .controls
+          input(type="text", name="name", class="span4", value="#{data.name}", placeholder="Enter Name")
+
+    .row
+      .control-group
+        label(class="control-label", for="notes") Notes
+        .controls
+          textarea(type="text", class="span5", name="notes", style="height: 50px;", placeholder="Required - Summary of the issue") #{data.notes}
+
+    .row
+      .span3
+        .control-group
+          label(class="control-label", for="notes") Priority
+          .controls
+
+            each option in ['Passed', 'Failed', 'Pending']
+              label.radio
+                - if (data.priority == option) 
+                  input(type="radio", name="status", value="#{option}") 
+                - else
+                  input(type="radio", checked name="status", value="#{option}")  
+                | #{option}
+
+      .span3
+        .row
+          .control-group
+            label(class="control-label", for="notes") Priority
+            .controls
+
+              each option in ['High', 'Medium', 'Low', 'Unknown']
+                label.radio
+                  - if (data.priority == option) 
+                    input(type="radio", name="priority", value="#{option}") 
+                  - else
+                    input(type="radio", checked name="priority", value="#{option}")  
+                  | #{option}
+
+    .row
+      .control-group
+        label(class="control-label", for="steps") Steps
+        .controls
+          textarea(type="text", class="span5", style="height: 300px;", name="steps", placeholder="Required - Enter the steps to this feature.") #{data.steps}
+
+    .row
+      .control-group
+        label(class="control-label", for="claimedby") Claimed by
+        .controls
+          input(type="text", name="claimedby", class="span4", value="#{data.claimedby}", placeholder="Enter Tester Name")
+
+          span(class="help-block") 
+            p(style="width: 500px;") Enter the name of the person who last tests or owns this test.
+
+    .row
+      .span10
+          a(type="button", class="btn", href="/tests") Cancel
+          &nbsp;
+
+          - if (test_id)
+            a(onclick="confirmDelete();", class="btn btn-danger") Delete this test?
+ 
+          &nbsp;
+          button(type="submit", class="btn btn-warning", name="SubmitButton") Save Changes
+
+    script
+      function confirmDelete() {
+        if (confirm('Do you want to delete this test?')) {
+          document.location='/tests/delete/#{test_id}';
+        }
+      }
+
