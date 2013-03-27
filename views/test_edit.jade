@@ -29,6 +29,12 @@ block content
 
   .row
     .control-group
+      label(class="control-label", for="name") Group
+      .controls
+        input(type="text", name="group", class="span7", value="#{data.group}", placeholder="Enter Group Name.")
+
+  .row
+    .control-group
       label(class="control-label", for="notes") Notes
       .controls
         textarea(type="text", class="span7", name="notes", style="height: 50px;", placeholder="Required - Summary of the issue") #{data.notes}
@@ -36,15 +42,14 @@ block content
   .row
     .span5
       .control-group
-        label(class="control-label", for="notes") Priority
+        label(class="control-label", for="notes") Status
         .controls
-
-          each option in ['Passed', 'Failed', 'Pending']
+          each option in ['Passed', 'Failed', 'Pending', 'Override']
             label.radio
-              - if (data.priority == option) 
-                input(type="radio", name="status", value="#{option}") 
+              - if (data.status == option) 
+                input(type="radio", name="status", checked, value="#{option}") 
               - else
-                input(type="radio", checked name="status", value="#{option}")  
+                input(type="radio", name="status", value="#{option}")  
               | #{option}
 
     .span5
@@ -56,9 +61,9 @@ block content
             each option in ['High', 'Medium', 'Low', 'Unknown']
               label.radio
                 - if (data.priority == option) 
-                  input(type="radio", name="priority", value="#{option}") 
+                  input(type="radio", name="priority", checked, value="#{option}") 
                 - else
-                  input(type="radio", checked name="priority", value="#{option}")  
+                  input(type="radio", name="priority", value="#{option}")  
                 | #{option}
 
   .row

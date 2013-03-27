@@ -20,7 +20,7 @@ exports.list = function(req, res) {
       }
 
       var collection = new mongodb.Collection(DbManager.getDb(), 'tests');
-      collection.find(query).toArray(function(err, results) {
+      collection.find(query, { sort: { group: 1 } }).toArray(function(err, results) {
         if (err) return callback(err, 0);
         callback(null, results);
       });
@@ -65,7 +65,8 @@ exports.add = function(req, res) {
     notes: '',
     steps: '',
     status: 'Pending',
-    claimedby: ''
+    claimedby: '',
+    group: ''
   };
 
   res.render('test_edit', { data: data, test_id: null });
@@ -80,7 +81,9 @@ exports.edit = function(req, res) {
   collection.findOne(query, function(err, result) {
     if (err) return;
 
-    if (!result.configurations) result.configurations = [];
+    if (!result.group)     result.group = '';
+    //if (!result.status)    result.status = '';
+    //if (!result.claimedby) result.claimedby = '';
 
     res.render('test_edit', { data: result, test_id: id });
   });
@@ -92,12 +95,13 @@ exports.update = function(req, res) {
   var test_id = req.body.test_id;
 
   var data = {
-    name:     req.body.name || 'No Name',
-    notes:    req.body.notes,
-    steps:    req.body.steps,
-    priority: req.body.priority,
-    status:   req.body.status,
-    claimedby: req.body.claimedby
+    name:      req.body.name || 'No Name',
+    notes:     req.body.notes,
+    steps:     req.body.steps,
+    priority:  req.body.priority,
+    status:    req.body.status,
+    claimedby: req.body.claimedby,
+    group:     req.body.group
   };
 
   if (!test_id) {

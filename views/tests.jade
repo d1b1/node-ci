@@ -32,7 +32,7 @@ block content
       table.table-striped.table.table-hover
        tr
         th(width="30%")
-         | Short Name
+         | Category, Short Name
         th(width="10%")
          | Status
         th(width="10%")
@@ -50,6 +50,8 @@ block content
           each config, i in tests
            tr
             td
+             !{config.group || 'None'}
+             br 
              a(href="/tests/edit/#{config._id}") #{config.name} 
             td
 

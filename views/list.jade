@@ -140,7 +140,8 @@ block content
                 td
                  | #{log.owner}
                 td
-                 b #{moment(log.timestamp,'MM/DD/YYYY HH:mm:ss').fromNow()}
+                 - if (log.timestamp)
+                   b #{moment(log.timestamp,'MM/DD/YYYY HH:mm:ss').fromNow()}
                  br
                  | #{log.name}
 
