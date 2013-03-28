@@ -27,7 +27,7 @@ block content
         |  or  
         a(href="/runs/#{data.runID}/tests", class="btn") List all Run Tests
  
-  input(type="text", name="nextPage", value="#{nextPage || '/tests'}")
+  input(type="hidden", name="nextPage", value="#{nextPage || '/tests'}")
 
   - if (test_id)
     input(type="hidden", name="test_id", value="#{test_id}")

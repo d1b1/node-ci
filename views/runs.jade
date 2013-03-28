@@ -24,14 +24,15 @@ block content
     .span12
       table.table-striped.table.table-hover
        tr
-        th(width="30%")
+        th(width="20%")
          | Sha Commit
-        th(width="20%")
+        th(width="10%")
          | Status
-        th(width="20%")
+        th(width="15%")
          | Date
-        th(width="40%")
+        th(width="30%")
          | Statistics
+        th()
 
         - if (!tests || tests.length == 0) 
            tr
@@ -41,7 +42,11 @@ block content
           each config, i in tests
            tr
             td
-             a(href="/runs/edit/#{config._id}") #{config.name} 
+             | #{config.name} 
+             - if (config.sha) 
+               br
+               b SHA: #{config.sha} 
+
             td
              | Status
             td
@@ -49,6 +54,13 @@ block content
              br
              i #{moment(config.date).fromNow()}
             td
-             | #{config.notes}
-             a(href="/runs/#{config._id}/tests", class="btn") Test me
+              | Coverage: #{config.total_code_coverage}%
+              br
+              | Total Tests: #{config.total_tests || 0}
+              br
+              | Bugs in Production: #{config.total_bugs_in_production || 0}
+            td
+             a(href="/runs/#{config._id}/tests", class="btn btn-warning") Test me
+             &nbsp;
+             a(href="/runs/edit/#{config._id}", class="btn") Edit
 

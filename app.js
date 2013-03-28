@@ -2,6 +2,7 @@ var express    = require('express'),
     mongoStore = require('connect-mongodb'),
     argv       = require('optimist').argv,
     moment     = require('moment');
+    md         = require('node-markdown').Markdown;
 
  var routes = require('./routes/index');
 
@@ -65,6 +66,7 @@ AppManager = (function() {
       app.use(function(req, res, next) {
         app.locals.session = req.session;
         app.locals.page = { title: '' };
+        app.locals.md = md;
         next();
       });
 
@@ -164,7 +166,9 @@ AppManager = (function() {
     app.get('/runs/edit/:id',     check, routes.runs.edit);
     app.post('/runs/update',      check, routes.runs.update);
 
-    app.get('/runs/:id/tests',    check, routes.runs.listTests);
+    app.get('/runs/:id/tests',     check, routes.runs.listTests);
+    app.get('/runs/test/:id',      check, routes.runs.processTest);
+    app.post('/runs/test/update', check, routes.runs.processTestUpdate);
   };
 
   return {

@@ -1,0 +1,63 @@
+extends layout
+
+block header
+
+block content
+ 
+ form(action="/runs/test/update", method="post", class="form-horizontal")
+
+  .row
+    .span10 
+      h3 #{data.name}
+
+  input(type="hidden", name="id", value="#{data._id}")
+  input(type="hidden", name="runID", value="#{data.runID}")
+ 
+  .row
+    table.table.table-striped.span8
+      tr
+        td(width="50%")
+          b Group: 
+          | #{data.group}
+        td(width="50%")
+          b Priority: 
+          | #{data.priority}
+      tr
+        td(colspan="2")
+          b Description: 
+          | #{data.notes}
+      tr
+        td
+          b Claimed by: 
+          input(type="text", name="claimedby", class="span2", value="#{data.claimedby}", placeholder="Enter Tester Name")
+
+        td
+          each option in ['Passed', 'Failed', 'Pending', 'Override']
+            label.radio.inline
+              - if (data.status == option) 
+                input(type="radio", class="inline", name="status", checked, value="#{option}")
+                b #{option} 
+              - else
+                input(type="radio", class="inline", name="status", value="#{option}") 
+                |  #{option}
+
+      tr
+        td(colspan="3")
+
+          div!= md(data.steps)
+      tr
+        td
+          a(type="button", class="btn", href="/runs/#{data.runID}/tests") Return to Tests
+  
+        td(colspan="2", style="text-align: right;")
+           button(type="submit", class="btn btn-warning", name="SubmitButton") Save Changes
+
+      tr
+        td(colspan="3")
+
+          a(href="/tests/edit/#{data.parentID}", class="btn btn-info btn-small") Edit Parent Test 
+          | 
+          a(href="/runs/edit/#{data.runID}", class="btn btn-info btn-small") Edit Run
+          | 
+          a(href="/runs/#{data.runID}/tests", class="btn btn-info btn-small") Return to Run Tests
+

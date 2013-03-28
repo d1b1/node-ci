@@ -36,6 +36,7 @@
     "mongodb": "~1.2.12",
     "async": "~0.2.5",
     "connect-mongodb": "~1.1.5",
-    "optimist": "~0.3.5"
+    "optimist": "~0.3.5",
+    "node-markdown": "~0.1.1"
   }
 }

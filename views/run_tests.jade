@@ -1,0 +1,84 @@
+extends layout
+
+block header
+
+block content
+ 
+  .row
+    .span12
+
+  - if (run) 
+
+    h3 Run Specific Test for "#{run.sha || run.name}"
+    .well
+      p The following are tests for a specific run '#{run.name}'.
+      a(href="/runs/edit/#{run._id}", class="btn") View the Run
+
+  .row
+    .span5
+      form(action="/runs/#{run._id}/tests", method="get")
+        .input-append
+          input(class="span3", name="term", value="#{term}", type="text")
+          button(class="btn", type="submit") Search
+          a(class="btn btn-primary", href="/tests/add") Create a New Test
+
+    .span7
+        table.table.table-striped.span5.pull-right 
+          tr
+            th(width:30%) Total
+            th(width:30%) Pending
+            th(width:30%) Completed
+          tr
+            td #{stats.total}
+            td #{stats.pending}
+            td %#{stats.complete || '0'}
+  .row
+    .span12
+      table.table-striped.table.table-hover
+       tr
+        th(width="30%")
+         | Category, Short Name
+        th(width="10%")
+         | Status
+        th(width="10%")
+         | Claimed by
+        th(width="10%")
+         | Priority
+        th(width="35%")
+         | Notes
+        th(width="5%")
+
+        - if (!tests || tests.length == 0) 
+           tr
+            td(colspan="4")
+             | No Tests defined.
+        - else
+          each config, i in tests
+           tr
+            td
+             !{config.group || 'None'}
+             br 
+             | #{config.name} 
+            td
+
+             - if (config.status == 'Passed')
+               span.label.label-success Passed
+ 
+             - else if (config.status == 'Failed')
+               span.label.label-important Failed
+
+             - else if (config.status == 'Pending')
+               span.label Pending
+
+             - else
+               span.label #{config.status}
+
+            td
+             | #{config.claimedby}
+            td
+             | #{config.priority}
+            td
+             | #{config.notes}
+            td
+              a(href="/runs/test/#{config._id}", class="btn btn-warning") Test
+

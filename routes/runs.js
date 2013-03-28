@@ -53,7 +53,7 @@ exports.list = function(req, res) {
       complete: Math.round(100 * (results.completed / results.total))
     };
 
-    res.render('runs', { tests: results.tests, term: term, stats: data });
+    res.render('runs', { tests: results.tests, term: term || '', stats: data });
 
   });
 
@@ -128,7 +128,10 @@ exports.update = function(req, res) {
     name:      req.body.name || 'No Name',
     notes:     req.body.notes,
     sha:       req.body.sha,
-    date:      mdate.unix() * 1000
+    date:      mdate.unix() * 1000,
+    total_bugs_in_production: req.body.total_bugs_in_production || 0,
+    total_code_coverage: req.body.total_code_coverage,
+    total_tests: req.body.total_tests
   };
 
   if (!id) {
@@ -147,13 +150,17 @@ exports.update = function(req, res) {
       var newRun = result[0];
       var runID =  newRun._id;
 
+      var query = {
+         runID: { $exists : false }
+      };
+
       var testCollection = new mongodb.Collection(DbManager.getDb(), 'tests');
-      testCollection.find().toArray(function(err, results) {
+      testCollection.find(query).toArray(function(err, results) {
         
         var masterTests = results;
         _.each(masterTests, function(o) {
           o.status = 'Pending';
-          o.name = o.name + ' COPY';
+          o.name = o.name + ' [Copy]';
           o.claimedby = '';
           o.isMaster = false;
           o.parentID = o._id;
@@ -274,8 +281,43 @@ exports.listTests =  function(req, res) {
 
     console.log(results.run);
 
-    res.render('tests', { run: results.run, tests: results.tests, term: term || '', stats: data });
+    res.render('run_tests', { run: results.run, tests: results.tests, term: term || '', stats: data });
 
   });
+
+}
+
+exports.processTest = function(req, res) {
+
+  var id = req.params.id;
+  var query = { _id: new mongodb.ObjectID( id ) };
+
+  var collection = new mongodb.Collection(DbManager.getDb(), 'tests');
+  collection.findOne(query, function(err, result) {
+    if (err) return;
+
+    res.render('release_test', { data: result, id: id });
+  });
+
+}
+
+exports.processTestUpdate = function(req, res) {
+
+  var id = req.body.id;
+
+  var data = {
+    status:    req.body.status,
+    claimedby: req.body.claimedby
+  };
+
+  var collection = new mongodb.Collection(DbManager.getDb(), 'tests');
+
+  collection.findAndModify({ _id: new mongodb.ObjectID( id ) }, 
+    [ ['_id','asc'] ], 
+    { $set : data }, 
+    { safe: true, new: true }, 
+    function(err, result) {
+       res.redirect('/runs/' + req.body.runID + '/tests');
+    });
 
 }

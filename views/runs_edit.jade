@@ -49,6 +49,32 @@ block content
         textarea(type="text", class="span7", name="notes", style="height: 50px;", placeholder="Optional - Summary of the test run") #{data.notes}
 
   .row
+    .span2
+      .control-group
+        label(class="control-label", for="total_code_coverage") Code Coverage
+        .controls
+          .input-prepend.input-append
+            input(type="text", name="total_code_coverage", class="span1", value="#{data.total_code_coverage || 0}", placeholder="Enter Code Coverage (0% -100%)")
+            span.add-on %
+
+    .span3
+      .control-group
+        label(class="control-label", for="total_tests") Total Tests
+        .controls
+          .input-prepend.input-append
+            span.add-on #
+            input(type="text", name="total_tests", class="span1", value="#{data.total_tests || 0}", placeholder="Enter Total Tests (0-###)")
+
+    .span3
+      .control-group 
+        label(class="control-label", for="total_bugs_in_production") Production Bugs
+        .controls
+          .input-prepend.input-append
+            span.add-on #
+            input(type="text", name="total_bugs_in_production", class="span1", value="#{data.total_bugs_in_production || 0}", placeholder="Enter Total Bugs in Production (0-###)")
+            
+
+  .row
     .span5
         a(type="button", class="btn", href="/runs") Cancel
         &nbsp;
