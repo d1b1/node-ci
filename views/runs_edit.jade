@@ -15,6 +15,11 @@ block content
   .row
     p.span8 The following provides the ability to add or edit an existing test run.
 
+  - if (count > -1) 
+  .row
+    .well.span8
+      p.span8 There are #{count} tests for this run.
+
 
   - if (id)
     input(type="hidden", name="id", value="#{id}")

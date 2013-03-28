@@ -11,12 +11,12 @@ exports.list = function(req, res) {
   async.parallel({
     tests: function(callback) {
 
-      var query = {};
+      var query = {
+         runID: { $exists : false }
+      };
 
       if (term) {
-        query = { 
-          name : { $regex :  term, $options: '-i'}
-        };
+        query.name = { $regex :  term, $options: '-i'};
       }
 
       var collection = new mongodb.Collection(DbManager.getDb(), 'tests');
@@ -52,7 +52,7 @@ exports.list = function(req, res) {
       complete: Math.round(100 * (results.completed / results.total))
     };
 
-    res.render('tests', { tests: results.tests, term: term, stats: data });
+    res.render('tests', { run: null, tests: results.tests, term: term, stats: data });
 
   });
 
@@ -69,7 +69,7 @@ exports.add = function(req, res) {
     group: ''
   };
 
-  res.render('test_edit', { data: data, test_id: null });
+  res.render('test_edit', { data: data, nextPage: '/tests', test_id: null });
 }
 
 exports.edit = function(req, res) {
@@ -82,10 +82,14 @@ exports.edit = function(req, res) {
     if (err) return;
 
     if (!result.group)     result.group = '';
-    //if (!result.status)    result.status = '';
-    //if (!result.claimedby) result.claimedby = '';
 
-    res.render('test_edit', { data: result, test_id: id });
+    // Define the next page for the test to see.
+    var nextPage = '/tests';
+    if (result.runID) {
+      nextPage = '/runs/' + result.runID.toString() + '/tests';
+    }
+
+    res.render('test_edit', { data: result, nextPage: nextPage, test_id: id });
   });
 
 }
@@ -104,6 +108,8 @@ exports.update = function(req, res) {
     group:     req.body.group
   };
 
+  var nextPage = req.body.nextPage || '/tests';
+
   if (!test_id) {
     data.createdby = req.session.user.github.login;
     data.created = moment().unix() * 1000;
@@ -118,7 +124,7 @@ exports.update = function(req, res) {
 
     collection.insert(data, { safe: true}, function(err, result) {
       console.log('Insert', result);
-      res.redirect('/tests');
+      res.redirect(nextPage);
     });
 
   } else {
@@ -128,7 +134,7 @@ exports.update = function(req, res) {
       { $set : data }, 
       { safe: true, new: true }, 
       function(err, result) {
-         res.redirect('/tests');
+         res.redirect(nextPage);
       });
   }
 
@@ -137,8 +143,6 @@ exports.update = function(req, res) {
 exports.delete = function(req, res) {
 
   var id = req.params.id;
-
-  console.log(id);
 
   var collection = new mongodb.Collection(DbManager.getDb(), 'tests');
 

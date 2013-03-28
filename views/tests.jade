@@ -7,11 +7,21 @@ block content
   .row
     .span12
       
-      h3 Tests
+
+  - if (run) 
+    - var formAction = '/runs/' + run._id + '/tests'
+
+    h3 Run Specific Test for "#{run.sha || run.name}"
+    .well
+      p The following are tests for a specific run '#{run.name}'.
+      a(href="/runs/edit/#{run._id}", class="btn") View the Run
+  - else
+    - var formAction = '/tests'
+    h3 Master Tests
 
   .row
     .span5
-      form(action="/tests", method="get")
+      form(action="#{formAction}", method="get")
         .input-append
           input(class="span3", name="term", value="#{term}", type="text")
           button(class="btn", type="submit") Search

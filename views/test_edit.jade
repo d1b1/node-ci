@@ -12,11 +12,22 @@ block content
   - else
    h3 Edit an Existing Test
 
-  
-
   .row
     p.span8 The following provides the ability to add or edit an existing test.
 
+  - if (data.runID)
+    .row 
+      .well.span8
+        H4 Notice
+        p This is a test run copy. If you want to edit the parent. Please use this link 
+          to open and edit.
+        a(href="/tests/edit/#{data.parentID}", class="btn") Open Parent Test 
+        |  or  
+        a(href="/runs/edit/#{data.runID}", class="btn") Open Run Details
+        |  or  
+        a(href="/runs/#{data.runID}/tests", class="btn") List all Run Tests
+ 
+  input(type="text", name="nextPage", value="#{nextPage || '/tests'}")
 
   - if (test_id)
     input(type="hidden", name="test_id", value="#{test_id}")

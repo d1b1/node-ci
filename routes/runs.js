@@ -3,6 +3,7 @@ var mongodb    = require('mongodb');
 var util       = require('./util');
 var async      = require('async');
 var moment     = require('moment');
+var _          = require('underscore');
 
 exports.list = function(req, res) {
 
@@ -66,19 +67,47 @@ exports.add = function(req, res) {
     sha:   ''
   };
 
-  res.render('runs_edit', { data: data, id: null });
+  res.render('runs_edit', { data: data, count: -1, id: null });
 }
 
 exports.edit = function(req, res) {
   
   var id = req.params.id;
-  var query = { _id: new mongodb.ObjectID(id) };
 
-  var collection = new mongodb.Collection(DbManager.getDb(), 'runs');
-  collection.findOne(query, function(err, result) {
-    if (err) return;
+  async.parallel({
+    count: function(callback) {
 
-    res.render('runs_edit', { data: result, id: id });
+
+      var query = { $or: [ 
+        { runID: new mongodb.ObjectID(id) },
+        { runID: id },
+        ]
+      };
+      var collection = new mongodb.Collection(DbManager.getDb(), 'tests');
+
+      collection.find(query).count(function(err, result) {
+        if (err) return;
+        callback(null, result);
+  
+      });
+
+    },
+    data: function(callback) {
+
+      var query = { _id: new mongodb.ObjectID(id) };
+
+      var collection = new mongodb.Collection(DbManager.getDb(), 'runs');
+      collection.findOne(query, function(err, result) {
+        if (err) return;
+        callback(null, result);
+        
+      });
+
+    }
+  }, function(err, results) {
+
+    res.render('runs_edit', { data: results.data, count: results.count, id: id });
+
   });
 
 }
@@ -113,8 +142,32 @@ exports.update = function(req, res) {
   var collection = new mongodb.Collection(DbManager.getDb(), 'runs');
 
   if (!id) {
-    collection.insert(data, { safe: true}, function(err, result) {
-      console.log('Insert', result);
+    collection.insert(data, { safe: true }, function(err, result) {
+
+      var newRun = result[0];
+      var runID =  newRun._id;
+
+      var testCollection = new mongodb.Collection(DbManager.getDb(), 'tests');
+      testCollection.find().toArray(function(err, results) {
+        
+        var masterTests = results;
+        _.each(masterTests, function(o) {
+          o.status = 'Pending';
+          o.name = o.name + ' COPY';
+          o.claimedby = '';
+          o.isMaster = false;
+          o.parentID = o._id;
+          o.runID = runID;
+
+          delete o._id;
+        });
+
+        testCollection.insert(masterTests, { safe: true }, function(err, result) {
+          console.log('Inserted a Ton of Tests', results.length);
+        });
+
+      });
+
       res.redirect('/runs');
     });
   } else {
@@ -132,11 +185,97 @@ exports.update = function(req, res) {
 exports.delete = function(req, res) {
 
   var id = req.params.id;
+
   var collection = new mongodb.Collection(DbManager.getDb(), 'runs');
   var query = { _id: new mongodb.ObjectID(id) };
   collection.remove(query, function(err, result) {
+
+     var query = { 
+      $or: [ { runID: new mongodb.ObjectID( id ) }, { runID: id } ]
+     };
+
+     var testCollection = new mongodb.Collection(DbManager.getDb(), 'tests');
+     testCollection.remove(query, { safe: true }, function(err, results) {});
+
      res.redirect('/runs');
   });
 
 }
 
+exports.listTests =  function(req, res) {
+
+  var runID = req.params.id;
+  var term = req.urlparams.term;
+
+  async.parallel({
+    tests: function(callback) {
+
+      var query = { $or: 
+        [
+          { runID: new mongodb.ObjectID( runID ) },
+          { runID: runID }
+        ]
+      };
+
+      if (term) {
+        query.name = { $regex :  term, $options: '-i'};
+      }
+
+      var collection = new mongodb.Collection(DbManager.getDb(), 'tests');
+      collection.find(query, { sort: { group: 1 } }).toArray(function(err, results) {
+        if (err) return callback(err, 0);
+        callback(null, results);
+      });
+
+    },
+    run: function(callback) {
+
+      var collection = new mongodb.Collection(DbManager.getDb(), 'runs');
+      collection.findOne({ _id: new mongodb.ObjectID(runID) } , function(err, results) {
+        if (err) return callback(err, 0);
+        callback(null, results);
+      });
+
+    },
+    total: function(callback) {
+
+      var query = { 
+        $or: [ { runID: new mongodb.ObjectID( runID ) }, { runID: runID } ]
+      };
+
+      var collection = new mongodb.Collection(DbManager.getDb(), 'tests');
+      collection.find(query).count(function(err, results) {
+        if (err) return callback(err, 0);
+        callback(null, results);
+      });
+
+    },
+    completed: function(callback) {
+
+      var query = { 
+        $or: [ { runID: new mongodb.ObjectID( runID ) }, { runID: runID } ],
+        status: { $ne: 'Pending' }
+      };
+
+      var collection = new mongodb.Collection(DbManager.getDb(), 'tests');
+      collection.find(query).count(function(err, results) {
+        if (err) return callback(err, 0);
+        callback(null, results);
+      });
+
+    }
+  }, function(err, results) {
+
+    var data = {
+      total:   results.total,
+      pending: results.completed,
+      complete: Math.round(100 * (results.completed / results.total))
+    };
+
+    console.log(results.run);
+
+    res.render('tests', { run: results.run, tests: results.tests, term: term || '', stats: data });
+
+  });
+
+}

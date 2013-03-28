@@ -163,6 +163,8 @@ AppManager = (function() {
     app.get('/runs/add',          check, routes.runs.add);
     app.get('/runs/edit/:id',     check, routes.runs.edit);
     app.post('/runs/update',      check, routes.runs.update);
+
+    app.get('/runs/:id/tests',    check, routes.runs.listTests);
   };
 
   return {
