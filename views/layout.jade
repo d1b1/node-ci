@@ -56,9 +56,14 @@ html(lang="en")
                   li
                     a(href='/teams') Team Members
 
-              li.dropdown
-                a(href='/tests') Tests
 
+              li.dropdown
+                a(href='#', class='dropdown-toggle', data-toggle='dropdown') Testing <b class='caret'></b>
+                ul.dropdown-menu.hidden-phone
+                  li
+                    a(href='/tests') Tests
+                  li
+                    a(href='/runs') Test Runs
 
               if (session.user && session.user.github)
                 li.dropdown

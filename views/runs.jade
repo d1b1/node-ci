@@ -1,0 +1,53 @@
+extends layout
+
+block header
+
+block content
+ 
+  .row
+    .span12
+      
+      h3 Test Runs
+
+      p This is a list of all commits and testing runs. Each run represents a full test
+        of regression test for that specific commit in the repo.
+
+  .row
+    .span5
+      form(action="/runs", method="get")
+        .input-append
+          input(class="span3", name="term", value="#{term}", type="text")
+          button(class="btn", type="submit") Search
+          a(class="btn btn-primary", href="/runs/add") Create a New Test Run
+
+  .row
+    .span12
+      table.table-striped.table.table-hover
+       tr
+        th(width="30%")
+         | Sha Commit
+        th(width="20%")
+         | Status
+        th(width="20%")
+         | Date
+        th(width="40%")
+         | Statistics
+
+        - if (!tests || tests.length == 0) 
+           tr
+            td(colspan="4")
+             | No Test Runs defined.
+        - else
+          each config, i in tests
+           tr
+            td
+             a(href="/runs/edit/#{config._id}") #{config.name} 
+            td
+             | Status
+            td
+             | #{moment(config.date).format('MM/DD/YY')}
+             br
+             i #{moment(config.date).fromNow()}
+            td
+             | #{config.notes}
+

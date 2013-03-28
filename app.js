@@ -150,11 +150,19 @@ AppManager = (function() {
 
     app.get('/webhook/trigger/:branch',        check, routes.webhook.trigger);
 
+    // Routes for Tests.
     app.get('/tests/delete/:id',   check, routes.tests.delete);
     app.get('/tests',              check, routes.tests.list);
     app.get('/tests/add',          check, routes.tests.add);
     app.get('/tests/edit/:id',     check, routes.tests.edit);
     app.post('/tests/update',      check, routes.tests.update);
+
+    // Routes for Test Runs
+    app.get('/runs/delete/:id',   check, routes.runs.delete);
+    app.get('/runs',              check, routes.runs.list);
+    app.get('/runs/add',          check, routes.runs.add);
+    app.get('/runs/edit/:id',     check, routes.runs.edit);
+    app.post('/runs/update',      check, routes.runs.update);
   };
 
   return {

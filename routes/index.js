@@ -7,3 +7,4 @@ exports.activity = require('./activity');
 exports.configs  = require('./configurations');
 exports.webhook  = require('./webhook');
 exports.tests    = require('./tests');
+exports.runs     = require('./runs');

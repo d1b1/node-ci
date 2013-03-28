@@ -1,0 +1,64 @@
+extends layout
+
+block header
+
+block content
+ 
+ form(action="/runs/update", method="post", class="form-horizontal")
+
+  .row
+  - if (!id)
+   h3 Add a New Test Run
+  - else
+   h3 Edit an Existing Test Run
+
+  .row
+    p.span8 The following provides the ability to add or edit an existing test run.
+
+
+  - if (id)
+    input(type="hidden", name="id", value="#{id}")
+ 
+  .row
+    .control-group
+      label(class="control-label", for="name") Test Name
+      .controls
+        input(type="text", name="name", class="span7", value="#{data.name}", placeholder="Enter Name")
+
+  .row
+    .control-group
+      label(class="control-label", for="sha") SHA Commit ID
+      .controls
+        input(type="text", name="sha", class="span7", value="#{data.sha}", placeholder="Enter Git SHA Commit")
+
+  .row
+    .control-group
+      label(class="control-label", for="date") Date
+      .controls
+        input(type="text", name="date", class="span7", value="#{moment(data.date).format('MM/DD/YYYY')}", placeholder="Enter the run date")
+
+  .row
+    .control-group
+      label(class="control-label", for="notes") Notes
+      .controls
+        textarea(type="text", class="span7", name="notes", style="height: 50px;", placeholder="Optional - Summary of the test run") #{data.notes}
+
+  .row
+    .span5
+        a(type="button", class="btn", href="/runs") Cancel
+        &nbsp;
+
+        - if (id)
+          a(onclick="confirmDelete();", class="btn btn-danger") Delete this test?
+
+    .span5.pull-right
+        &nbsp;
+        button(type="submit", class="btn btn-warning", name="SubmitButton") Save Changes
+
+    script
+      function confirmDelete() {
+        if (confirm('Do you want to delete this test run? This will delete all the associates tests and results.')) {
+          document.location='/runs/delete/#{id}';
+        }
+      }
+
