@@ -8,12 +8,25 @@ block content
 
   .row
   - if (!test_id)
-   h3 Add a New Test
+   h3 Add a New Happy Path
   - else
-   h3 Edit an Existing Test
+   h3 Edit an Existing Happy Path
 
   .row
-    p.span8 The following provides the ability to add or edit an existing test.
+    .span9
+      p
+        | A happy path is a set of steps needed to provide that a specific element, feature or 
+        | workflow behaves as expected. Please write your path with the following:
+
+      ul
+        li <b>'Givens'</b> are list of assumptions or states needed to start the path.
+        li <b>'Performs'</b> are the specific steps (links, clicks, text etc) that user will need to enter or following.
+        li <b>'Confirms'</b> are specfic elements or place in the steps that user needs to note or see to set the status.
+
+      p
+        | Try to keep the number of steps to a mimumum and the things to confirm, specific to the path. If you 
+        | find other elements or paths that need to be defined, create a new happy path. Please use the priority
+        | to help determine how important the path is when compared with larger suite of paths.
 
   - if (data.runID)
     .row 
@@ -34,7 +47,7 @@ block content
  
   .row
     .control-group
-      label(class="control-label", for="name") Test Name
+      label(class="control-label", for="name") Path Name
       .controls
         input(type="text", name="name", class="span7", value="#{data.name}", placeholder="Enter Name")
 
@@ -43,55 +56,37 @@ block content
       label(class="control-label", for="name") Group
       .controls
         input(type="text", name="group", class="span7", value="#{data.group}", placeholder="Enter Group Name.")
-
+    
   .row
     .control-group
-      label(class="control-label", for="notes") Notes
+      label(class="control-label", for="notes") Summary
+
       .controls
-        textarea(type="text", class="span7", name="notes", style="height: 50px;", placeholder="Required - Summary of the issue") #{data.notes}
+        textarea(type="text", class="span7", name="notes", style="height: 40px;", placeholder="Required - Summary of the issue") #{data.notes}
 
   .row
-    .span5
-      .control-group
-        label(class="control-label", for="notes") Status
-        .controls
-          each option in ['Passed', 'Failed', 'Pending', 'Override']
-            label.radio
-              - if (data.status == option) 
-                input(type="radio", name="status", checked, value="#{option}") 
-              - else
-                input(type="radio", name="status", value="#{option}")  
-              | #{option}
 
-    .span5
+    .span6
       .row
         .control-group
           label(class="control-label", for="notes") Priority
           .controls
-
             each option in ['High', 'Medium', 'Low', 'Unknown']
-              label.radio
+              label.radio.inline
                 - if (data.priority == option) 
-                  input(type="radio", name="priority", checked, value="#{option}") 
+                  input(type="radio", name="priority", checked, value="#{option}")
+                  b #{option}   
                 - else
                   input(type="radio", name="priority", value="#{option}")  
-                | #{option}
+                  | #{option}  
 
   .row
     .control-group
       label(class="control-label", for="steps") Steps
       .controls
-        textarea(type="text", class="span7", style="height: 300px;", name="steps", placeholder="Required - Enter the steps to this feature.") #{data.steps}
-
-  .row
-    .control-group
-      label(class="control-label", for="claimedby") Claimed by
-      .controls
-        input(type="text", name="claimedby", class="span5", value="#{data.claimedby}", placeholder="Enter Tester Name")
-
-        span(class="help-block") 
-          p(style="width: 500px;") Enter the name of the person who last tests or owns this test.
-
+        textarea(type="text", class="span7", style="height: 350px;", name="steps", placeholder="Required - Enter the steps to this feature.") #{data.steps}
+        p This textarea support markdown syntax. 
+          a(href="http://support.mashery.com/docs/customizing_your_portal/Markdown_Cheat_Sheet") Markdown Cheatsheet
   .row
     .span5
         a(type="button", class="btn", href="/tests") Cancel

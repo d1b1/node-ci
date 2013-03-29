@@ -9,18 +9,17 @@ block content
 
   - if (run) 
 
-    h3 Run Specific Test for "#{run.sha || run.name}"
+    h3 Run Specific Paths for Release: "#{run.sha || run.name}"
     .well
-      p The following are tests for a specific run '#{run.name}'.
-      a(href="/runs/edit/#{run._id}", class="btn") View the Run
+      p The following are paths for a specific run '#{run.name}'.
+      a(href="/runs/edit/#{run._id}", class="btn") View Release
 
   .row
     .span5
       form(action="/runs/#{run._id}/tests", method="get")
         .input-append
-          input(class="span3", name="term", value="#{term}", type="text")
+          input(class="span3", name="term", value="#{term}", placeholder="Enter a search term...", type="text")
           button(class="btn", type="submit") Search
-          a(class="btn btn-primary", href="/tests/add") Create a New Test
 
     .span7
         table.table.table-striped.span5.pull-right 
@@ -54,7 +53,13 @@ block content
              | No Tests defined.
         - else
           each config, i in tests
-           tr
+           - var className = ''
+           - if (config.status == 'Failed') 
+             className = 'error'
+           - if (config.status == 'Passed') 
+             className = 'success'
+
+           tr(class="#{className}")
             td
              !{config.group || 'None'}
              br 

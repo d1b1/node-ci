@@ -7,7 +7,6 @@ block content
   .row
     .span12
       
-
   - if (run) 
     - var formAction = '/runs/' + run._id + '/tests'
 
@@ -17,70 +16,48 @@ block content
       a(href="/runs/edit/#{run._id}", class="btn") View the Run
   - else
     - var formAction = '/tests'
-    h3 Master Tests
+    h3 Happy Paths
 
   .row
     .span5
       form(action="#{formAction}", method="get")
         .input-append
-          input(class="span3", name="term", value="#{term}", type="text")
+          input(class="span3", name="term", value="#{term}", placeholder="Enter a search term...", type="text")
           button(class="btn", type="submit") Search
-          a(class="btn btn-primary", href="/tests/add") Create a New Test
+          a(class="btn btn-primary", href="/tests/add") Create a New Happy Path
 
     .span7
-        table.table.table-striped.span5.pull-right 
-          tr
-            th(width:30%) Total
-            th(width:30%) Pending
-            th(width:30%) Completed
-          tr
-            td #{stats.total}
-            td #{stats.pending}
-            td %#{stats.complete || '0'}
+        h4.pull-right Total Master Paths: #{stats.total}
+
   .row
     .span12
       table.table-striped.table.table-hover
        tr
+        th(width="15%")
+         | Group
         th(width="30%")
-         | Category, Short Name
-        th(width="10%")
-         | Status
-        th(width="10%")
-         | Claimed by
+         | Name
         th(width="10%")
          | Priority
         th(width="40%")
          | Notes
+        th(width="5%")
 
         - if (!tests || tests.length == 0) 
            tr
-            td(colspan="4")
+            td(colspan="5")
              | No Tests defined.
         - else
           each config, i in tests
            tr
             td
              !{config.group || 'None'}
-             br 
-             a(href="/tests/edit/#{config._id}") #{config.name} 
-            td
-
-             - if (config.status == 'Passed')
-               span.label.label-success Passed
- 
-             - else if (config.status == 'Failed')
-               span.label.label-important Failed
-
-             - else if (config.status == 'Pending')
-               span.label Pending
-
-             - else
-               span.label #{config.status}
-
-            td
-             | #{config.claimedby}
+            td 
+             | #{config.name} 
             td
              | #{config.priority}
             td
              | #{config.notes}
+            td
+             a(href="/tests/edit/#{config._id}", class="btn btn-warning") Edit
 

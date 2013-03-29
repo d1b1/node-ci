@@ -160,7 +160,7 @@ exports.update = function(req, res) {
         var masterTests = results;
         _.each(masterTests, function(o) {
           o.status = 'Pending';
-          o.name = o.name + ' [Copy]';
+          o.name = o.name;
           o.claimedby = '';
           o.isMaster = false;
           o.parentID = o._id;

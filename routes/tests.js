@@ -20,7 +20,7 @@ exports.list = function(req, res) {
       }
 
       var collection = new mongodb.Collection(DbManager.getDb(), 'tests');
-      collection.find(query, { sort: { group: 1 } }).toArray(function(err, results) {
+      collection.find(query, { sort: { group: 1, name: 1 } }).toArray(function(err, results) {
         if (err) return callback(err, 0);
         callback(null, results);
       });
@@ -28,17 +28,12 @@ exports.list = function(req, res) {
     },
     total: function(callback) {
 
-      var collection = new mongodb.Collection(DbManager.getDb(), 'tests');
-      collection.find({}).count(function(err, results) {
-        if (err) return callback(err, 0);
-        callback(null, results);
-      });
-
-    },
-    completed: function(callback) {
+      var query = {
+         runID: { $exists : false }
+      };
 
       var collection = new mongodb.Collection(DbManager.getDb(), 'tests');
-      collection.find({ status: { $ne: 'Pending' }}).count(function(err, results) {
+      collection.find(query).count(function(err, results) {
         if (err) return callback(err, 0);
         callback(null, results);
       });
@@ -47,12 +42,10 @@ exports.list = function(req, res) {
   }, function(err, results) {
 
     var data = {
-      total:   results.total,
-      pending: results.completed,
-      complete: Math.round(100 * (results.completed / results.total))
+      total:   results.total
     };
 
-    res.render('tests', { run: null, tests: results.tests, term: term, stats: data });
+    res.render('tests', { run: null, tests: results.tests, term: term || '', stats: data });
 
   });
 
@@ -63,8 +56,9 @@ exports.add = function(req, res) {
   var data = {
     name: '',
     notes: '',
-    steps: '',
+    steps: '## Given the following:\n* \n* \n* \n\n##Perform the following:\n1. \n2. \n3. \n\n## Confirm\n1. \n1. \n2. \n3.\n',
     status: 'Pending',
+    priority: 'Unknown',
     claimedby: '',
     group: ''
   };
@@ -103,8 +97,8 @@ exports.update = function(req, res) {
     notes:     req.body.notes,
     steps:     req.body.steps,
     priority:  req.body.priority,
-    status:    req.body.status,
-    claimedby: req.body.claimedby,
+    status:    req.body.status || 'Pending',
+    claimedby: req.body.claimedby | '',
     group:     req.body.group
   };
 
