@@ -123,7 +123,10 @@ exports.setupBuild = setupBuild = function(opts, cb) {
                 'git clone ' + GLOBAL.config.repository.path + ' ' + pdir + '; ' + 
                 'GIT_WORK_TREE=' + pdir + ' git --git-dir=' + pdir + '/.git --work-tree=' + pdir + ' checkout ' + opts.sha + '; ' +
                 'cd ' + pdir + ';' +
-                'npm install;';
+                'npm install;' +
+								// Update submodules.
+                'git submodule init;' +
+								'git submodule update;';
     }
 
     util.logNow({ owner: opts.owner, name: 'Starting a Build Process', message: 'User requested a build process. ' + JSON.stringify(options) });
