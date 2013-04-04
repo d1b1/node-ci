@@ -171,6 +171,8 @@ AppManager = (function() {
     app.post('/runs/test/update', check, routes.runs.processTestUpdate);
 
     app.get('/plugins', check, routes.plugins.list);
+    app.get('/plugins/start', check, routes.plugins.start);
+    app.get('/plugins/ping', check, routes.plugins.ping);
   };
 
   return {
