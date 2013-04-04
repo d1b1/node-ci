@@ -1,0 +1,5 @@
+{
+  "name": "Sample Plugin 2",
+  "description": "Sample Plugin for Node-CI",
+  "version": "0.0.2"
+}

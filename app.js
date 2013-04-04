@@ -169,6 +169,8 @@ AppManager = (function() {
     app.get('/runs/:id/tests',     check, routes.runs.listTests);
     app.get('/runs/test/:id',      check, routes.runs.processTest);
     app.post('/runs/test/update', check, routes.runs.processTestUpdate);
+
+    app.get('/plugins', check, routes.plugins.list);
   };
 
   return {
