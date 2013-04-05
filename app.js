@@ -210,7 +210,8 @@ AppManager = (function() {
 
       app.CIServer = {
          repositories: results.repos,
-         settings:     results.settings
+         settings:     results.settings,
+         version:      require('./package.json').version
       }
 
       app.locals.CIServer = app.CIServer;
