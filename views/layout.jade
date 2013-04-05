@@ -2,7 +2,7 @@ doctype 5
 html(lang="en")
   head
     title
-      | CI Node Manager
+      | #{CIServer.settings.title}
     meta(name='charset', content='UTF-8')
     meta(name='viewport', content='width=device-width, initial-scale=1.0')
     link(rel='stylesheet', href='/assets/css/bootstrap.css')
@@ -30,7 +30,7 @@ html(lang="en")
             span.icon-bar
             span.icon-bar
             span.icon-bar
-          a(class='brand', href='/') Node CI
+          a(class='brand', href='/') #{CIServer.settings.title}
           div.nav-collapse.collapse
             ul.nav
               li.dropdown
@@ -40,6 +40,8 @@ html(lang="en")
                     a(href='/list') Sites
                   li
                     a(href='/sites') Builds
+                  li
+                    a(href='/setup') Server
                   li
                     a(href='/configurations') Configurations
                    li.divider

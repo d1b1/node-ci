@@ -160,7 +160,6 @@ AppManager = (function() {
     app.get('/configurations/domain/edit/:id', check, routes.configs.domainEdit);
     app.post('/configurations/domain/update',  check, routes.configs.domainUpdate);
 
-    
 
     // Routes for Tests.
     app.get('/tests/delete/:id',   check, routes.tests.delete);
@@ -178,21 +177,44 @@ AppManager = (function() {
 
     app.get('/runs/:id/tests',     check, routes.runs.listTests);
     app.get('/runs/test/:id',      check, routes.runs.processTest);
-    app.post('/runs/test/update', check, routes.runs.processTestUpdate);
+    app.post('/runs/test/update',  check, routes.runs.processTestUpdate);
+
+    app.get('/setup',             check, routes.system.setup);
+    app.post('/setup/update',     check, routes.system.update);
   };
 
   var configureCIServer = function(app, db) {
     
-    var query = {};
-    var collection = new mongodb.Collection(db, 'repos');
-    collection.find(query).toArray(function(err, results) {
-      if (err) return;
+    var async = require('async');
+
+    async.parallel({
+      settings: function(callback) {
+
+        var collection = new mongodb.Collection(db, 'settings');
+        collection.findOne({}, function(err, result) {
+          if (err) return callback(err);
+          callback(null, result);
+        });
+
+      },
+      repos: function(callback) {
+
+        var collection = new mongodb.Collection(db, 'repos');
+        collection.find({}).toArray(function(err, results) {
+          if (err) return callback(err);
+          callback(null, results);
+        });
+
+      }
+    }, function(err, results) {
 
       app.CIServer = {
-        repositories: results
+         repositories: results.repos,
+         settings:     results.settings
       }
 
       app.locals.CIServer = app.CIServer;
+
     });
 
   };

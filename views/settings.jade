@@ -1,0 +1,35 @@
+extends layout
+
+block header
+
+block content
+ 
+  h3 Server Settings
+ 
+  .row
+    p.span8 The following provides the ability to configure the Server.
+
+  form(action="/setup/update", method="post", class="form-horizontal")
+
+    - if (data._id)
+      input(type="hidden", name="id", value="#{data._id || ''}")
+   
+    .row
+      .control-group
+        label(class="control-label", for="title") Title
+        .controls
+          input(type="text", name="title", value="#{data.title}", placeholder="Enter Site Title")
+
+    .row
+      .control-group
+        label(class="control-label", for="teamID") Github Team
+        .controls
+          input(type="text", name="teamID", value="#{data.teamID}", placeholder="Enter Github Team ID")
+
+    .row
+      .span10
+          a(type="button", class="btn", href="/") Cancel
+          &nbsp;
+          button(type="submit", class="btn btn-warning", name="SubmitButton") Save Settings
+ 
+
