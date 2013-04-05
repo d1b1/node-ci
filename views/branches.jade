@@ -4,7 +4,7 @@ block header
 
 block content
  
-  h3 Composer Branches
+  h3 #{repo.user}/#{repo.repo} Branches
 
   table.table-striped.table.table-hover
    tr
@@ -29,6 +29,6 @@ block content
          - if (session.user)
            a(href="/git/ref/delete/#{branch.name}", class="btn btn-primary") Delete
            &nbsp;
-           a(href="/start/#{branch.name}?process_type=head", class="btn btn-primary") Build
+           a(href="/provision/#{repo._id}/#{branch.name}?process_type=head", class="btn btn-primary") Build
            &nbsp;
-           a(href="/webhook/trigger/#{branch.name}", class="btn") Trigger Web hook
+           a(href="/repos/webhook/#{repo._id}/#{branch.name}", class="btn") Trigger Web hook

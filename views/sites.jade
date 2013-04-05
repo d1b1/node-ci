@@ -46,7 +46,7 @@ block content
                  li
                    a(href="/start/#{slug.commit}") Restart
                  li
-                   a(href="/slug/delete/#{slug.commit}") Delete
+                   a(href="/slug/delete?d=111&dir=#{slug.commit.replace('#', 'HASH')}") Delete
           - else
               div.btn-group
                 - if (slug.process.ui_url) 

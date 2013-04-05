@@ -4,7 +4,7 @@ block header
 
 block content
  
-  h3 Start a Build Process: #{process_type.toUpperCase()} 
+  h3 Start a Build Process: #{repo.user}/#{repo.repo}##{process_type.toUpperCase()} 
     - if (process_type != 'head')
       | @ #{id.substring(0, 10)}
   p
@@ -18,6 +18,8 @@ block content
 
     .well 
       form(action="/start/process", method="post", class="form-horizontal")
+
+        input(type="hidden", name="id", value="#{repo._id}")
 
         input(type="hidden", name="process_type", value="#{process_type}")
         

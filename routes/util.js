@@ -94,7 +94,8 @@ exports.setupBuild = setupBuild = function(opts, cb) {
       ui_description: opts.description,
       ui_owner:       opts.owner,
       ui_url:         availableURL,
-      ui_type:        opts.type
+      ui_type:        opts.type,
+      ui_repo:        opts.repo
     };
 
     var exec = require('child_process').exec;
@@ -105,22 +106,12 @@ exports.setupBuild = setupBuild = function(opts, cb) {
     if (path.existsSync(pdir)) { 
       console.log('Already have a valid Build. Skipping Git steps.');
 
-      // command = 'cd ' + pdir + ';' +
-      //           'git fetch origin;' +
-      //           'git reset --hard HEAD' + 
-      //           'npm install;';
-
-      // var cmd = 'cd ' + pdir + ';' + 
-      //           'git fetch origin;' +
-      //           'git rebase origin/' + sha + ';' +
-      //           'npm install;'
-
       command = 'cd ' + pdir + ';npm install;';
     } else {
       console.log('No slug found, so build it now.');
 
       command = 'rm -Rf ' + pdir + '; ' +
-                'git clone ' + GLOBAL.config.repository.path + ' ' + pdir + '; ' + 
+                'git clone ' + opts.repo + ' ' + pdir + '; ' + 
                 'GIT_WORK_TREE=' + pdir + ' git --git-dir=' + pdir + '/.git --work-tree=' + pdir + ' checkout ' + opts.sha + '; ' +
                 'cd ' + pdir + ';' +
                 'npm install;' +
@@ -184,8 +175,6 @@ exports.restartBuild = restartBuild = function(sha, cb) {
   //           'git fetch origin;' +
   //           'git rebase origin/' + sha + ';' +
   //           'npm install;'
-
-  console.log('in the restartBuild() function');
 
   var sys = require('sys');
   var exec = require('child_process').exec;
@@ -390,11 +379,13 @@ exports.getProcessIndexbySHA = getProcessIndexbySHA = function(sha, cb) {
 
   forever.list(false, function (err, data) {
     if (err) return cb(err);
+    if (!data) return cb(null, null);
 
     var UIDs = [];
     _.each(data, function(o) { UIDs.push(o.ui_sha || 222); });
     var indexNum = _.indexOf(UIDs, sha);
-    //if (indexNum == -1) indexNum = null;
+
+    if (indexNum == -1) indexNum = null;
 
     cb(null, indexNum);
   })
@@ -520,11 +511,15 @@ exports.getConfiguration = getConfiguration = function(id, cb) {
     getbyName: function(callback) {
 
       try {
-        var query = { name: id.toLowerCase() };
+        var query = { 
+          name: id.toLowerCase()
+        };
+
         collection.findOne(query, function(err, result) {
           if (err) return callback(null, null);
           if (!result) return callback(null, null);
           if (!result.configurations) result.configurations = [];
+
           callback(null, result);
         });
       } catch(err) {

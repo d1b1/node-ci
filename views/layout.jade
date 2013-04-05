@@ -49,13 +49,21 @@ html(lang="en")
               li.dropdown
                 a(href='#', class='dropdown-toggle', data-toggle='dropdown') Git <b class='caret'></b>
                 ul.dropdown-menu.hidden-phone
-                  li
-                    a(href='/git') Commits
-                  li
-                    a(href='/branches') Branches
+                 
                   li
                     a(href='/teams') Team Members
+                  li
+                    a(href='/repos') Project Repos
 
+                  li.divider
+                  each repo in CIServer.repositories
+                    li.dropdown-submenu 
+                      a(tabindex="-1", href="#") #{repo.name} 
+                      ul.dropdown-menu.hidden-phone
+                        li
+                          a(href='/git/#{repo._id}') Commits
+                        li
+                          a(href='/git/#{repo._id}/branches') Branches
 
               li.dropdown
                 a(href='#', class='dropdown-toggle', data-toggle='dropdown') Quality <b class='caret'></b>

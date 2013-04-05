@@ -30,11 +30,13 @@ exports.restartProcess = function(req, res) {
 
 exports.slugDelete = function(req, res) {
 
-  var id = req.params.id;
+  var dir = req.urlparams.dir
+
+  dir = dir.replace('HASH', '#');
 
   var exec = require('child_process').exec;
 
-  var path = GLOBAL.root + '/tmp/' + id;
+  var path = GLOBAL.root + '/tmp/' + dir;
   var cmd = 'rm -Rf ' + path;
 
   var deleteConfirm = function (error, stdout, stderr) { 
@@ -56,123 +58,150 @@ exports.sites = function(req, res) {
 
 exports.startDialog = function(req, res) {
 
-  var shaOrBranch = req.params.sha;
+  var id = req.params.id;
 
-  var githubAPI  = require('github');
-  var github = new githubAPI({ version: '3.0.0' });
-  github.authenticate({ type: 'oauth', token: req.session.user.access_token });
+  var query = { _id: new mongodb.ObjectID(id) };
+  var collection = new mongodb.Collection(DbManager.getDb(), 'repos');
+  collection.findOne(query, function(err, result) {
+    if (err) return;
 
-  var options = {
-    repo:   GLOBAL.config.repository.repo,
-    user:   GLOBAL.config.repository.user
-  };
- 
-  var process_type = req.urlparams.process_type || 'snapshot';
-
-  async.parallel({
-     configurations: function(callback) {
-
-      var query = {};
-      var collection = new mongodb.Collection(DbManager.getDb(), 'configurations');
-      collection.find(query).toArray(function(err, results) {
-        if (err) return callback(err, null);
-        callback(null, results);
-      });
-
-     },
-     domains: function(callback) {
-
-      var query = {};
-      var collection = new mongodb.Collection(DbManager.getDb(), 'domains');
-      collection.find(query).toArray(function(err, results) {
-        if (err) return callback(err, null);
-        callback(null, results);
-      });
-
-     },
-     branches: function(callback) {
-
-      github.repos.getBranches(options, function(err, data) {
-        callback(null, data);
-      });
-
-     }
-  }, function(err, results) {
-
-    res.render('build_commit', { process_type: process_type, domains: results.domains, configurations: results.configurations, branches: results.branches, id: shaOrBranch } );
-
+    buildPage(result);
   });
+
+  var buildPage = function(repoData) {
+
+    var shaOrBranch = req.params.sha;
+
+    var githubAPI  = require('github');
+    var github = new githubAPI({ version: '3.0.0' });
+    github.authenticate({ type: 'oauth', token: req.session.user.access_token });
+
+    var options = {
+      repo:   repoData.repo,
+      user:   repoData.user
+    };
+   
+    var process_type = req.urlparams.process_type || 'snapshot';
+
+    async.parallel({
+       configurations: function(callback) {
+
+        var query = {};
+        var collection = new mongodb.Collection(DbManager.getDb(), 'configurations');
+        collection.find(query).toArray(function(err, results) {
+          if (err) return callback(err, null);
+          callback(null, results);
+        });
+
+       },
+       domains: function(callback) {
+
+        var query = {};
+        var collection = new mongodb.Collection(DbManager.getDb(), 'domains');
+        collection.find(query).toArray(function(err, results) {
+          if (err) return callback(err, null);
+          callback(null, results);
+        });
+
+       },
+       branches: function(callback) {
+
+        github.repos.getBranches(options, function(err, data) {
+          callback(null, data);
+        });
+
+       }
+    }, function(err, results) {
+
+      res.render('build_commit', { repo: repoData, process_type: process_type, domains: results.domains, configurations: results.configurations, branches: results.branches, id: shaOrBranch } );
+
+    });
+  }
 
 }
 
 exports.startProcess = function(req, res) {
 
-  var sha                   = req.body.sha;
-  var reference_name        = req.body.reference_name || 'Manual Build ' + sha;
-  var reference_description = req.body.reference_description || '';
-  var environment           = req.body.environment || 'development';
-  var max_attempts          = req.body.max_attempts || 5;
-  var process_type          = req.body.process_type || 'snapshot';
-  var configuration_id      = req.body.configuration_id || null;
-  var domain_id             = req.body.domain_id || null;
+  var id = req.body.id;
 
-  console.log('Domain_id', domain_id);
+  var query = { _id: new mongodb.ObjectID(id) };
+  var collection = new mongodb.Collection(DbManager.getDb(), 'repos');
+  collection.findOne(query, function(err, result) {
+    if (err) return;
 
-  async.parallel({
-    configuration: function(callback) {
-
-      util.getConfiguration(configuration_id, function(err, result) {
-        callback(null, result);
-      });
-
-    },
-    currentProcessIdx: function(callback) {
-
-      // Check if we have the process running.
-      util.getProcessIndexbySHA(sha, function(err, currentProcessIdx) {
-        callback(null, currentProcessIdx);
-      });
-
-    }
-  }, function(err, result) {
-
-      if (result.currentProcessIdx == -1) {
-         // No Love. Since we did not find what we needed. we need to build it.
-
-         var options = {
-           type:        process_type,
-           sha:         sha,
-           name:        reference_name,
-           description: reference_description,
-           max:         max_attempts,
-           environment: environment,
-           owner:       req.session.user.github.name || 'CI',
-           configuration: result.configuration.configurations || {},
-           domain:      domain_id
-         };
-
-         util.logNow({ 
-           type:    'manual', name:    'New ' + process_type.toUpperCase() + ' build', 
-           message: req.session.user.github.name + ' has manually created a ' + process_type + ' build.' 
-         });
-
-         util.setupBuild(options, function(err, data) {
-           res.redirect('/');
-         });
-      } else {
-         // We have it, so restart it. Use the following to rebuild the git status and 
-
-         util.logNow({ 
-           type:    'manual', name:    'Refreshing a ' + process_type.toUpperCase() + ' build', 
-           message: req.session.user.github.name + ' has manually requested to add/refresh a ' + process_type + ' build.' 
-         });
-
-         util.restartBuild(sha, function(err, data) {
-           res.redirect('/');
-         });
-      }
-
+    buildPage(result);
   });
+
+  var buildPage = function(repoData) {
+
+    var sha                   = req.body.sha;
+    var reference_name        = req.body.reference_name || 'Manual Build ' + sha;
+    var reference_description = req.body.reference_description || '';
+    var environment           = req.body.environment || 'development';
+    var max_attempts          = req.body.max_attempts || 5;
+    var process_type          = req.body.process_type || 'snapshot';
+    var configuration_id      = req.body.configuration_id || null;
+    var domain_id             = req.body.domain_id || null;
+
+    var lookup = repoData.repo+'#'+sha;
+
+    async.parallel({
+      configuration: function(callback) {
+
+        util.getConfiguration(configuration_id, function(err, result) {
+          callback(null, result);
+        });
+
+      },
+      currentProcessIdx: function(callback) {
+
+        // Check if we have the process running.
+        util.getProcessIndexbySHA(lookup, function(err, currentProcessIdx) {
+          callback(null, currentProcessIdx);
+        });
+
+      }
+    }, function(err, result) {
+
+        if (result.currentProcessIdx == -1) {
+           // No Love. Since we did not find what we needed. we need to build it.
+
+           var options = {
+             type:        process_type,
+             sha:         lookup,
+             name:        reference_name,
+             description: reference_description,
+             max:         max_attempts,
+             environment: environment,
+             owner:       req.session.user.github.name || 'CI',
+             configuration: result.configuration.configurations || {},
+             domain:      domain_id,
+             repo:        repoData.url
+           };
+
+           util.logNow({ 
+             type:    'manual', name:    'New ' + process_type.toUpperCase() + ' build', 
+             message: req.session.user.github.name + ' has manually created a ' + process_type + ' build.' 
+           });
+
+           util.setupBuild(options, function(err, data) {
+             res.redirect('/');
+           });
+        } else {
+           // We have it, so restart it. Use the following to rebuild the git status and 
+
+           util.logNow({ 
+             type:    'manual', name:    'Refreshing a ' + process_type.toUpperCase() + ' build', 
+             message: req.session.user.github.name + ' has manually requested to add/refresh a ' + process_type + ' build.' 
+           });
+
+           util.restartBuild(sha, function(err, data) {
+             res.redirect('/');
+           });
+        }
+
+    });
+  }
 
 }
 
@@ -361,37 +390,41 @@ exports.catchCommitPayloadv2 = function(req, res) {
   var load = JSON.parse(req.body.payload);
   var sha  = load.ref.replace('refs/heads/', '').trim();
 
-  util.getConfiguration(sha, function(err, configuration) {
+  var lookupValue = load.repository.name+"#"+sha;
+
+  util.getConfiguration(lookupValue, function(err, configuration) {
 
     // Check that we have an available configuration for environment variables.
     if (err || !configuration) {
-      util.logNow({ type: 'hook', name: 'Github Hook Build Failed', message: 'Could not find a configuration (or a default) for ' + sha + '.' });
+      util.logNow({ type: 'hook', name: 'Github Hook Build Failed', message: 'Could not find a configuration (or a default) for ' + lookupValue + '.' });
       return;
     }
 
-    util.getProcessIndexbySHA(sha, function(err, currentProcessIdx) {
+    util.getProcessIndexbySHA(lookupValue, function(err, currentProcessIdx) {
 
-      if (currentProcessIdx == -1) {
+      if (!currentProcessIdx) {
+
          var options = {
            type:        'head',
-           sha:         sha,
+           sha:         lookupValue,
            name:        'Hook Tracking',
-           description: 'Github Web hook delivered ' + sha,
+           description: 'Github Web hook delivered ' + lookupValue,
            environment: 'development',
            owner:       'CI',
-           configuration: configuration.configurations || {}
+           configuration: configuration.configurations || {},
+           repo:         load.repository.url
          };
 
          util.setupBuild(options, function(err, data) {
            if (err) return util.logNow({type: 'hook', name: 'Github Hook Start Failed', message: 'A github webhook requested failed ' + err.message });
            
-           util.logNow({ type: 'hook', name: 'Github Hook Build Complete', message: 'A github webhook requested setup the branch ' + sha + ' ' + load.ref });
+           util.logNow({ type: 'hook', name: 'Github Hook Build Complete', message: 'A github webhook requested setup the branch ' + lookupValue + ' ' + load.ref });
          });
       } else {
-         util.restartBuild(sha, function(err, data) {
+         util.restartBuild(lookupValue, function(err, data) {
            if (err) return util.logNow({type: 'hook', name: 'Github Hook Restart Failed', message: 'A github webhook requested failed ' + err.message });
            
-           util.logNow({ type: 'hook', name: 'Github Hook Rebuild Complete', message: 'A github webhook requested rebuild the branch ' + sha + ' ' + load.ref });
+           util.logNow({ type: 'hook', name: 'Github Hook Rebuild Complete', message: 'A github webhook requested rebuild the branch ' + lookupValue + ' ' + load.ref });
          });
       }
 

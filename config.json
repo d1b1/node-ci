@@ -8,6 +8,20 @@
       "path": "git@github.com:nprds/composer.git"
     }
   ,
+  "repositories":
+    [
+      { "name": "Composer Pro",
+        "repo": "composer",
+        "user": "nprds",
+        "path": "git@github.com:nprds/composer.git"
+      },
+      { "name": "Composer API",
+        "repo": "composerapi",
+        "user": "nprds",
+        "path": "git@github.com:nprds/composerapi.git"
+      }
+    ]
+  ,
   "team": 314116,
   "repoPath": "/tmp",
   "domain": "ci.publicbroadcasting.net"

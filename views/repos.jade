@@ -1,0 +1,53 @@
+extends layout
+
+block header
+
+block content
+ 
+  p The following are configurations settings for managing domains, environment variables
+    and other builds and process settings.
+
+  .row
+    .span12
+      
+      h4 Project Git Repos
+
+      p Reverved domains provide that ability to bind a specific port and domain
+        to a given branch or commit. This provides the ability to keep a given
+        build on a port and out of the available port pool. Additionally it provides the
+        ability to share a persistent domain for a given build.
+
+      table.table-striped.table.table-hover
+       tr
+        th(width="20%")
+         | Name
+        th(width="20%")
+         | Repo
+        th(width="10%")
+         | user
+        th(width="20%")
+         | URL
+        th
+
+        - if (!data || data.length == 0) 
+           tr
+            td(colspan="4")
+             | No Project Repositories defined.
+        - else
+          each config in data
+           tr
+            td
+             | #{config.name} 
+            td
+             | #{config.repo}
+            td
+             | #{config.user}
+            td
+             | #{config.url}
+            td
+              a(href="/repos/#{config._id}/edit", class="btn btn-primary") Edit
+
+      a(class="btn btn-primary btn-small", href="/repos/add") Add Project Repo
+
+
+

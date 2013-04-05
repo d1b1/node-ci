@@ -22,13 +22,13 @@ block content
    
     .row
       .control-group
-        label(class="control-label", for="name") Reference Name
+        label(class="control-label", for="name") Git Repo Link
         .controls
           input(type="text", name="name", value="#{data.name}", placeholder="Enter Name")
 
           span(class="help-block") 
-            p(style="width: 500px;") Enter the branch or commit name you want to use use if this
-              domain needs to bind to a tracked branch.
+            p(style="width: 500px;") This value provides the ability to track either a branch or 
+             or a repo/branch. Example repo#branch or repo#commit
 
     .row
       .control-group

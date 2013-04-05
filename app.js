@@ -3,6 +3,7 @@ var express    = require('express'),
     argv       = require('optimist').argv,
     moment     = require('moment');
     md         = require('node-markdown').Markdown;
+    mongodb    = require('mongodb');
 
  var routes = require('./routes/index');
 
@@ -65,8 +66,9 @@ AppManager = (function() {
       // Pass the session to the app.local scope.
       app.use(function(req, res, next) {
         app.locals.session = req.session;
-        app.locals.page = { title: '' };
-        app.locals.md = md;
+        app.locals.page   = { title: '' };
+        app.locals.md     = md;
+        app.locals.server_config = GLOBAL.config;
         next();
       });
 
@@ -103,21 +105,27 @@ AppManager = (function() {
     // Github Oauth Paths.
     app.get('/github_login',            routes.github.login);
     app.get('/github_cb',               routes.github.callback);
-    app.get('/account',          check, routes.github.userinfo);
+    app.get('/account',                 check, routes.github.userinfo);
 
     // Standard Login
     app.get('/login',                   routes.session.login);
     app.get('/logout',                  routes.session.logout);
 
     // Git Commit Paths.
-    app.get('/git',              check, routes.github.commits);
-    app.get('/branches',         check, routes.github.branches);
-    app.get('/git/commit/:sha',  check, routes.ci.buildCommitSlug);
-    app.get('/teams',            check, routes.github.teamMembers);
+    app.get('/repos',                      check, routes.github.list);
+    app.get('/repos/add',                  check, routes.github.repoAdd);
+    app.get('/repos/:id/edit',             check, routes.github.repoEdit);
+    app.post('/repos/update',              check, routes.github.repoUpdate);
+    app.get('/repos/webhook/:id/:branch',  check, routes.webhook.trigger);
+
+    app.get('/git/:id',               check, routes.github.commits);
+    app.get('/git/:id/branches',      check, routes.github.branches);
+    app.get('/git/commit/:sha',       check, routes.ci.buildCommitSlug);
+    app.get('/teams',                 check, routes.github.teamMembers);
 
     app.get('/git/create/ref/:sha',   check, routes.github.makeReferenceDialog);
     app.post('/git/create/ref',       check, routes.github.makeReferenceAction);
-    app.get('/git/ref/delete/:ref',        check, routes.github.deleteReferenceAction);
+    app.get('/git/ref/delete/:ref',   check, routes.github.deleteReferenceAction);
 
     // Mockups.
     app.get('/plots',              check, routes.data.showChart);
@@ -125,8 +133,10 @@ AppManager = (function() {
     // Process Paths.
     app.get('/sites',            check, routes.ci.sites);
     app.get('/list',             check, routes.ci.listProcesses);
-    app.get('/start/:sha',       check, routes.ci.startDialog);
+
+    app.get('/provision/:id/:sha',   check, routes.ci.startDialog);
     app.post('/start/process',   check, routes.ci.startProcess);
+
     app.get('/stop/:uid/:index', check, routes.ci.stopProcess);
     app.get('/restart/:uid',     check, routes.ci.restartProcess);
     app.get('/cleanup',          check, routes.ci.cleanupProcesses);
@@ -136,7 +146,7 @@ AppManager = (function() {
     app.get('/activity',       check, routes.activity.list);
     app.get('/activity/:id',   check, routes.activity.delete);
 
-    app.get('/slug/delete/:id',       check, routes.ci.slugDelete);
+    app.get('/slug/delete',       check, routes.ci.slugDelete);
 
     // Handles Github Web hooks payloads.
     app.post('/build',                routes.ci.catchCommitPayloadv2);
@@ -150,7 +160,7 @@ AppManager = (function() {
     app.get('/configurations/domain/edit/:id', check, routes.configs.domainEdit);
     app.post('/configurations/domain/update',  check, routes.configs.domainUpdate);
 
-    app.get('/webhook/trigger/:branch',        check, routes.webhook.trigger);
+    
 
     // Routes for Tests.
     app.get('/tests/delete/:id',   check, routes.tests.delete);
@@ -171,6 +181,22 @@ AppManager = (function() {
     app.post('/runs/test/update', check, routes.runs.processTestUpdate);
   };
 
+  var configureCIServer = function(app, db) {
+    
+    var query = {};
+    var collection = new mongodb.Collection(db, 'repos');
+    collection.find(query).toArray(function(err, results) {
+      if (err) return;
+
+      app.CIServer = {
+        repositories: results
+      }
+
+      app.locals.CIServer = app.CIServer;
+    });
+
+  };
+
   return {
     start: function(db) {
       var app = module.exports = express();
@@ -183,6 +209,8 @@ AppManager = (function() {
 
       // Third, not setup the routes.
       configureRoutes(app);
+
+      configureCIServer(app, db);
 
       app.listen(port);
 

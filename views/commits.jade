@@ -4,7 +4,7 @@ block header
 
 block content
  
-  h3 Git Repo Commits
+  h3 Git: #{repo.name} (#{repo.user}/#{repo.repo})
 
   .row
     .span4
@@ -102,9 +102,9 @@ block content
                   span.caret
                 ul(class="dropdown-menu")
                  li
-                   a(href="/git/create/ref/#{commit.sha}") Branch
+                   a(href="/git/create/ref/#{repo._id}#/#{commit.sha}") Branch
                  li 
-                   a(href="/start/#{commit.sha}") Build
+                   a(href="/start/#{repo._id}/#{commit.sha}") Build
 
 
       div(class="pagination pagination-small pagination-right")

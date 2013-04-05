@@ -122,9 +122,11 @@ block content
             p
               | Need to start a build, use this option to review the commit history, choose a branch or commit.
 
-            a(href="/git", class="btn btn-warning") Commit >>
-            &nbsp;
-            a(href="/start/NA?process_type=head", class="btn btn-warning") Branch >>
+            each repo in CIServer.repositories
+              h5 #{repo.name}
+              a(href="/git/#{repo._id}", class="btn btn-warning btn-small") Commit >>
+              &nbsp;
+              a(href="/provision/#{repo._id}/NA?process_type=head", class="btn btn-small btn-warning") Branch >>
 
         .well
           h4 Activity
@@ -182,19 +184,3 @@ block content
                       span.label.label-success Active
           a(href="/sites", class="btn btn-mini") View all Builds
 
-        .well
-          h4 Branches
-          p The following is list of active git repo branches.
-
-          table.table-striped.table.table-hover
-            - if (!branches || branches.length == 0) 
-               tr
-                td(colspan="5")
-                 | Not Available
-            - else
-              each branch, i in branches
-                tr
-                  td 
-                    a(href="/tmp") #{branch.name} 
-
-          a(href="/branches", class="btn ") All

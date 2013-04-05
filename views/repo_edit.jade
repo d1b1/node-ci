@@ -1,0 +1,49 @@
+extends layout
+
+block header
+
+block content
+ 
+  h3 Add/Edit Project Git Repo
+ 
+  .row
+    p.span8 This provides the ability to add or edit an project repo.
+
+
+  form(action="/repos/update", method="post", class="form-horizontal")
+
+    - if (id)
+      input(type="hidden", name="id", value="#{id}")
+   
+    .row
+      .control-group
+        label(class="control-label", for="name") Repo Title
+        .controls
+          input(type="text", name="name", value="#{data.name}", placeholder="Enter Repo Title")
+
+    .row
+      .control-group
+        label(class="control-label", for="repo") Repo Name
+        .controls
+          input(type="text", name="repo", value="#{data.repo}", placeholder="Enter Repo BName")
+
+    .row
+      .control-group
+        label(class="control-label", for="user") Repo User
+        .controls
+          input(type="text", name="user", value="#{data.user}", placeholder="Enter Repo User")
+
+    .row
+      .control-group
+        label(class="control-label", for="url") URL
+        .controls
+          input(type="text", name="url", value="#{data.url}", placeholder="Enter Repo URL")
+
+
+    .row
+      .span10
+          a(type="button", class="btn", href="/repos") Cancel
+          &nbsp;
+          button(type="submit", class="btn btn-warning", name="SubmitButton") Save Configuration
+ 
+

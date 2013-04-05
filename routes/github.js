@@ -128,82 +128,166 @@ exports.userinfo = function(req, res) {
 
 }
 
-exports.commits = function(req, res) {
+exports.repoAdd = function(req, res) {
 
-  if (!GLOBAL.config) {
-    GLOBAL.messages.push({ type: 'error', copy: 'Missing Configuration information.'});
-    res.redirect('/');
-    return;
+  var data = {
+    name:  '',
+    repo:  '',
+    user:  '',
+    url:   ''
   }
 
-  var github = new githubAPI({ version: '3.0.0' });
-  github.authenticate({ type: 'oauth', token: req.session.user.access_token });
+  res.render('repo_edit', { data: data, id: null });
+}
 
-  var options = {
-    repo:   GLOBAL.config.repository.repo,
-    user:   GLOBAL.config.repository.user,
-    since:  moment().subtract('months', 24).format('YYYY-MM-DDTHH:mm:ssZ'),
-    per_page: 30,
-    sha:     req.urlparams.sha || null
+exports.repoEdit = function(req, res) {
+  
+  var id = req.params.id;
+  var query = { _id: new mongodb.ObjectID(id) };
+
+  var collection = new mongodb.Collection(DbManager.getDb(), 'repos');
+  collection.findOne(query, function(err, result) {
+    if (err) return;
+
+    if (!result.configurations) result.configurations = [];
+
+    res.render('repo_edit', { data: result, id: id });
+  });
+
+}
+
+exports.repoUpdate = function(req, res) {
+
+  var id = req.body.id;
+
+  var data = {
+    name:   req.body.name || 'No Name',
+    repo:   req.body.repo || '',
+    user:   req.body.user || '',
+    url:    req.body.url || ''
   };
 
-  console.log(options);
+  if (!id) {
 
-  var async = require('async');
+    var collection = new mongodb.Collection(DbManager.getDb(), 'repos');
+    collection.insert(data, { safe: true}, function(err, result) {
+      if (err) {
+        console.log(err);
+      };
 
-  async.parallel({
-    builds: function(callback) {
+      console.log('Insert', result)
+    });
 
-      forever.list(false, function (err, data) {
+    res.redirect('/repos');
+  } else {
 
-        if (!data) return cb(null, {});
+    var query = { _id: new mongodb.ObjectID( id ) };
 
-        var builds = {};
-        _.each(data, function(o) { 
-          if (o.ui_sha) builds[o.ui_sha] = o;  
+    var collection = new mongodb.Collection(DbManager.getDb(), 'repos');
+    collection.findAndModify(query, 
+      [ ['_id','asc'] ], 
+      { $set : data }, 
+      { safe: true, new: true }, 
+      function(err, result) {
+
+         res.redirect('/repos');
+      });
+  }
+
+}
+
+exports.list = function(req, res) {
+
+  var query = {};
+  var collection = new mongodb.Collection(DbManager.getDb(), 'repos');
+  collection.find(query).toArray(function(err, results) {
+    if (err) return;
+
+    res.render('repos', { data: results });
+  });
+
+}
+
+exports.commits = function(req, res) {
+
+  var id = req.params.id;
+  var query = { _id: new mongodb.ObjectID(id) };
+
+  var collection = new mongodb.Collection(DbManager.getDb(), 'repos');
+  collection.findOne(query, function(err, result) {
+    if (err) return;
+
+    buildPage(result);
+  });
+
+  var buildPage = function(repoData) {
+
+    var github = new githubAPI({ version: '3.0.0' });
+    github.authenticate({ type: 'oauth', token: req.session.user.access_token });
+
+    var options = {
+      repo:   repoData.repo,
+      user:   repoData.user,
+      since:  moment().subtract('months', 24).format('YYYY-MM-DDTHH:mm:ssZ'),
+      per_page: 30,
+      sha:     req.urlparams.sha || null
+    };
+
+    async.parallel({
+      builds: function(callback) {
+
+        forever.list(false, function (err, data) {
+
+          if (!data) return callback(null, {});
+
+          var builds = {};
+          _.each(data, function(o) { 
+            if (o.ui_sha) builds[o.ui_sha] = o;  
+          });
+
+          callback(null, builds);
         });
 
-        callback(null, builds);
-      });
+      },
+      team: function(callback) {
 
-    },
-    team: function(callback) {
+        var opt = {
+          id:    GLOBAL.config.team,
+        };
 
-      var opt = {
-        id:    GLOBAL.config.team,
-      };
+        github.orgs.getTeamMembers(opt, function(err, data) {
+          if (err) return callback(err, null);
+          callback(null, data);
+        });
+        
+      },
+      branches: function(callback) {
 
-      github.orgs.getTeamMembers(opt, function(err, data) {
-        if (err) return callback(err, null);
-        callback(null, data);
-      });
-      
-    },
-    branches: function(callback) {
+        var opt = {
+          repo:   repoData.repo,
+          user:   repoData.user,
+        };
 
-      var opt = {
-        repo:   GLOBAL.config.repository.repo,
-        user:   GLOBAL.config.repository.user,
-      };
+        github.repos.getBranches(opt, function(err, data) {
+          if (err) return callback(err, null);
+          callback(null, data);
+        });
+        
+      },
+      commits: function(callback) {
+        
+        github.repos.getCommits(options, function(err, data) {
+          if (err) return callback(err, null);
+          callback(null, data)
+        });
 
-      github.repos.getBranches(opt, function(err, data) {
-        if (err) return callback(err, null);
-        callback(null, data);
-      });
-      
-    },
-    commits: function(callback) {
-      
-      github.repos.getCommits(options, function(err, data) {
-        if (err) return callback(err, null);
-        callback(null, data)
-      });
+      }
+    }, function(err, data) {
 
-    }
-  }, function(err, data) {
+      res.render('commits', { repo: repoData, activeBuilds: data.builds, current_branch: '', team: data.team, data: data.commits, branches: data.branches, options: options });
+    });
+  }
 
-    res.render('commits', { activeBuilds: data.builds, current_branch: '', team: data.team, data: data.commits, branches: data.branches, options: options });
-  })
 
 }
 
@@ -222,28 +306,43 @@ exports.branches = function(req, res) {
     return;
   }
 
-  var github = new githubAPI({ version: '3.0.0' });
-  github.authenticate({ type: 'oauth', token: req.session.user.access_token });
+  var id = req.params.id;
+  var query = { _id: new mongodb.ObjectID(id) };
 
-  var async = require('async');
-  async.parallel({
-    branches: function(callback) {
+  var collection = new mongodb.Collection(DbManager.getDb(), 'repos');
+  collection.findOne(query, function(err, result) {
+    if (err) return;
 
-      var opt = {
-        repo:   GLOBAL.config.repository.repo,
-        user:   GLOBAL.config.repository.user,
-      };
+    buildPage(result);
+  });
 
-      github.repos.getBranches(opt, function(err, data) {
-        if (err) return callback(err, null);
-        callback(null, data);
-      });
-      
-    }
-  }, function(err, data) {
+  var buildPage = function(repoData) {
 
-    res.render('branches', { current_branch: '', data: data.branches });
-  })
+    var github = new githubAPI({ version: '3.0.0' });
+    github.authenticate({ type: 'oauth', token: req.session.user.access_token });
+
+    var async = require('async');
+    async.parallel({
+      branches: function(callback) {
+
+        var opt = {
+          repo:   repoData.repo,
+          user:   repoData.user,
+        };
+
+        github.repos.getBranches(opt, function(err, data) {
+          if (err) return callback(err, null);
+          callback(null, data);
+        });
+        
+      }
+    }, function(err, data) {
+
+      res.render('branches', { repo: repoData, current_branch: '', data: data.branches });
+    });
+
+  }
+
 
 }
 
