@@ -163,7 +163,7 @@ exports.startProcess = function(req, res) {
       }
     }, function(err, result) {
 
-        if (result.currentProcessIdx == -1) {
+        if (!result.currentProcessIdx) {
            // No Love. Since we did not find what we needed. we need to build it.
 
            var options = {
@@ -195,7 +195,7 @@ exports.startProcess = function(req, res) {
              message: req.session.user.github.name + ' has manually requested to add/refresh a ' + process_type + ' build.' 
            });
 
-           util.restartBuild(sha, function(err, data) {
+           util.restartBuild(lookup, function(err, data) {
              res.redirect('/');
            });
         }
