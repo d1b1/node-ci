@@ -6,6 +6,12 @@ block content
  
   h3 #{repo.user}/#{repo.repo} Branches
 
+  a(href="/heroku/#{repo.repo}/#development/full", class="btn btn-warning") Heroku Web Hook With Git
+
+  br
+  br
+  a(href="/heroku/webhook/menu", class="btn btn-warning") Test Heroku
+
   table.table-striped.table.table-hover
    tr
     th(width="40%")
@@ -32,3 +38,5 @@ block content
            a(href="/provision/#{repo._id}/#{branch.name}?process_type=head", class="btn btn-primary") Build
            &nbsp;
            a(href="/repos/webhook/#{repo._id}/#{branch.name}", class="btn") Trigger Web hook
+           &nbsp;
+           a(href="/heroku/#{repo.repo}/#{branch.name}", class="btn btn-warning") Heroku Web Hook

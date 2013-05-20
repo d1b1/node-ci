@@ -19,3 +19,8 @@ tmp/
 npm-debug.log
 .settings
 logs/
+api
+app
+assets
+public
+spec

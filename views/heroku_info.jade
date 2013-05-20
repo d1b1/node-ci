@@ -1,0 +1,61 @@
+extends layout
+
+block header
+
+block content
+ 
+  h3 Heroku Deployment Process for a Branch
+
+  .row
+    p.span8 This provides the ability to buld and deploy a git repo branch
+      to heroku. You will be provided with a build URL.
+    #{data.path}
+
+  br
+  br
+ 
+  script
+    function setRepoInURL() {
+      var t = $('#repoPath').find(":selected").val();
+
+       var url = '/heroku/test?path=' + t;
+       document.location=url;
+    }
+
+  form(action="/heroku/deploy", method="post", class="form-horizontal")
+
+    .row
+      .control-group
+        label(class="control-label", for="appname") Choose a Repo
+        .controls
+          select(name="repoPath", id="repoPath", onchange="setRepoInURL(this);") 
+            option(value="") Choose...
+            each repo in data.repositories
+              - if (data.path == repo.path) 
+                option(value="#{repo.path}", selected) #{repo.name}
+              - else
+                option(value="#{repo.path}") #{repo.name}
+
+    - if (data.path) 
+      .row
+        .control-group
+          label(class="control-label", for="appname") Choose a Branch
+          .controls
+            select(name="repoBranch") 
+
+              each branch in data.branches
+                option(value="#{branch.name}") #{branch.name}
+
+    - else
+
+    .row
+      .span10
+        | &nbsp;
+
+    .row
+      .span10
+          a(type="button", class="btn", href="/repos") Cancel
+          &nbsp;
+          button(type="submit", class="btn btn-warning", name="SubmitButton") Continue
+ 
+

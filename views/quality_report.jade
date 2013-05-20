@@ -1,0 +1,45 @@
+extends layout
+
+block header
+
+block content
+ 
+  h3 QA Report for All Projects
+
+  a(href="/heroku/test", class="btn btn-warning") Heroku Manual Build
+
+  | &nbsp;
+
+  a(href="/heroku/webhook/composer/development", class="btn btn-warning") Heroku WebHook (Development)
+
+  br
+  br
+
+  table.table-striped.table.table-hover
+   tr
+    th(width="20%")
+     | Repo
+    th(width="20%")
+     | Branch
+    th(width="20%")
+     | Tests
+    th(width="20%")
+     | Coverage %
+
+    - if (!data || data.length == 0) 
+       tr
+        td(colspan="4")
+         | No Branches available.
+    - else
+      each record, i in data
+       tr
+        td
+         | #{record.repo}
+        td
+         | #{record.branch}
+        td
+         a(href="https://travis-ci.org/#{record.temprepo}")
+           img(src="https://travis-ci.org/#{record.temprepo}.png?branch=#{record.branch}", alt="Build Status", style="max-width:100%;")
+        td
+         a(href="https://coveralls.io/r/#{record.temprepo}?branch=#{record.master}")
+           img(src="https://coveralls.io/repos/#{record.temprepo}/badge.png?branch=#{record.branch}", alt="Coverage Status", style="max-width:100%;")
