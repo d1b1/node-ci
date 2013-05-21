@@ -77,14 +77,14 @@ exports.info = function(req, res) {
 
       res.render('heroku_info', { data: data }, function(err, html) {
         if (err) return res.render('error', { title: '', message: err.message });
-        res.end(html);
+        res.send(html);
       });
     });
 
   } else {
     res.render('heroku_info', { data: data }, function(err, html) {
       if (err) return res.render('error', { title: '', message: err.message });
-      res.end(html);
+      res.send(html);
     });
   }
 
