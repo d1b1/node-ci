@@ -1,0 +1,16 @@
+extends layout
+
+block header
+
+- if (typeof(title) !== 'undefined')
+  title = ''
+
+- if (typeof(message) !== 'undefined')
+  message = ''
+
+block content
+ 
+  h2 Oops, Error Encountered: #{title || 'No Title'}
+
+  p #{message || 'No Description'}
+

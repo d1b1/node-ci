@@ -159,8 +159,6 @@ AppManager = (function() {
     app.get('/configurations/domain/add',      check, routes.configs.domainAdd);
     app.get('/configurations/domain/edit/:id', check, routes.configs.domainEdit);
     app.post('/configurations/domain/update',  check, routes.configs.domainUpdate);
-
-
     // Routes for Tests.
     app.get('/tests/delete/:id',   check, routes.tests.delete);
     app.get('/tests',              check, routes.tests.list);
@@ -181,6 +179,12 @@ AppManager = (function() {
 
     app.get('/setup',             check, routes.system.setup);
     app.post('/setup/update',     check, routes.system.update);
+
+    // Heroku Related Features.
+    app.get('/heroku/test',        check, routes.heroku.info );
+    app.get('/quality/report',     check, routes.quality.list );
+    app.post('/heroku/deploy',     check, routes.heroku.deploy );
+    app.post('/build2',            routes.heroku.catchCommitPayloadv3 );
   };
 
   var configureCIServer = function(app, db) {

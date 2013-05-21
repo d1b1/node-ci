@@ -38,8 +38,8 @@ block content
         td
          | #{record.branch}
         td
-         a(href="https://travis-ci.org/#{record.temprepo}")
+         a(href="https://travis-ci.org/#{record.temprepo}", target="_blank")
            img(src="https://travis-ci.org/#{record.temprepo}.png?branch=#{record.branch}", alt="Build Status", style="max-width:100%;")
         td
-         a(href="https://coveralls.io/r/#{record.temprepo}?branch=#{record.master}")
+         a(href="https://coveralls.io/r/#{record.temprepo}?branch=#{record.master}", target="_blank")
            img(src="https://coveralls.io/repos/#{record.temprepo}/badge.png?branch=#{record.branch}", alt="Coverage Status", style="max-width:100%;")
