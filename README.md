@@ -1,11 +1,10 @@
 ### Node CI Server
 
-This is a UI to support node.js development. It provides the ability to run multiple node processes, using either a
-git repo branch HEAD (persistent), or commit specific builds. Persistent branch builds are kept up to date with each
-commit using a github Web hook. Commit specific builds are managed by the UI and redesigned to support QA review
-and testing. 
+This is a UI to support node.js development. It acts a CI hub for heroku, travis-ci and coveralls.io. It 
+provides a hostable hub to aggregate the CI metrics and provides a single point of entry into each of the 
+CI process; testing, persistance, coverage and regression. 
 
-* Provide a front end for the forever node service.
+* Provide a front end for the forever node service. (Dropping this)
 * Github integration.
 * CI hooks for testing.
 
