@@ -110,6 +110,7 @@ exports.deploy = function(req, res) {
   var data = {
     repository: {
       name: gitData.repo.name,
+      owner: { name: gitData.repo.user },
       url: repoPath
     }, 
     ref: 'refs/heads/' + req.body.repoBranch 
@@ -156,9 +157,17 @@ exports.deploy = function(req, res) {
 */
 exports.catchCommitPayloadv3 = function(req, res) {
 
+  console.log('Got a webhook request.')
+
   var load   = JSON.parse(req.body.payload);
   var repo   = load.repository;
   var branch = load.ref.replace('refs/heads/', '').trim();
+
+  var gitURL = 'git@github.com:' + repo.owner.name + '/' + repo.name
+
+  console.log('GIT Payload', load);
+
+  console.log('GIT URL ' + gitURL);
 
   // TODO: Add in form submit valication.
   // TODO: Add a check agains accepted Repos to prevent outside payloads.
@@ -168,6 +177,8 @@ exports.catchCommitPayloadv3 = function(req, res) {
 
       // TODO: Move the mmp string to a configuration value.
       var appName = 'mmp-' + repo.name + '-' + branch;
+
+      console.log('Looking for ' + appName);
 
       herokuAppGet(appName, function(err, data) {
         if (err) return callback(err);
@@ -188,9 +199,12 @@ exports.catchCommitPayloadv3 = function(req, res) {
     },
     gitDir: function(callback) {
       // Set the folder where we might find the repo.
-      var dir = GLOBAL.root + '/tmp/' + repo.name;
+      var dir = GLOBAL.root + '/tmp/' + gitURL;
 
-      cloneFetchGITRepo(repo.url, dir, function(err, data) {
+      console.log('Looking for Local Git Repo')
+
+      cloneFetchGITRepo(gitURL, dir, function(err, data) {
+        console.log('Clone/Fetch Result', err, data)
         if (err) return callback(null);
         callback(null, dir);
       });
@@ -202,12 +216,17 @@ exports.catchCommitPayloadv3 = function(req, res) {
     var localGitPath = results.gitDir;
     var branchName   = branch;
 
+    console.log('Async Results', results);
+
     if (!results.app.status) {
+      console.log('Stopping in the App Status check', results.app);
       return res.send(results.app);
     }
 
+    console.log('Starting the final phase');
+
     pushToHeroku(herokuGITUri, localGitPath, branchName, function(err, stdout, stderr) {
-      // console.log('Error', err);
+      console.log('Error', err);
       // console.log('STDout', stdout);
       // console.log('STDerr', stderr);
 
@@ -217,6 +236,8 @@ exports.catchCommitPayloadv3 = function(req, res) {
         stderr: stderr
       }
     
+      console.log('Final Push Data', data);
+
       return res.send(data);
     });
   });
@@ -237,11 +258,17 @@ exports.catchCommitPayloadv3 = function(req, res) {
 */
 var cloneFetchGITRepo = function(gitUri, gitDir, cb) {
 
+  console.log('Looking for ' + gitDir + ' (' + gitUri + ')');
+
   if (require('fs').existsSync(gitDir)) { 
+    console.log('Found a folder with the repo ' + gitDir);
+
     var cmd = 'GIT_WORK_TREE=' + gitDir + '; ' +
               'git --git-dir=' + gitDir + '/.git --work-tree=' + gitDir + ' fetch origin';
   } else {
+    console.log('Cloning the Repo ' + gitDir);
     var cmd = 'git clone ' + gitUri + ' ' + gitDir + ';'
+    console.log('Clone Command ' + cmd);
   }
 
   var exec = require('child_process').exec;
@@ -282,6 +309,8 @@ var pushToHeroku = function(herokuGitUri, localGitPath, branchName, cb) {
 */
 var herokuAppGet = function(name, cb) {
 
+  name = name.toLowerCase();
+
   if (process.env.HEROKU_API == '' || !process.env.HEROKU_API) {
     console.log('No process.env.HEROKU_API defined. Stopping Heroku GET /apps/:id.');
     cb(null, null);
@@ -308,6 +337,10 @@ var herokuAppGet = function(name, cb) {
       }
       
       var data = JSON.parse(chunkData);
+      // This will tell the final asynch process that all is well.
+      data.status = true;
+
+      console.log('Found the APP', data) 
       cb(null, data);
     });
   });
@@ -351,6 +384,8 @@ var herokuAppPost = function(opts, cb) {
       'Authorization': 'Basic ' + new Buffer(':' + (process.env.HEROKU_API)).toString("base64")
     }
   };
+
+  console.log('Heroku POST /apps call', options)
 
   var call = https.request(options, function(result) {
     result.setEncoding('utf8');
