@@ -412,6 +412,39 @@ var herokuAppPost = function(opts, cb) {
 
 }
 
+exports.herokuDetails = function(req, res) {
+
+  var async = require("async");
+
+  async.parallel({
+    app: function(callback) {
+      getherokuAnApp(req.params.id, function(err, data) {
+        callback(err, data);
+      });
+    },
+    users: function(callback) {
+      getherokuContributors(req.params.id, function(err, data) {
+        callback(err, data);
+      });
+    },
+    variables: function(callback) {
+      getherokuConfig(req.params.id, function(err, data) {
+        callback(err, data);
+      });
+    },
+    addons: function(callback) {
+      getherokuAddons(req.params.id, function(err, data) {
+        callback(err, data);
+      });
+    }
+  }, function(err, data) {
+
+    res.render('heroku_details', { app_name: req.params.id, data: data });
+
+  });
+
+}
+
 exports.herokuAddons = function(req, res) {
 
   // TODO Get the APP for display in the header.
@@ -446,6 +479,52 @@ exports.herokuList = function(req, res) {
   });
   
 }
+
+var getherokuAnApp = function(id, cb) {
+
+  if (process.env.HEROKU_API == '' || !process.env.HEROKU_API) {
+    console.log('No process.env.HEROKU_API defined. Stopping Heroku GET /apps/:id.');
+    cb(null, null);
+    return;
+  }
+
+  var options = {
+    host: "api.heroku.com",
+    path: "/apps/" + id,
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      "Accept": "application/vnd.heroku+json; version=3",
+      "Authorization": 'Basic ' + new Buffer(":" + (process.env.HEROKU_API)).toString('base64'),
+    }
+  };
+
+  var call = https.request(options, function(result) {
+    result.setEncoding('utf8');
+    var chunkData = '';
+    result.on('data', function(chunk) { chunkData = chunkData + chunk; });
+    result.on('end', function() {
+      if (result.statusCode == 404 && chunkData == 'App not found.') {
+        return cb(null, null);
+      }
+      
+      var data = JSON.parse(chunkData);
+      // This will tell the final asynch process that all is well.
+      data.status = true;
+
+      cb(null, data);
+    });
+  });
+
+  call.on('error', function(err) { 
+    console.log('Error in webhook handler', err); 
+    cb(err);
+  });
+
+  call.end();
+
+}
+
 
 var getherokuAddons = function(id, cb) {
 

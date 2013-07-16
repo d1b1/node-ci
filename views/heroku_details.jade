@@ -1,0 +1,105 @@
+extends layout
+
+block header
+
+block content
+
+    .row-fluid
+      .span7
+
+        h3 #{data.app.name}
+
+    .row-fluid
+      .span7
+
+        table.table-striped.table.table-hover
+         tr
+           td Name
+           td=data.app.name
+         tr
+           td Owner
+           td=data.app.owner.email
+         tr
+         tr
+           td Updated
+           td=data.app.updated_at
+         tr
+           td Stack
+           td=data.app.stack
+         tr
+           td Git
+           td=data.app.git_url
+         tr
+           td App URL
+           td=data.app.web_url
+         tr
+           td Status
+           td=data.app.status
+         tr
+           td Build Pack
+           td=data.app.buildpack_provided_description
+
+      .span4
+
+        h4 Contributors
+
+        table.table-striped.table.table-hover
+         tr
+          th(width="20%")
+           | Email
+          th(width="20%")
+
+          - if (!data || data.length == 0) 
+             tr
+              td(colspan="5")
+               | No processes started.
+          - else
+            each rec in data.users
+             tr
+              td=rec.user.email
+              td
+               button(class="btn btn-small", onclick="alert('Coming soon...');") Remove
+
+        h4 App Addons
+
+        table.table-striped.table.table-hover
+         tr
+          th
+           | Plan Name
+
+          - if (!data || data.length == 0) 
+             tr
+              td(colspan="5")
+               | No processes started.
+          - else
+            each addon in data.addons
+             tr
+              td=addon.plan.name
+
+    .row-fluid
+      .span11
+
+        table.table-striped.table.table-hover
+         tr
+          th(width="20%")
+           | Name
+          th(width="40%")
+           | Value
+          th(width="20%")
+
+          - if (!data || data.length == 0) 
+             tr
+              td(colspan="5")
+               | No processes started.
+          - else
+            each val, i in data.variables
+             tr
+              td=i
+              td=val
+              td
+               button(class="btn btn-small", onclick="alert('Coming soon...');") Remove
+               | &nbsp;
+               button(class="btn btn-small", onclick="alert('Coming soon...');") Edit
+
+
+        a(class="btn btn-primary", href="/heroku/apps") Return to App List

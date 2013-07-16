@@ -47,6 +47,8 @@ block content
               td=app.git_url
               td(title=moment(app.updated_at).format("MM/DD/YY HH:mm:ss")) #{moment(app.updated_at).fromNow()}
               td
+                a(class="btn btn-small", href="/heroku/app/#{app.name}/details") Details 
+                | &nbsp;
                 a(class="btn btn-small", href="/heroku/app/#{app.name}/addons") Addon 
                 | &nbsp;
                 a(class="btn btn-small", href="/heroku/app/#{app.name}/contributors") Users 

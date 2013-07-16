@@ -181,6 +181,7 @@ AppManager = (function() {
     app.post('/setup/update',     check, routes.system.update);
 
     // Heroku Related Features.
+    app.get("/heroku/app/:id/details", check, routes.heroku.herokuDetails );
     app.get("/heroku/app/:id/config", check, routes.heroku.herokuConfigs );
     app.get("/heroku/app/:id/contributors", check, routes.heroku.herokuContributors );
     app.get("/heroku/app/:id/addons", check, routes.heroku.herokuAddons );
