@@ -1,7 +1,7 @@
 {
   "name": "node-ci",
   "description": "Node.js CI Server. Provides local or server support for git integration and CI processes.",
-  "version": "0.0.5",
+  "version": "0.1.0",
   "author": "d1b1 <stephan.smith.bc93@gmail.com>",
   "maintainers": [
     "d1b1 <stephan.smith.bc93@gmail.com>"
