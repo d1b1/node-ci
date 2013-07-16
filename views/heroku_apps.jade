@@ -1,0 +1,54 @@
+extends layout
+
+block header
+
+block content
+
+    h3 Heroku Apps
+
+    p The following is a list of app/sites on Heroku. The CI Server will attempt to build 
+      a site, or update a site for each branch submitted. If you want more immediate control
+      of a heroku site, for testing, tweaks or debugging you can use the 'git remote add ' + git URL.
+      The heroku CLI will then allow you to access app using 'heroku COMMAND --remote [remoteName]'.
+
+    br
+
+    .row-fluid
+      .span12
+
+        table.table-striped.table.table-hover
+         tr
+          th(width="20%")
+           | Based on
+          th(width="10%")
+           | Dyno/Workers
+
+          th(width="10%")
+           | Stack
+          th(width="30%")
+           | Git
+          th(width="10%")
+           | Updated
+          th(width="30%")
+
+          - if (!data || data.length == 0) 
+             tr
+              td(colspan="5")
+               | No processes started.
+          - else
+            each app in data
+             tr
+              td 
+                a(href="#{app.web_url}", target="_blank")=app.name
+              td
+                | Dynos: #{app.dynos}
+                | Workers: #{app.workers}
+              td=app.stack
+              td=app.git_url
+              td(title=moment(app.updated_at).format("MM/DD/YY HH:mm:ss")) #{moment(app.updated_at).fromNow()}
+              td
+                a(class="btn btn-small", href="/heroku/app/#{app.name}/contributors") Users 
+                | &nbsp;
+                a(class="btn btn-small", href="/heroku/app/#{app.name}/config") Details 
+                | &nbsp;
+                a(class="btn btn-small btn-primary", href="#{app.web_url}", target="_blank") Open

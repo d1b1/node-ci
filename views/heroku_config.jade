@@ -1,0 +1,45 @@
+extends layout
+
+block header
+
+block content
+
+    h3 Heroku Config Variables for '#{app_name}'
+
+    p The following is a list of app/sites on Heroku. The CI Server will attempt to build 
+      a site, or update a site for each branch submitted. If you want more immediate control
+      of a heroku site, for testing, tweaks or debugging you can use the 'git remote add ' + git URL.
+      The heroku CLI will then allow you to access app using 'heroku COMMAND --remote [remoteName]'.
+
+    br
+
+    .row-fluid
+      .span12
+        button(class="btn btn-small", onclick="alert('Coming soon...');") Add New Config Var
+
+        br
+        br
+
+        table.table-striped.table.table-hover
+         tr
+          th(width="20%")
+           | Name
+          th(width="40%")
+           | Value
+          th(width="20%")
+
+          - if (!data || data.length == 0) 
+             tr
+              td(colspan="5")
+               | No processes started.
+          - else
+            each val, i in data
+             tr
+              td=i
+              td=val
+              td
+               button(class="btn btn-small", onclick="alert('Coming soon...');") Remove
+               | &nbsp;
+               button(class="btn btn-small", onclick="alert('Coming soon...');") Edit
+
+        a(class="btn btn-primary", href="/heroku/apps") Return to App List

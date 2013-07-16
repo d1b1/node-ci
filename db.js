@@ -13,7 +13,7 @@ DbManager = (function() {
   var _dbPass = mongoCon.auth_ex[1];
 
   var _server = new mongodb.Server(mongoCon.hostname, parseInt(mongoCon.port), { safe: false });
-  var db     = new mongodb.Db(_dbname, _server, { native_parser: true });
+  var db     = new mongodb.Db(_dbname, _server, { safe: true, native_parser: true });
 
   return {
     getDb: function() {

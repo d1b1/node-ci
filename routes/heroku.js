@@ -411,3 +411,163 @@ var herokuAppPost = function(opts, cb) {
   call.end();
 
 }
+
+exports.herokuContributors = function(req, res) {
+
+  // TODO Get the APP for display in the header.
+  getherokuContributors(req.params.id, function(err, data) {
+    res.render('heroku_contributors', { app_name: req.params.id, data: data });
+  });
+
+}
+
+exports.herokuConfigs = function(req, res) {
+
+  // TODO Get the APP for display in the header.
+  getherokuConfig(req.params.id, function(err, data) {
+    res.render('heroku_config', { app_name: req.params.id, data: data });
+  });
+
+}
+
+exports.herokuList = function(req, res) {
+
+  getherokuList(function(err, data) {
+    res.render('heroku_apps', { data: data });
+  });
+  
+}
+
+var getherokuContributors = function(id, cb) {
+
+  if (process.env.HEROKU_API == '' || !process.env.HEROKU_API) {
+    console.log('No process.env.HEROKU_API defined. Stopping Heroku GET /apps/:id.');
+    cb(null, null);
+    return;
+  }
+
+  var options = {
+    host: "api.heroku.com",
+    path: "/apps/" + id + "/collaborators",
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      "Accept": "application/vnd.heroku+json; version=3",
+      "Authorization": 'Basic ' + new Buffer(":" + (process.env.HEROKU_API)).toString('base64'),
+    }
+  };
+
+  var call = https.request(options, function(result) {
+    result.setEncoding('utf8');
+    var chunkData = '';
+    result.on('data', function(chunk) { chunkData = chunkData + chunk; });
+    result.on('end', function() {
+      if (result.statusCode == 404 && chunkData == 'App not found.') {
+        return cb(null, null);
+      }
+      
+      var data = JSON.parse(chunkData);
+      // This will tell the final asynch process that all is well.
+      data.status = true;
+
+      cb(null, data);
+    });
+  });
+
+  call.on('error', function(err) { 
+    console.log('Error in webhook handler', err); 
+    cb(err);
+  });
+
+  call.end();
+
+}
+
+var getherokuConfig = function(id, cb) {
+
+  if (process.env.HEROKU_API == '' || !process.env.HEROKU_API) {
+    console.log('No process.env.HEROKU_API defined. Stopping Heroku GET /apps/:id.');
+    cb(null, null);
+    return;
+  }
+
+  var options = {
+    host: "api.heroku.com",
+    path: "/apps/" + id + "/config-vars",
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      "Accept": "application/vnd.heroku+json; version=3",
+      "Authorization": 'Basic ' + new Buffer(":" + (process.env.HEROKU_API)).toString('base64'),
+    }
+  };
+
+  var call = https.request(options, function(result) {
+    result.setEncoding('utf8');
+    var chunkData = '';
+    result.on('data', function(chunk) { chunkData = chunkData + chunk; });
+    result.on('end', function() {
+      if (result.statusCode == 404 && chunkData == 'App not found.') {
+        return cb(null, null);
+      }
+      
+      var data = JSON.parse(chunkData);
+      // This will tell the final asynch process that all is well.
+      data.status = true;
+
+      cb(null, data);
+    });
+  });
+
+  call.on('error', function(err) { 
+    console.log('Error in webhook handler', err); 
+    cb(err);
+  });
+
+  call.end();
+
+}
+
+var getherokuList = function(cb) {
+
+  if (process.env.HEROKU_API == '' || !process.env.HEROKU_API) {
+    console.log('No process.env.HEROKU_API defined. Stopping Heroku GET /apps/:id.');
+    cb(null, null);
+    return;
+  }
+
+  var options = {
+    host: "api.heroku.com",
+    path: "/apps",
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": 'Basic ' + new Buffer(":" + (process.env.HEROKU_API)).toString('base64'),
+    }
+  };
+
+  var call = https.request(options, function(result) {
+    result.setEncoding('utf8');
+    var chunkData = '';
+    result.on('data', function(chunk) { chunkData = chunkData + chunk; });
+    result.on('end', function() {
+      if (result.statusCode == 404 && chunkData == 'App not found.') {
+        return cb(null, null);
+      }
+      
+      var data = JSON.parse(chunkData);
+      // This will tell the final asynch process that all is well.
+      data.status = true;
+ 
+      cb(null, data);
+    });
+  });
+
+  call.on('error', function(err) { 
+    console.log('Error in webhook handler', err); 
+    cb(err);
+  });
+
+  call.end();
+
+}

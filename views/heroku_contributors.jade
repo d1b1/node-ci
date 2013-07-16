@@ -1,0 +1,40 @@
+extends layout
+
+block header
+
+block content
+
+    h3 Contributors for '#{app_name}'
+
+    p The following is a list of contributors who have access to this project. 
+
+    br
+
+    .row-fluid
+      .span12
+        button(class="btn btn-small", onclick="alert('Coming soon...');") Add New Contributor
+
+        br
+        br
+
+        table.table-striped.table.table-hover
+         tr
+          th(width="20%")
+           | Email
+          th(width="40%")
+           | User ID
+          th(width="20%")
+
+          - if (!data || data.length == 0) 
+             tr
+              td(colspan="5")
+               | No processes started.
+          - else
+            each rec in data
+             tr
+              td=rec.user.email
+              td=rec.id
+              td
+               button(class="btn btn-small", onclick="alert('Coming soon...');") Remove
+
+        a(class="btn btn-primary", href="/heroku/apps") Return to App List

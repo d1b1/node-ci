@@ -181,10 +181,15 @@ AppManager = (function() {
     app.post('/setup/update',     check, routes.system.update);
 
     // Heroku Related Features.
-    app.get('/heroku/test',        check, routes.heroku.info );
+    app.get("/heroku/app/:id/config", check, routes.heroku.herokuConfigs );
+    app.get("/heroku/app/:id/contributors", check, routes.heroku.herokuContributors );
+    app.get("/heroku/apps",        check, routes.heroku.herokuList );
+  
+    app.get("/heroku/test",        check, routes.heroku.info );
     app.get('/quality/report',     check, routes.quality.list );
     app.post('/heroku/deploy',     check, routes.heroku.deploy );
     app.post('/build2',            routes.heroku.catchCommitPayloadv3 );
+    
   };
 
   var configureCIServer = function(app, db) {

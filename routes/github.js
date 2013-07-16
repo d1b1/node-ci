@@ -8,7 +8,7 @@ var url        = require('url'),
     forever    = require('forever');
 
 exports.login = function(req, res) { 
-  var url = 'https://github.com/login/oauth/authorize?state=222&client_id=' + process.env.GITHUB_CLIENTID + '&scope=user,repo';
+  var url = 'https://github.com/login/oauth/authorize?state=333&client_id=' + process.env.GITHUB_CLIENTID + '&scope=user,repo';
   res.redirect(url);
 }
 
@@ -27,26 +27,26 @@ exports.callback = function(req, res) {
   var jsonData = JSON.stringify(data);
 
   var options = {
-    hostname    : 'github.com',
+    hostname    : "github.com",
     port        : 443,
-    path        : '/login/oauth/access_token',
-    contenttype : 'application/json',
-    datatype    : 'json',
-    method      : 'POST',
+    path        : "/login/oauth/access_token",
+    contenttype : "application/json",
+    datatype    : "json",
+    method      : "POST",
     headers     : { 
-      'Content-Type': 'application/json', 
-      'Content-Length': jsonData.length,
-      'X-OAuth-Scopes': 'repo',
-      'X-Accepted-OAuth-Scopes': 'repo'
+      "Content-Type": "application/json", 
+      "Content-Length": jsonData.length,
+      "X-OAuth-Scopes": "repo",
+      "X-Accepted-OAuth-Scopes": "repo"
     }
   };
 
-  var https = require('https');
+  var https = require("https");
 
   var call = https.request(options, function( result ) {
-    result.setEncoding('utf8');
+    result.setEncoding("utf8");
 
-    var chunkData = '';
+    var chunkData = "";
     result.on('data', function(chunk) {
       chunkData = chunkData + chunk
     });
