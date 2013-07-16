@@ -290,7 +290,7 @@ var cloneFetchGITRepo = function(gitUri, gitDir, cb) {
 var pushToHeroku = function(herokuGitUri, localGitPath, branchName, cb) {
 
   var cmd = 'GIT_WORK_TREE=' + localGitPath + '; ' + 
-            'git --git-dir=' + localGitPath + '/.git push  '+ herokuGitUri + ' ' + branchName + ':master --force';
+            'git --git-dir=' + localGitPath + '/.git push  '+ herokuGitUri + ' origin/' + branchName + ':master --force';
 
   console.log('Push Command to Heroku: ', cmd);
   var exec = require('child_process').exec;
