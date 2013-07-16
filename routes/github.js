@@ -7,8 +7,16 @@ var url        = require('url'),
     util       = require('./util');
     forever    = require('forever');
 
+var GITHUB_PREFIX = process.env.GITHUB_PREFIX || "";
+if (GITHUB_PREFIX) GITHUB_PREFIX = GITHUB_PREFIX + "_";
+
+var GITHUB_CLIENTID      = process.env[ GITHUB_PREFIX + "GITHUB_CLIENTID"];
+var GITHUB_CLIENT_SECRET = process.env[ GITHUB_PREFIX + "GITHUB_CLIENT_SECRET"];
+
+console.log("GITHUB_PREFIX", GITHUB_PREFIX, GITHUB_CLIENTID);
+
 exports.login = function(req, res) { 
-  var url = 'https://github.com/login/oauth/authorize?state=333&client_id=' + process.env.GITHUB_CLIENTID + '&scope=user,repo';
+  var url = 'https://github.com/login/oauth/authorize?state=333&client_id=' + GITHUB_CLIENTID + '&scope=user,repo';
   res.redirect(url);
 }
 
@@ -17,11 +25,11 @@ exports.callback = function(req, res) {
   var queryURL = url.parse(req.url, true);
 
   var data = {
-    client_id:     process.env.GITHUB_CLIENTID,
-    client_secret: process.env.GITHUB_CLIENT_SECRET,
+    client_id:     GITHUB_CLIENTID,
+    client_secret: GITHUB_CLIENT_SECRET,
     code: queryURL.query['code'],
     scope: 'repo,user,public_repo',
-    state: 222
+    state: 333
   }
 
   var jsonData = JSON.stringify(data);
@@ -63,6 +71,7 @@ exports.callback = function(req, res) {
         type: 'oauth',
         token: jsonchunkData.access_token
       });
+
 
       async.series({
         user: function(callback) {

@@ -412,6 +412,15 @@ var herokuAppPost = function(opts, cb) {
 
 }
 
+exports.herokuAddons = function(req, res) {
+
+  // TODO Get the APP for display in the header.
+  getherokuAddons(req.params.id, function(err, data) {
+    res.render('heroku_addons', { app_name: req.params.id, data: data });
+  });
+
+}
+
 exports.herokuContributors = function(req, res) {
 
   // TODO Get the APP for display in the header.
@@ -436,6 +445,51 @@ exports.herokuList = function(req, res) {
     res.render('heroku_apps', { data: data });
   });
   
+}
+
+var getherokuAddons = function(id, cb) {
+
+  if (process.env.HEROKU_API == '' || !process.env.HEROKU_API) {
+    console.log('No process.env.HEROKU_API defined. Stopping Heroku GET /apps/:id.');
+    cb(null, null);
+    return;
+  }
+
+  var options = {
+    host: "api.heroku.com",
+    path: "/apps/" + id + "/addons",
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      "Accept": "application/vnd.heroku+json; version=3",
+      "Authorization": 'Basic ' + new Buffer(":" + (process.env.HEROKU_API)).toString('base64'),
+    }
+  };
+
+  var call = https.request(options, function(result) {
+    result.setEncoding('utf8');
+    var chunkData = '';
+    result.on('data', function(chunk) { chunkData = chunkData + chunk; });
+    result.on('end', function() {
+      if (result.statusCode == 404 && chunkData == 'App not found.') {
+        return cb(null, null);
+      }
+      
+      var data = JSON.parse(chunkData);
+      // This will tell the final asynch process that all is well.
+      data.status = true;
+
+      cb(null, data);
+    });
+  });
+
+  call.on('error', function(err) { 
+    console.log('Error in webhook handler', err); 
+    cb(err);
+  });
+
+  call.end();
+
 }
 
 var getherokuContributors = function(id, cb) {

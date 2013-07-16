@@ -183,6 +183,8 @@ AppManager = (function() {
     // Heroku Related Features.
     app.get("/heroku/app/:id/config", check, routes.heroku.herokuConfigs );
     app.get("/heroku/app/:id/contributors", check, routes.heroku.herokuContributors );
+    app.get("/heroku/app/:id/addons", check, routes.heroku.herokuAddons );
+
     app.get("/heroku/apps",        check, routes.heroku.herokuList );
   
     app.get("/heroku/test",        check, routes.heroku.info );
