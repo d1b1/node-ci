@@ -2,8 +2,9 @@ var http  = require('http');
 var https = require('https');
 var _     = require('underscore');
 var async = require('async');
-var githubAPI = require('github');
-
+var githubAPI = require("github");
+var heroku    = require("../heroku");
+  
 /*
   This function will parse a github path into its parts.
 
@@ -418,29 +419,27 @@ exports.herokuDetails = function(req, res) {
 
   async.parallel({
     app: function(callback) {
-      getherokuAnApp(req.params.id, function(err, data) {
+      heroku.apps.get({ id: req.params.id}, function(err, data) {
         callback(err, data);
       });
     },
     users: function(callback) {
-      getherokuContributors(req.params.id, function(err, data) {
-        callback(err, data);
+      heroku.apps.collaborators({ id: req.params.id }, function(err, data) {
+          callback(err, data);
       });
     },
     variables: function(callback) {
-      getherokuConfig(req.params.id, function(err, data) {
-        callback(err, data);
+      heroku.apps.configs({ id: req.params.id }, function(err, data) {
+          callback(err, data);
       });
     },
     addons: function(callback) {
-      getherokuAddons(req.params.id, function(err, data) {
-        callback(err, data);
+      heroku.apps.addons({ id: req.params.id }, function(err, data) {
+          callback(err, data);
       });
     }
   }, function(err, data) {
-
     res.render('heroku_details', { app_name: req.params.id, data: data });
-
   });
 
 }
@@ -474,10 +473,10 @@ exports.herokuConfigs = function(req, res) {
 
 exports.herokuList = function(req, res) {
 
-  getherokuList(function(err, data) {
-    res.render('heroku_apps', { data: data });
-  });
-  
+  heroku.apps.all({}, function(err, data) {
+     res.render('heroku_apps', { data: data });
+   });
+
 }
 
 var getherokuAnApp = function(id, cb) {

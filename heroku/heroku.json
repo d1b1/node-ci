@@ -1,0 +1,135 @@
+{
+    "defines": {
+        "constants": {
+            "name": "Heroku",
+            "description": "Braque Heroku API definition.",
+            "protocol": "https",
+            "host": "api.heroku.com",
+            "port": 443,
+            "dateFormat": "YYYY-MM-DDTHH:MM:SSZ",
+            "requestFormat": "json"
+        },
+        "response-headers": [
+            "X-RateLimit-Limit",
+            "X-RateLimit-Remaining",
+            "X-Oauth-Scopes",
+            "Link"
+        ],
+        "params": {
+            "files": {
+                "type": "Json",
+                "required": true,
+                "validation": "",
+                "invalidmsg": "",
+                "description": "Files that make up this gist. The key of which should be a required string filename and the value another required hash with parameters: 'content'"
+            },
+            "user": {
+                "type": "String",
+                "required": true,
+                "validation": "",
+                "invalidmsg": "",
+                "description": ""
+            },
+            "description": {
+                "type": "String",
+                "required": false,
+                "validation": "",
+                "invalidmsg": "",
+                "description": ""
+            },
+            "id": {
+                "type": "String",
+                "required": true,
+                "validation": "",
+                "invalidmsg": "",
+                "description": ""
+            },
+            "number": {
+                "type": "Number",
+                "required": true,
+                "validation": "^[0-9]+$",
+                "invalidmsg": "",
+                "description": ""
+            },
+            "name": {
+                "type": "String",
+                "required": true,
+                "validation": "",
+                "invalidmsg": "",
+                "description": ""
+            },
+            "body": {
+                "type": "String",
+                "required": true,
+                "validation": "",
+                "invalidmsg": "",
+                "description": ""
+            },
+            "page": {
+                "type": "Number",
+                "required": false,
+                "validation": "^[0-9]+$",
+                "invalidmsg": "",
+                "description": "Page number of the results to fetch."
+            },
+            "per_page": {
+                "type": "Number",
+                "required": false,
+                "validation": "^[0-9]+$",
+                "invalidmsg": "",
+                "description": "A custom page size up to 100. Default is 30."
+            }
+        }
+    },
+
+    "apps": {
+        "all": {
+            "url": "/apps",
+            "method": "GET",
+            "params": {}
+        },
+        "get": {
+            "url": "/apps/:id",
+            "method": "GET",
+            "params": {
+                "$id": null
+            }
+        },
+        "configs": {
+            "url": "/apps/:id/config-vars",
+            "method": "GET",
+            "params": {
+                "$id": null
+            }
+        },
+        "collaborators": {
+            "url": "/apps/:id/collaborators",
+            "method": "GET",
+            "params": {
+                "$id": null
+            }
+        },
+        "addons": {
+            "url": "/apps/:id/addons",
+            "method": "GET",
+            "params": {
+                "$id": null
+            }
+        },
+        "domains": {
+            "url": "/apps/:id/domains",
+            "method": "GET",
+            "params": {
+                "$id": null
+            }
+        },
+        "formation": {
+            "url": "/apps/:id/formation",
+            "method": "GET",
+            "params": {
+                "$id": null
+            }
+        } 
+    }
+
+}
