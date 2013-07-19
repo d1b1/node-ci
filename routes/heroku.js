@@ -479,10 +479,11 @@ exports.herokuList = function(req, res) {
 
 }
 
+
 exports.configAdd = function(req, res) {
 
   var data = {};
-  data[req.body.key] = req.body.value;
+  data[req.body.key] = req.body.value == 'null' ? null : req.body.value;
 
   heroku.configvars.add({ app_id: req.params.id, body: data }, function(err, data) {
      res.json({ err: err, data: data });
@@ -499,10 +500,6 @@ exports.collaboratorAdd = function(req, res) {
 }
 
 exports.collaboratorRemove = function(req, res) {
-
-  // console.log({ app_id: req.params.id, collaborator_id: req.params.cid });
-  // res.redirect("/heroku/app/" + req.params.id + "/details");
-  // return;
 
   heroku.collaborators.remove({ app_id: req.params.id, collaborator_id: req.params.cid }, function(err, data) {
      res.redirect("/heroku/app/" + req.params.id + "/details");

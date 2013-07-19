@@ -3,6 +3,25 @@ extends layout
 block header
 
   script
+    function removeConfig(key) {
+      if (confirm('Remove this Config Var?')) {
+        $.ajax({
+          url: '/heroku/app/#{data.app.name}/config-var/add',
+          type: 'post',
+          data: { key: key, value: 'null' },
+          success: function(res) {
+            if (res.err) {
+              // $('.message').html('Invalid Config Var.');
+              // TODO: Popup an alert message.
+            } else {
+              // $('.message').html('Config Var Added. Add Another?');
+              $('.row-'+key).remove();  
+            }
+          }
+        });
+      }
+    }
+
     function addConfig() {
       var email = $('#addUser_Email').val();
 
@@ -99,11 +118,11 @@ block content
              tr
               td=rec.user.email
               td
-               a(class="btn btn-small", href="/heroku/app/#{data.app.name}/collaborator/#{rec.id}/delete") Remove
+               a(class="btn btn-mini", href="/heroku/app/#{data.app.name}/collaborator/#{rec.id}/delete") Remove
           tr
             td(colspan="2")
 
-                a(href="#addCollaborator", role="button", class="btn", data-toggle="modal") Add User
+                a(href="#addCollaborator", role="button", class="btn btn-mini btn-primary", data-toggle="modal") Add a User
  
         h4 App Addons
 
@@ -123,35 +142,36 @@ block content
 
     .row-fluid
       .span11
+        
+        h4 Config Vars
+        p The following are Config Vars for this application. Use the add to either create a new, or to overwrite 
+          and existing key value pair. These values are accessible from the Heroku CLI using the 'heroku config'
+          command.
 
         table.table-striped.table.table-hover
          tr
-          th(width="20%")
+          th(width="30%")
            | Name
-          th(width="40%")
+          th(width="60%")
            | Value
-          th(width="20%")
-
+          th(width="10%")
           - if (!data || data.length == 0) 
              tr
               td(colspan="5")
                | No processes started.
           - else
             each val, i in data.variables
-             tr
+             tr(class="row-#{i}")
               td=i
               td=val
               td
-               button(class="btn btn-small", onclick="alert('Coming soon...');") Remove
-               | &nbsp;
-               button(class="btn btn-small", onclick="alert('Coming soon...');") Edit
+                button(class="btn btn-mini", onclick="removeConfig('#{i}');") Remove
 
           tr
-            td(colspan="2")
+            td(colspan="3")
+              button(href="#addConfig", role="button", class="btn btn-mini btn-primary", data-toggle="modal") Add Config Var
 
-                a(href="#addConfig", role="button", class="btn", data-toggle="modal") Add Config Var
-
-        a(class="btn btn-primary", href="/heroku/apps") Return to App List
+        a(class="btn btn-warning", href="/heroku/apps") << Return to App List
 
         div(id="addCollaborator", class="modal hide fade", tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true")
           div(class="modal-header")
@@ -177,6 +197,7 @@ block content
             p Enter Key and Value:
               form(id="addUserForm")
                 input(type="text", id="addConfig_Key", name="key")
+                | &nbsp;
                 input(type="text", id="addConfig_Value", name="value")
             p(class="message") 
 
