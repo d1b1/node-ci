@@ -2,6 +2,27 @@ extends layout
 
 block header
 
+  script
+    function addUser() {
+      var email = $('#addUser_Email').val();
+      // Add Validation for the email address.
+
+      $.ajax({
+        url: '/heroku/app/#{data.app.name}/collaborators/add',
+        type: 'post',
+        data: { email: email },
+        success: function(res) {
+          if (res.err) {
+            $('.message').html('Invalid Email Address.');
+          } else {
+            $('#addUser_Email').val('');
+            $('.message').html('Collaborator Added. Add Another?')   
+          }
+        }
+      });
+
+    }
+
 block content
 
     .row-fluid
@@ -58,8 +79,12 @@ block content
              tr
               td=rec.user.email
               td
-               button(class="btn btn-small", onclick="alert('Coming soon...');") Remove
+               a(class="btn btn-small", href="/heroku/app/#{data.app.name}/collaborator/#{rec.id}/delete") Remove
+          tr
+            td(colspan="2")
 
+                a(href="#addCollaborator", role="button", class="btn", data-toggle="modal") Add User
+ 
         h4 App Addons
 
         table.table-striped.table.table-hover
@@ -101,5 +126,20 @@ block content
                | &nbsp;
                button(class="btn btn-small", onclick="alert('Coming soon...');") Edit
 
-
         a(class="btn btn-primary", href="/heroku/apps") Return to App List
+
+        div(id="addCollaborator", class="modal hide fade", tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true")
+          div(class="modal-header")
+            button(type="button", class="close", data-dismiss="modal", aria-hidden="true") ×
+            h3(id="myModalLabel") Add a Collaborator?
+
+          div(class="modal-body")
+            p Enter User Email Address:
+              form(id="addUserForm")
+                input(type="text", id="addUser_Email", name="email")
+            p(class="message") 
+
+          div(class="modal-footer")
+            button(class="btn", data-dismiss="modal", aria-hidden="true") Close
+            button(class="btn btn-primary", onclick="addUser();") Continue
+

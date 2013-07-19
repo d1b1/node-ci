@@ -4,6 +4,6 @@ test:
 
 local:
 	 heroku config:pull --overwrite
-	 format start
+	 foreman start
 
 .PHONY: test

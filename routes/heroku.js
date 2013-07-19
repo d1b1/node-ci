@@ -479,6 +479,26 @@ exports.herokuList = function(req, res) {
 
 }
 
+exports.collaboratorAdd = function(req, res) {
+
+  heroku.collaborators.add({ app_id: req.params.id, user: { email: req.body.email } }, function(err, data) {
+     res.json({ err: err, data: data });
+   });
+
+}
+
+exports.collaboratorRemove = function(req, res) {
+
+  // console.log({ app_id: req.params.id, collaborator_id: req.params.cid });
+  // res.redirect("/heroku/app/" + req.params.id + "/details");
+  // return;
+
+  heroku.collaborators.remove({ app_id: req.params.id, collaborator_id: req.params.cid }, function(err, data) {
+     res.redirect("/heroku/app/" + req.params.id + "/details");
+   });
+
+}
+
 var getherokuAnApp = function(id, cb) {
 
   if (process.env.HEROKU_API == '' || !process.env.HEROKU_API) {

@@ -9,7 +9,9 @@ var heroku = new Braque({
 	  header: function(headers) {
 	  	headers.Accept= "application/vnd.heroku+json; version=3";
 	  }
-	}
+	},
+
+  debug: false
 });
 
 heroku.authenticate({

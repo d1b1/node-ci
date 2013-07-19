@@ -44,6 +44,23 @@
                 "invalidmsg": "",
                 "description": ""
             },
+
+            "app_id": {
+                "type": "String",
+                "required": true,
+                "validation": "",
+                "invalidmsg": "",
+                "description": ""
+            },
+
+            "collaborator_id": {
+                "type": "String",
+                "required": true,
+                "validation": "",
+                "invalidmsg": "",
+                "description": ""
+            },
+
             "number": {
                 "type": "Number",
                 "required": true,
@@ -130,6 +147,31 @@
                 "$id": null
             }
         } 
+    },
+
+    "collaborators": {
+        "remove": {
+            "url": "/apps/:app_id/collaborators/:collaborator_id",
+            "method": "DELETE",
+            "params": {
+                "$app_id": null,
+                "$collaborator_id": null
+            }
+        },
+        "add": {
+            "url": "/apps/:app_id/collaborators",
+            "method": "POST",
+            "params": {
+                "$app_id": null,
+                "user": {
+                    "type": "String",
+                    "required": true,
+                    "validation": "",
+                    "invalidmsg": "",
+                    "description": "Email address of collaborator."
+                }
+            }
+        }
     }
 
 }
