@@ -3,6 +3,26 @@ extends layout
 block header
 
   script
+    function addConfig() {
+      var email = $('#addUser_Email').val();
+
+      $.ajax({
+        url: '/heroku/app/#{data.app.name}/config-var/add',
+        type: 'post',
+        data: { key: $('#addConfig_Key').val(), value: $('#addConfig_Value').val() },
+        success: function(res) {
+          if (res.err) {
+            $('.message').html('Invalid Config Var.');
+          } else {
+            $('#addConfig_Key').val('');
+            $('#addConfig_Value').val('');
+            $('.message').html('Config Var Added. Add Another?')   
+          }
+        }
+      });
+
+    }
+
     function addUser() {
       var email = $('#addUser_Email').val();
       // Add Validation for the email address.
@@ -126,6 +146,11 @@ block content
                | &nbsp;
                button(class="btn btn-small", onclick="alert('Coming soon...');") Edit
 
+          tr
+            td(colspan="2")
+
+                a(href="#addConfig", role="button", class="btn", data-toggle="modal") Add Config Var
+
         a(class="btn btn-primary", href="/heroku/apps") Return to App List
 
         div(id="addCollaborator", class="modal hide fade", tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true")
@@ -143,3 +168,18 @@ block content
             button(class="btn", data-dismiss="modal", aria-hidden="true") Close
             button(class="btn btn-primary", onclick="addUser();") Continue
 
+        div(id="addConfig", class="modal hide fade", tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true")
+          div(class="modal-header")
+            button(type="button", class="close", data-dismiss="modal", aria-hidden="true") ×
+            h3(id="myModalLabel") Add/Edit Configuration Variable?
+
+          div(class="modal-body")
+            p Enter Key and Value:
+              form(id="addUserForm")
+                input(type="text", id="addConfig_Key", name="key")
+                input(type="text", id="addConfig_Value", name="value")
+            p(class="message") 
+
+          div(class="modal-footer")
+            button(class="btn", data-dismiss="modal", aria-hidden="true") Close
+            button(class="btn btn-primary", onclick="addConfig();") Continue

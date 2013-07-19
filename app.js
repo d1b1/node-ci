@@ -188,6 +188,7 @@ AppManager = (function() {
 
     app.get("/heroku/app/:id/collaborator/:cid/delete", check, routes.heroku.collaboratorRemove );
     app.post("/heroku/app/:id/collaborators/add", check, routes.heroku.collaboratorAdd );
+    app.post("/heroku/app/:id/config-var/add", check, routes.heroku.configAdd );
 
     app.get("/heroku/apps",        check, routes.heroku.herokuList );
   

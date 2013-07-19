@@ -1,7 +1,7 @@
 {
   "name": "node-ci",
   "description": "Node.js CI Server. Provides local or server support for git integration and CI processes.",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "author": "d1b1 <stephan.smith.bc93@gmail.com>",
   "maintainers": [
     "d1b1 <stephan.smith.bc93@gmail.com>"
@@ -38,6 +38,6 @@
     "connect-mongodb": "~1.1.5",
     "optimist": "~0.3.5",
     "node-markdown": "~0.1.1",
-    "braque": "~1.0.3"
+    "braque": "~1.0.4"
   }
 }

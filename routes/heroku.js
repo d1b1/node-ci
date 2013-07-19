@@ -479,6 +479,17 @@ exports.herokuList = function(req, res) {
 
 }
 
+exports.configAdd = function(req, res) {
+
+  var data = {};
+  data[req.body.key] = req.body.value;
+
+  heroku.configvars.add({ app_id: req.params.id, body: data }, function(err, data) {
+     res.json({ err: err, data: data });
+   });
+
+}
+
 exports.collaboratorAdd = function(req, res) {
 
   heroku.collaborators.add({ app_id: req.params.id, user: { email: req.body.email } }, function(err, data) {

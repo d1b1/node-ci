@@ -172,6 +172,23 @@
                 }
             }
         }
+    },
+
+    "configvars": {
+        "add": {
+            "url": "/apps/:app_id/config-vars",
+            "method": "PATCH",
+            "params": {
+                "$app_id": null,
+                "body": {
+                    "type": "String",
+                    "required": true,
+                    "validation": "",
+                    "invalidmsg": "",
+                    "description": "Data"
+                }
+            }
+        }
     }
 
 }
