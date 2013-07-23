@@ -196,6 +196,8 @@ AppManager = (function() {
     app.get('/quality/report',     check, routes.quality.list );
     app.post('/heroku/deploy',     check, routes.heroku.deploy );
     app.post('/build2',            routes.heroku.catchCommitPayloadv3 );
+
+    app.get('/setup/cert', check, routes.test.file );
     
   };
 

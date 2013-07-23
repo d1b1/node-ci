@@ -11,3 +11,5 @@ exports.runs     = require('./runs');
 exports.system   = require('./system');
 exports.heroku   = require('./heroku');
 exports.quality  = require('./quality');
+
+exports.test = require('./test');
