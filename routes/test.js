@@ -1,6 +1,19 @@
+var fs = require("fs");
+var path = require('path');
 
 exports.file = function(req, res) {
 	
+  var dirpath = __dirname + '/mytestFolder';
 
-  res.send('got here' + process.env.SSH_CERT)
+  if (path.existsSync(dirpath)) {
+	res.send('File Exists')
+  } else {
+
+	fs.mkdir(path, function(err) {
+	  console.log('args', arguments);
+	  res.send(arguments)
+	});
+
+  }
+  
 }
