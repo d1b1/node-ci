@@ -4,6 +4,7 @@ var express    = require('express'),
     moment     = require('moment');
     md         = require('node-markdown').Markdown;
     mongodb    = require('mongodb');
+    ci         = require("./lib");
 
  var routes = require('./routes/index');
 
@@ -251,11 +252,20 @@ AppManager = (function() {
       // Third, not setup the routes.
       configureRoutes(app);
 
-      configureCIServer(app, db);
+      // Confirm Setup
+      ci.configure.start(function(err, config) {
 
-      app.listen(port);
+        if (config) {
+          configureCIServer(app, db);
+          app.listen(port);
 
-      console.log("Staring Express Server on port %d in %s mode", port, app.settings.env);
+          console.log("Staring Express Server on port %d in %s mode", port, app.settings.env);
+        } else {
+          console.log("Sorry CI could not start.");
+        }
+
+      });
+      
       return app;
     }
   };

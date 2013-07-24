@@ -25,3 +25,4 @@ assets
 public
 spec
 .env
+.ssh
