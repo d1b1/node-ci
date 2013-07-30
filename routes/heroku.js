@@ -473,9 +473,29 @@ exports.herokuConfigs = function(req, res) {
 
 exports.herokuList = function(req, res) {
 
+  var repolist = 'composerapi,composer'.split(",");
+  var misc = [];
+
   heroku.apps.all({}, function(err, data) {
-     res.render('heroku_apps', { data: data });
-   });
+    var apps = {};
+
+    _.each(data, function(o) {
+      var repo = o.name.split("-");
+      if (repo.length > 1 && _.indexOf(repolist, repo[1]) > -1) {
+        o.branch = repo[2];
+        var repo_name = repo[1];
+        if (!apps[repo_name]) apps[repo_name] = [];
+        apps[repo_name].push(o);
+      } else {
+        o.branch = o.name;
+        misc.push(o);
+      }
+    });
+
+    apps.others = misc;
+
+    res.render('heroku_apps', { data: apps });
+  });
 
 }
 

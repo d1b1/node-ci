@@ -14,39 +14,29 @@ block content
     br
 
     .row-fluid
-      .span12
+      
+      each repo, i in data
 
-        table.table-striped.table.table-hover
-         tr
-          th(width="20%")
-           | Based on
-          th(width="10%")
-           | Dyno/Workers
+        .span6.fluid
+          h3
+            | Repo: #{i}
+          table.table-striped.table.table-hover
+           tr
+            th(width="40%")
+             | Branch
+            th(width="30%")
+             | Updated
+            th(width="10%")
 
-          th(width="10%")
-           | Stack
-          th(width="30%")
-           | Git
-          th(width="10%")
-           | Updated
-          th(width="30%")
-
-          - if (!data || data.length == 0) 
-             tr
-              td(colspan="5")
-               | No processes started.
-          - else
-            each app in data
-             tr
-              td 
-                a(href="#{app.web_url}", target="_blank")=app.name
-              td
-                | Dynos: #{app.dynos}
-                | Workers: #{app.workers}
-              td=app.stack
-              td=app.git_url
-              td(title=moment(app.updated_at).format("MM/DD/YY HH:mm:ss")) #{moment(app.updated_at).fromNow()}
-              td
-                a(class="btn btn-small", href="/heroku/app/#{app.name}/details") Details 
-                | &nbsp;
-                a(class="btn btn-small btn-primary", href="#{app.web_url}", target="_blank") Open
+            - if (!data || data.length == 0) 
+               tr
+                td(colspan="5")
+                 | No processes started.
+            - else
+              each app in repo
+               tr
+                td 
+                  a(href="#{app.web_url}", target="_blank")=app.name
+                td(title=moment(app.updated_at).format("MM/DD/YY HH:mm:ss")) #{moment(app.updated_at).fromNow()}
+                td
+                  a(class="btn btn-small", href="/heroku/app/#{app.name}/details") Details
