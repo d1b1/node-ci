@@ -2,9 +2,10 @@ var http  = require('http');
 var https = require('https');
 var _     = require('underscore');
 var async = require('async');
-var githubAPI = require("github");
-var heroku    = require("../heroku");
-  
+var heroku    = require("../heroku");  
+var githubAPI = require('github');
+var moment  = require('moment');
+
 /*
   This function will parse a github path into its parts.
 
@@ -179,6 +180,8 @@ exports.catchCommitPayloadv3 = function(req, res) {
       // TODO: Move the mmp string to a configuration value.
       var appName = 'mmp-' + repo.name + '-' + branch;
 
+      appName = appName.substring(0,30);
+
       console.log('Looking for ' + appName);
 
       herokuAppGet(appName, function(err, data) {
@@ -219,14 +222,9 @@ exports.catchCommitPayloadv3 = function(req, res) {
 
     console.log('Async Results', results);
 
-    if (!results.app.status) {
-      console.log('Stopping in the App Status check', results.app);
-      return res.send(results.app);
-    }
+    var sha = load.after;
 
-    console.log('Starting the final phase');
-
-    pushToHeroku(herokuGITUri, localGitPath, branchName, function(err, stdout, stderr) {
+    pushToHeroku(herokuGITUri, localGitPath, branchName, sha, function(err, stdout, stderr) {
       console.log('Error', err);
       // console.log('STDout', stdout);
       // console.log('STDerr', stderr);
@@ -288,10 +286,19 @@ var cloneFetchGITRepo = function(gitUri, gitDir, cb) {
    - branchName   (string) - Name of branch to push to heroku.
 
 */
-var pushToHeroku = function(herokuGitUri, localGitPath, branchName, cb) {
+var pushToHeroku = function(herokuGitUri, localGitPath, branchName, sha, cb) {
 
-  var cmd = 'GIT_WORK_TREE=' + localGitPath + '; ' + 
-            'git --git-dir=' + localGitPath + '/.git push  '+ herokuGitUri + ' origin/' + branchName + ':master --force';
+  var cmd = 'GIT_WORK_TREE=' + localGitPath + ';' +
+            'git --git-dir=' + localGitPath + '/.git fetch origin; ' +
+            'git --git-dir=' + localGitPath + '/.git update-ref refs/heads/' + branchName + ' ' + sha + ';' + 
+            'git --git-dir=' + localGitPath + '/.git push  '+ herokuGitUri + ' refs/heads/' + branchName + ':master --force';
+
+  //var cmd2 = 'GIT_WORK_TREE=' + localGitPath + ';' + 
+  //          'git --git-dir=' + localGitPath + '/.git fetch origin; ' +
+  //          'git --git-dir=' + localGitPath + '/.git checkout -b ' + t + ' origin/' + branchName + '; ' +
+  //          'git --git-dir=' + localGitPath + '/.git push  '+ herokuGitUri + ' ' + t + ':master --force';
+
+  // --git-dir=' + localGitPath + '/.git
 
   console.log('Push Command to Heroku: ', cmd);
   var exec = require('child_process').exec;
@@ -392,7 +399,10 @@ var herokuAppPost = function(opts, cb) {
     result.setEncoding('utf8');
     var chunkData = '';
     result.on('data', function(chunk) { chunkData = chunkData + chunk; });
+    result.on('error', function(err) { console.log('err in get', err) });
+
     result.on('end', function() {
+      console.log('got here', chunkData);
       var data = JSON.parse(chunkData);
       if (result.statusCode == 200) {
         data.status = true;
